@@ -1,4 +1,5 @@
 //Dung Ly N01327929
+//Thanh Phat Lam N01335598 CENG32-RND
 package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
