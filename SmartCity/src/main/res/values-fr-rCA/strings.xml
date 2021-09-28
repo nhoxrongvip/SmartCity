@@ -9,7 +9,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Prochain</string>
     <string name="previous">précédent</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Garbage_fragment">Ce fragment sera utilisé pour contrôler les poubelles</string>
     <string name="hello_first_fragment">Bonjour premier fragment</string>
     <string name="hello_second_fragment">Bonjour deuxième fragment. Arg: %1$s</string>
     <string name="air_quality">Air Quality</string>
