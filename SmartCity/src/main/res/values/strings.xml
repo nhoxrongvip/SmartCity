@@ -19,5 +19,5 @@
     <string name="fragment_2">Fragment 2</string>
     <string name="fragment_3">Fragment 3</string>
     <string name="fragment_4">Fragment 4</string>
-    <string name="air_quality_fragment">Air Quality Fragment</string>
+    <string name="air_quality_fragment">This fragment will monitor the Air Quality of selected area</string>
 </resources>
