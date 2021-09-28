@@ -1,8 +1,10 @@
 /*
-    Name:Dinh Hoa Tran N01354661
+    Name:Dung Ly N01327929
     Course: CENG322-RND
-    Purpose: City Light
+    Purpose: Control Garbage bins in city
+    Last updated: Sep 27 2021
 */
+
 package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
@@ -15,10 +17,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment3#newInstance} factory method to
+ * Use the {@link GarbageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment3 extends Fragment {
+public class GarbageFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +31,7 @@ public class Fragment3 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment3() {
+    public GarbageFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +41,11 @@ public class Fragment3 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment3.
+     * @return A new instance of fragment Fragment2.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment3 newInstance(String param1, String param2) {
-        Fragment3 fragment = new Fragment3();
+    public static GarbageFragment newInstance(String param1, String param2) {
+        GarbageFragment fragment = new GarbageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,6 +66,6 @@ public class Fragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_3, container, false);
+        return inflater.inflate(R.layout.garbage_fragment, container, false);
     }
 }
