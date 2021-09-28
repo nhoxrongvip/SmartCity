@@ -1,3 +1,10 @@
+/*
+    Name:Thanh Phat Lam N01335598
+    Course: CENG322-RND
+    Purpose: Report Air Quality of the selected area
+*/
+
+
 package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
