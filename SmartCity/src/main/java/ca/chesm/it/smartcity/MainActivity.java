@@ -1,5 +1,6 @@
 //Dung Ly N01327929
-//Thanh Phat Lam N01335598 CENG32-RND
+//Thanh Phat Lam N01335598 CENG322-RND
+//Hieu Chu N01371619 CENG322-RND
 package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
@@ -50,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 frag = new GarbageFragment();
                 break;
             case R.id.Fragment3:
-                frag = new Fragment3();
+                frag = new CityLight();
                 break;
             case R.id.Fragment4:
-                frag = new Fragment4();
+                frag = new SnowLevelFragment();
                 break;
 
         }

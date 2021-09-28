@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Thanh Phat Lam N01335598 CENG322-RND-->
 <!--Dung Ly n01335598 CENG322-RND-->
+<!--Hieu Chu n01371619 CENG322-RND-->
+
 <resources>
     <string name="app_name">SmartCityMonitor</string>
     <string name="action_settings">Les paramètres</string>
