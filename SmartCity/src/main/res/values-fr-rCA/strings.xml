@@ -15,7 +15,7 @@
     <string name="hello_second_fragment">Bonjour deuxième fragment. Arg: %1$s</string>
     <string name="air_quality">Air Quality</string>
     <string name="city_light_fragment">CityLight</string>
-    <string name="fragment_4">Fragment 4</string>
+    <string name="fragment_4">Snow Level</string>
     <string name="air_quality_fragment">This fragment will monitor the Air Quality of selected area</string>
     <string name="snow_level_fragment">This fragment display snow level to user</string>
 </resources>

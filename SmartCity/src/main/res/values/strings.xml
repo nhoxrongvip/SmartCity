@@ -18,7 +18,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="garbage_fragment">This fragment will use to control Garbage bins</string>
     <string name="city_light_fragment">Fragment 3</string>
-    <string name="fragment_4">Fragment 4</string>
+    <string name="fragment_4">Snow Level</string>
     <string name="air_quality_fragment">This fragment will monitor the Air Quality of selected area</string>
     <string name="snow_level_fragment">This fragment display snow level to user</string>
 </resources>
