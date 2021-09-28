@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 frag = new Fragment2();
                 break;
             case R.id.Fragment3:
-                frag = new Fragment3();
+                frag = new CityLight();
                 break;
             case R.id.Fragment4:
                 frag = new Fragment4();
