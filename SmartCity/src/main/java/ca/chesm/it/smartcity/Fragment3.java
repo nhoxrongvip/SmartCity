@@ -1,3 +1,8 @@
+/*
+    Name:Dinh Hoa Tran N01354661
+    Course: CENG322-RND
+    Purpose: City Light
+*/
 package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
