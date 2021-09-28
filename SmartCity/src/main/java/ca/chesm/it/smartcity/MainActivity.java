@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 frag = new AirQualityFragment();
                 break;
             case R.id.Fragment2:
-                frag = new Fragment2();
+                frag = new GarbageFragment();
                 break;
             case R.id.Fragment3:
                 frag = new CityLight();
