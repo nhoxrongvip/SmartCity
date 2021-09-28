@@ -1,3 +1,4 @@
+
 package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
