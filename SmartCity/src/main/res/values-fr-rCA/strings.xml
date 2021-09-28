@@ -12,4 +12,8 @@
 
     <string name="hello_first_fragment">Bonjour premier fragment</string>
     <string name="hello_second_fragment">Bonjour deuxième fragment. Arg: %1$s</string>
+    <string name="air_quality">Air Quality</string>
+    <string name="fragment_2">Fragment 2</string>
+    <string name="fragment_3">Fragment 3</string>
+    <string name="fragment_4">Fragment 4</string>
 </resources>

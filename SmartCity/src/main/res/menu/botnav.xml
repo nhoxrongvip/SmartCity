@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/AirQualityFragment"
+        android:title="@string/air_quality"
+
+        />
+    <item
+        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/Fragment2"
+        android:title="@string/fragment_2"
+
+        />
+    <item
+        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/Fragment3"
+        android:title="@string/fragment_3"
+
+        />
+    <item
+        android:icon="@drawable/ic_launcher_background"
+        android:id="@+id/Fragment4"
+        android:title="@string/fragment_4"
+
+        />
+</menu>

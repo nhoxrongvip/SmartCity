@@ -4,75 +4,62 @@ package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import ca.chesm.it.smartcity.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
+    BottomNavigationView botnavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
+        botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AirQualityFragment()).commit();
 
-        setSupportActionBar(binding.toolbar);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
+    //Back button pressed
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.app_name)
+                .setCancelable(false)
+                .setMessage("Do you really want to exit?")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                .create()
+                .show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
+        Fragment frag = null;
+        //Set the Fragment that is need to show
+        switch (item.getItemId()) {
+            case R.id.AirQualityFragment:
+                frag = new AirQualityFragment();
+                break;
+            case R.id.Fragment2:
+                frag = new Fragment2();
+                break;
+            case R.id.Fragment3:
+                frag = new Fragment3();
+                break;
+            case R.id.Fragment4:
+                frag = new Fragment4();
+                break;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+        item.setChecked(true);
+        //Change the fragment to the selected fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+        return true;
+    };
 }
