@@ -20,5 +20,5 @@
     <string name="city_light_fragment">Fragment 3</string>
     <string name="fragment_4">Fragment 4</string>
     <string name="air_quality_fragment">This fragment will monitor the Air Quality of selected area</string>
-    <string name="fragment4_declaration">This fragment display snow level to user</string>
+    <string name="snow_level_fragment">This fragment display snow level to user</string>
 </resources>
