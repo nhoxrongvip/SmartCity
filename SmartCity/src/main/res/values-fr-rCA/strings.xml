@@ -18,4 +18,9 @@
     <string name="fragment_4">Snow Level</string>
     <string name="air_quality_fragment">This fragment will monitor the Air Quality of selected area</string>
     <string name="snow_level_fragment">This fragment display snow level to user</string>
+
+    <string name="txtedit_hint_username">Username</string>
+    <string name="txtedit_hint_password">Password</string>
+    <string name="smartcitylogin_label">SmartCityLogin</string>
+    <string name="bnttxtlogin">Login</string>
 </resources>
