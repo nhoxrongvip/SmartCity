@@ -5,13 +5,4 @@
     android:layout_height="match_parent"
     tools:context=".AirQualityFragment"
     android:background="#ff8f8f"
-    >
-
-
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/air_quality_fragment" />
-
-</FrameLayout>
+    />
