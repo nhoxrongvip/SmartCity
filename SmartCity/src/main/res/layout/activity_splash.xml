@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/splash_logo_animation"
+        app:lottie_url="https://assets1.lottiefiles.com/temp/lf20_vOb2AN.json"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
