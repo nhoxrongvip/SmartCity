@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:title="@string/search_overflow"
-          android:id="@+id/search1"
-          app:showAsAction="always"
-        ></item>
+    <item
+        android:title="@string/search_overflow"
+        android:id="@+id/search1"
+        app:showAsAction="always" />
 
     <item android:title="Settings"
         android:id="@+id/main_menu"
@@ -34,6 +34,7 @@
                 android:title="Wifi"
                 android:id="@+id/overflow2"
                 app:showAsAction="never"
+
                 >
             </item>
             <item
@@ -48,5 +49,6 @@
     <item android:title="@string/search_overflow"
         android:id="@+id/search4"
         app:showAsAction="never"
-        ></item>
+        android:icon="@drawable/search_icon"
+        />
 </menu>
