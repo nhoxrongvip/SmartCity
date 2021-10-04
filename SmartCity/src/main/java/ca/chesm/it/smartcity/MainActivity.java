@@ -3,6 +3,7 @@
 //Hieu Chu N01371619 CENG322-RND
 package ca.chesm.it.smartcity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.CityLight:
                 frag = new CityLight();
                 break;
-            case R.id.Fragment4:
+            case R.id.SnowLevel:
                 frag = new SnowLevelFragment();
                 break;
 

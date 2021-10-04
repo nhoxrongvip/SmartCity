@@ -20,8 +20,8 @@
 
         />
     <item
-        android:icon="@drawable/ic_launcher_background"
-        android:id="@+id/Fragment4"
+        android:icon="@drawable/snow_icon"
+        android:id="@+id/SnowLevel"
         android:title="@string/fragment_4"
 
         />
