@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.overflow1:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.overflow2:
                 Toast.makeText(this, "Wifi", Toast.LENGTH_SHORT).show();
