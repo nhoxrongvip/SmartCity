@@ -19,7 +19,8 @@ import com.airbnb.lottie.LottieAnimationView;
 public class SplashActivity extends AppCompatActivity {
 
     LottieAnimationView logo_animation;
-    final long delay_time = 2000;
+    final long DELAY = 2000;
+    final long DURATION = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
         //Splash Screen animation
         logo_animation = findViewById(R.id.splash);
-        logo_animation.animate().translationY(-1600).setDuration(1000).setStartDelay(delay_time);
+        logo_animation.animate().translationY(-1600).setDuration(DURATION).setStartDelay(DELAY);
 
         //change Activity after animation
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -36,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }
-        },delay_time);
+        },DELAY);
 
 
 
