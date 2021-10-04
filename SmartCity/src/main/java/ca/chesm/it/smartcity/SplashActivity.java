@@ -1,3 +1,5 @@
+//If you want to change animation, modify in activity_splash.xml
+
 package ca.chesm.it.smartcity;
 
 import androidx.annotation.NonNull;
@@ -24,11 +26,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
+        //Splash Screen animation
         logo_animation = findViewById(R.id.splash);
-
         logo_animation.animate().translationY(-1600).setDuration(1000).setStartDelay(delay_time);
 
+        //change Activity after animation
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
