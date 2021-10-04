@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.Fragment2:
                 frag = new GarbageFragment();
                 break;
-            case R.id.Fragment3:
+            case R.id.CityLight:
                 frag = new CityLight();
                 break;
             case R.id.Fragment4:

@@ -15,7 +15,7 @@
         />
     <item
         android:icon="@drawable/citylightlogo"
-        android:id="@+id/Fragment3"
+        android:id="@+id/CityLight"
         android:title="@string/city_light_fragment"
 
         />
