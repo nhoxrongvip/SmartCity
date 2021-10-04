@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:title="@string/search_overflow"
           android:id="@+id/search1"
-          app:showAsAction="ifRoom"
+          app:showAsAction="always"
         ></item>
 
-    <item android:title="Main menu"
+    <item android:title="Settings"
         android:id="@+id/main_menu"
-        app:showAsAction="always">
+        app:showAsAction="never">
         <menu>
             <item
                 android:title="Settings"
@@ -31,4 +31,8 @@
         </menu>
     </item>
 
+    <item android:title="@string/search_overflow"
+        android:id="@+id/search4"
+        app:showAsAction="never"
+        ></item>
 </menu>
