@@ -8,7 +8,7 @@
 
         />
     <item
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/icons8_truck_64"
         android:id="@+id/Fragment2"
         android:title="@string/garbage_fragment_name"
 
