@@ -14,7 +14,7 @@
 
         />
     <item
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/citylightlogo"
         android:id="@+id/Fragment3"
         android:title="@string/city_light_fragment"
 
