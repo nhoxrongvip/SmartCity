@@ -8,17 +8,24 @@
 
 package ca.chesm.it.smartcity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 
 public class AirQualityFragment extends Fragment {
 
+    private int STORAGE_PERMISSION_CODE = 1;
+    private View v;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -42,18 +49,41 @@ public class AirQualityFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_air_quality, container, false);
+        v = inflater.inflate(R.layout.fragment_air_quality, container, false);
+        Button btn = v.findViewById(R.id.bntpremission);
+        btn.setOnClickListener(view ->
+        {
+            if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(getContext(), "Abcd", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION))
+                {
+
+                }
+                else {
+                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},STORAGE_PERMISSION_CODE);
+                }
+            }
+        });
+
+        return v;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+
+        }
+    }
+
 }
