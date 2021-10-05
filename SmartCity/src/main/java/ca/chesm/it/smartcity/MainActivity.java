@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.overflow1:
                 Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
+                Fragment frag = new AppSettingFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
                 return true;
             case R.id.overflow2:
                 Toast.makeText(this, "Wifi", Toast.LENGTH_SHORT).show();

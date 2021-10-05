@@ -15,20 +15,6 @@
                 android:id="@+id/overflow1"
                 app:showAsAction="never"
                 >
-                <menu>
-                    <item
-                        android:title="Lock Portrait mode"
-                        android:id= "@+id/portraitonly"
-                        app:showAsAction="never">
-                    </item>
-
-                    <item
-                        android:title="Dark wa"
-                        android:id="@+id/darkmode"
-                        app:showAsAction="never">
-                    </item>
-
-                </menu>
             </item>
             <item
                 android:title="Wifi"
