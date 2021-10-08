@@ -36,8 +36,9 @@ public class SplashActivity extends AppCompatActivity {
         //change Activity after animation
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
-            public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            public void run()
+            {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }
         },DELAY);
 

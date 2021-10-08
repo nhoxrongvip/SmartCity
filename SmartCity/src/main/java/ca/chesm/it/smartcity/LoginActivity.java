@@ -1,48 +1,165 @@
 package ca.chesm.it.smartcity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity
 {
-    Button btn;
-    EditText txtedituser,txteditpass;
+
+    private Button btnlog, btnreg;
+    private EditText etxtedituser, etxteditpass;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-        resg();
-
-        btn.setOnClickListener(view ->
+        mAuth = FirebaseAuth.getInstance();
+        res();
+        btnlog.setOnClickListener(view ->
         {
-            String username,password;
-            username = txtedituser.getText().toString();
-            password = txteditpass.getText().toString();
-            if(username.equals("admin") && password.equals("admin"))
-            {
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
-            else
-            {
+            login();
 
-            }
         });
+        btnreg.setOnClickListener(view ->
+        {
+            register();
+        });
+
+
     }
 
-    public void resg()
+    private void res()
     {
-        txtedituser = (EditText) findViewById(R.id.txteditusername);
-        txteditpass = (EditText) findViewById(R.id.txteditpassword);
-        btn = (Button) findViewById(R.id.bntlogin);
+        etxtedituser = (EditText) findViewById(R.id.txteditusername);
+        etxteditpass = (EditText) findViewById(R.id.txteditpassword);
+        btnlog = (Button) findViewById(R.id.bntlogin);
+        btnreg = (Button) findViewById(R.id.bntregister);
+    }
+
+    private void login()
+    {
+        String email, pass;
+        email = etxtedituser.getText().toString();
+        pass = etxteditpass.getText().toString();
+        if (email.isEmpty() && pass.isEmpty())
+        {
+            etxtedituser.setError("This email can not be blank");
+            etxteditpass.setError("This password can not be blank");
+        }
+        if (email.isEmpty())
+        {
+            etxtedituser.setError("This email can not be blank");
+        }
+        if (pass.isEmpty())
+        {
+            etxteditpass.setError("This password can not be blank");
+        } else
+        {
+            if(!isEmailValid(email))
+            {
+                etxtedituser.setError("This look like an incorrect address");
+                return;
+            }
+            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>()
+            {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task)
+                {
+                    if (task.isSuccessful())
+                    {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else
+                    {
+                        AlertDialog.Builder dialogb = Dialogb();
+                        dialogb.show();
+
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                        {
+                            NotificationChannel channel = new NotificationChannel("Login","Login",NotificationManager.IMPORTANCE_DEFAULT);
+                            NotificationManager manager = getSystemService(NotificationManager.class);
+                            manager.createNotificationChannel(channel);
+                        }
+                        NotificationCompat.Builder builder = Notibuild();
+
+                        NotificationManagerCompat managercompat = NotificationManagerCompat.from(LoginActivity.this);
+                        managercompat.notify(1,builder.build());
+                    }
+                }
+            });
+        }
+    }
+
+    //Build Notication
+    private NotificationCompat.Builder Notibuild()
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            NotificationChannel channel = new NotificationChannel("Login","Login",NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(LoginActivity.this,"Login");
+        builder.setContentTitle("SmartCity");
+        builder.setContentText("Login failed, please check back your password, or email !");
+        builder.setSmallIcon(R.mipmap.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+
+        return builder;
+    }
+
+    //Build Dialog
+    private AlertDialog.Builder Dialogb ()
+    {
+        AlertDialog.Builder builderd = new AlertDialog.Builder(LoginActivity.this);
+        builderd.setCancelable(true);
+        builderd.setMessage("Login failed, please check back your password, or email !");
+        builderd.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                dialogInterface.cancel();
+            }
+        });
+        return builderd;
+    }
+
+    //use to check email valid or not
+    private static boolean isEmailValid(String email)
+    {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    //Function to load intent register
+    private void register()
+    {
+        Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent1);
     }
 }
