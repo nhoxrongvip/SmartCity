@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity
                         startActivity(intent);
                     } else
                     {
-                        AlertDialog.Builder dialogb = Dialogb();
+                        AlertDialog.Builder dialogb = Dialogb(task.getException().getMessage().toString());
                         dialogb.show();
 
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity
                             NotificationManager manager = getSystemService(NotificationManager.class);
                             manager.createNotificationChannel(channel);
                         }
-                        NotificationCompat.Builder builder = Notibuild();
+                        NotificationCompat.Builder builder = Notibuild(task.getException().getMessage().toString());
 
                         NotificationManagerCompat managercompat = NotificationManagerCompat.from(LoginActivity.this);
                         managercompat.notify(1,builder.build());
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //Build Notication
-    private NotificationCompat.Builder Notibuild()
+    private NotificationCompat.Builder Notibuild(String mess)
     {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(LoginActivity.this,"Login");
         builder.setContentTitle("SmartCity");
-        builder.setContentText("Login failed, please check back your password, or email !");
+        builder.setContentText(mess);
         builder.setSmallIcon(R.mipmap.ic_launcher_foreground);
         builder.setAutoCancel(true);
 
@@ -131,11 +131,11 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //Build Dialog
-    private AlertDialog.Builder Dialogb ()
+    private AlertDialog.Builder Dialogb (String mess)
     {
         AlertDialog.Builder builderd = new AlertDialog.Builder(LoginActivity.this);
         builderd.setCancelable(true);
-        builderd.setMessage("Login failed, please check back your password, or email !");
+        builderd.setMessage(mess);
         builderd.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
         {
             @Override
