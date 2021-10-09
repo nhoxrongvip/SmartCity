@@ -1,3 +1,9 @@
+/*
+    Name:Dung Ly N01327929
+    Course: CENG322-RND
+    Purpose: Control Login for user with firebase
+    Last updated:  09 Oct 2021
+*/
 package ca.chesm.it.smartcity;
 
 import android.app.AlertDialog;

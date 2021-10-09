@@ -47,7 +47,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/loginedittext_bg"
         android:ems="14"
-        android:hint="email"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textAlignment="center"
