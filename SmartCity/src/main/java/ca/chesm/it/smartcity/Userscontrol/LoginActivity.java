@@ -4,7 +4,7 @@
     Purpose: Control Login for user with firebase
     Last updated:  09 Oct 2021
 */
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.Userscontrol;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -28,6 +28,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ca.chesm.it.smartcity.MainActivity;
+import ca.chesm.it.smartcity.R;
 
 public class LoginActivity extends AppCompatActivity
 {

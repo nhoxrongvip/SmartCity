@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Userscontrol.RegisterActivity"
             android:exported="true" />
         <activity
             android:name=".SplashActivity"
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Userscontrol.LoginActivity"
             android:exported="true"></activity>
         <activity
             android:name=".MainActivity"

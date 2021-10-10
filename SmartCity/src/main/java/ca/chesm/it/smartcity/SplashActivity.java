@@ -17,6 +17,8 @@ import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import ca.chesm.it.smartcity.Userscontrol.LoginActivity;
+
 public class SplashActivity extends AppCompatActivity {
 
     LottieAnimationView logo_animation;
@@ -38,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run()
             {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }
         },DELAY);
 

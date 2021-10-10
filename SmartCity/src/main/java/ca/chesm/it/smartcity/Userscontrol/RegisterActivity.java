@@ -5,15 +5,13 @@
     Last updated:  09 Oct 2021
 */
 
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.Userscontrol;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ca.chesm.it.smartcity.R;
 
 public class RegisterActivity extends AppCompatActivity
 {

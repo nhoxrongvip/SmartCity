@@ -4,7 +4,7 @@
     Purpose: User to encrypt and decrypt password.
     Last updated:  09 Oct 2021
 */
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.Userscontrol;
 
 import android.util.Base64;
 
