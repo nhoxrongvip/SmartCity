@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "665315147441",
+    "firebase_url": "https://smartcity-69701-default-rtdb.firebaseio.com",
+    "project_id": "smartcity-69701",
+    "storage_bucket": "smartcity-69701.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665315147441:android:dfb1644c58f4f9fcf72c90",
+        "android_client_info": {
+          "package_name": "ca.chesm.it.smartcity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665315147441-k22r6i731th8ap74u2t3iadsmn5spuh6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4L2nQXeDk3s0Q8IeofvAwHA3MR9WQ8ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665315147441-k22r6i731th8ap74u2t3iadsmn5spuh6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
