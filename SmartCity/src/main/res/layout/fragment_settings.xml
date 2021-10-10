@@ -5,57 +5,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339"
-        app:srcCompat="@drawable/lockportrait" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/portraitlocker"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:textOff="Unlock"
-        android:textOn="Lock"
-        android:thumb="@drawable/thumb1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.639"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334"
-        app:showText="true"
-        app:track="@drawable/track" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122"
-        app:srcCompat="@drawable/darkmode" />
+        app:layout_constraintVertical_bias="0.137">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/darkmode"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:thumb="@drawable/thumb2"
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.193"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.122"
+            app:srcCompat="@drawable/darkmode" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/darkmode"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:thumb="@drawable/thumb2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.639"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.115"
+            app:showText="true"
+            app:track="@drawable/track" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.639"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115"
-        app:showText="true"
-        app:track="@drawable/track" />
+        app:layout_constraintVertical_bias="0.508">
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.193"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.339"
+            app:srcCompat="@drawable/lockportrait" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/portraitlocker"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:textOff="Unlock"
+            android:textOn="Lock"
+            android:thumb="@drawable/thumb1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.639"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.334"
+            app:showText="true"
+            app:track="@drawable/track" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

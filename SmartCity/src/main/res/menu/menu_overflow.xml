@@ -37,4 +37,9 @@
         app:showAsAction="never"
         android:icon="@drawable/search_icon"
         />
+    <item
+        android:title="Info"
+        android:id="@+id/menu_info"
+        app:showAsAction="ifRoom"
+        />
 </menu>

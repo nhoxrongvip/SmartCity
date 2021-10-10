@@ -21,6 +21,8 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class AirQualityFragment extends Fragment {
 
@@ -58,7 +60,11 @@ public class AirQualityFragment extends Fragment {
         {
             if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             {
-                Toast.makeText(getContext(), "Abcd", Toast.LENGTH_SHORT).show();
+                Snackbar.make(getContext(),getView(),"Permission Granted", Snackbar.LENGTH_SHORT).show();
+            }
+            else if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
+                Snackbar.make(getContext(),getView(),"Permission Denied", Snackbar.LENGTH_SHORT).show();
+
             }
             else
             {

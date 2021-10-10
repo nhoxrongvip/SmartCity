@@ -41,15 +41,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Fragment frag;
 
         switch (item.getItemId())
         {
+            case R.id.menu_info:
+                frag = new AppInfoFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+                return true;
+
             case R.id.search1:
                 Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.overflow1:
                 Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
-                Fragment frag = new AppSettingFragment();
+                frag = new AppSettingFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
                 return true;
             case R.id.overflow2:
