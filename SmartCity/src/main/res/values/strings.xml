@@ -60,4 +60,5 @@
     <string name="bin2">Bin2</string>
     <string name="bin1">Bin1</string>
     <string name="temperature_unit_c_f">Temperature Unit(C/F)</string>
+    <string name="help_and_feedback">Help and Feedback</string>
 </resources>
