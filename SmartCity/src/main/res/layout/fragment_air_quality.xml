@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Air condition" />
+            android:text="@string/air_condition" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:text="CO2" />
+                android:text="@string/co2" />
 
             <CheckBox
                 android:id="@+id/condition_no2"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:text="NO2" />
+                android:text="@string/no2" />
 
             <CheckBox
                 android:id="@+id/condition_pm25"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:text="PM2.5" />
+                android:text="@string/pm2_5" />
 
             <CheckBox
                 android:id="@+id/condition_temperature"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:text="Temperature" />
+                android:text="@string/temperature" />
 
             <CheckBox
                 android:id="@+id/condition_humidity"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:text="Humidity" />
+                android:text="@string/humidity" />
 
             <CheckBox
                 android:id="@+id/condition_voc"
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:text="VOC" />
+                android:text="@string/voc" />
 
         </LinearLayout>
     </LinearLayout>
@@ -101,7 +101,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Level" />
+            android:text="@string/level" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="50dp"
-                android:text="High" />
+                android:text="@string/high" />
 
             <CheckBox
                 android:id="@+id/level_average"
@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="50dp"
-                android:text="Average" />
+                android:text="@string/average" />
 
             <CheckBox
                 android:id="@+id/level_low"
@@ -130,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="50dp"
-                android:text="Low" />
+                android:text="@string/low" />
         </LinearLayout>
 
     </LinearLayout>
@@ -151,7 +151,7 @@
         android:id="@+id/bntpremission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Permission"
+        android:text="@string/permission"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

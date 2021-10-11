@@ -4,6 +4,7 @@
     <item
         android:title="@string/search_overflow"
         android:id="@+id/search1"
+        android:icon="@drawable/search_icon"
         app:showAsAction="always" />
 
     <item android:title="Settings"
@@ -30,6 +31,7 @@
                 />
             <item
                 android:title="Info"
+
                 android:id="@+id/menu_info"
                 app:showAsAction="ifRoom"
                 />
@@ -39,7 +41,7 @@
     <item android:title="@string/search_overflow"
         android:id="@+id/search4"
         app:showAsAction="never"
-        android:icon="@drawable/search_icon"
+
         />
 
 </menu>

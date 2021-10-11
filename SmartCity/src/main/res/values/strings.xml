@@ -39,4 +39,24 @@
     <string name="emailreg">Email</string>
     <string name="phone_number_reg">Phone Number</string>
     <string name="register_textview_reg">Register</string>
+    <string name="sign_in_with_social_account">Sign in with social account</string>
+    <string name="email">Email</string>
+    <string name="register">register</string>
+    <string name="air_condition">Air condition</string>
+    <string name="co2">CO2</string>
+    <string name="no2">NO2</string>
+    <string name="pm2_5">PM2.5</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="voc">VOC</string>
+    <string name="level">Level</string>
+    <string name="high">High</string>
+    <string name="average">Average</string>
+    <string name="low">Low</string>
+    <string name="permission">Permission</string>
+    <string name="this_fragment_displays_information_of_the_app">This Fragment displays information of the app</string>
+    <string name="on_off">ON/OFF</string>
+    <string name="bin3">Bin3</string>
+    <string name="bin2">Bin2</string>
+    <string name="bin1">Bin1</string>
 </resources>
