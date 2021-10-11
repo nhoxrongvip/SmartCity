@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     >
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -43,9 +43,9 @@
             app:layout_constraintVertical_bias="0.115"
             app:showText="true"
             app:track="@drawable/track" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.508">
+        app:layout_constraintVertical_bias="0.294">
 
         <ImageView
             android:id="@+id/imageView10"
@@ -84,7 +84,30 @@
             app:showText="true"
             app:track="@drawable/track" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.463">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature_unit_c_f" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/bntpremission"
@@ -93,10 +116,10 @@
         android:text="@string/permission"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.692" />
+        app:layout_constraintVertical_bias="0.935" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
