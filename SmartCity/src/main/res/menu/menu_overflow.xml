@@ -14,21 +14,25 @@
                 android:title="App settings"
                 android:id="@+id/overflow1"
                 app:showAsAction="never"
-                >
-            </item>
+                />
+
             <item
                 android:title="Wifi"
                 android:id="@+id/overflow2"
                 app:showAsAction="never"
 
-                >
-            </item>
+                />
+
             <item
                 android:title="Bluetooh"
                 android:id="@+id/overflow3"
                 app:showAsAction="never"
-                >
-            </item>
+                />
+            <item
+                android:title="Info"
+                android:id="@+id/menu_info"
+                app:showAsAction="ifRoom"
+                />
         </menu>
     </item>
 
@@ -37,9 +41,5 @@
         app:showAsAction="never"
         android:icon="@drawable/search_icon"
         />
-    <item
-        android:title="Info"
-        android:id="@+id/menu_info"
-        app:showAsAction="ifRoom"
-        />
+
 </menu>

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -40,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run()
             {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
         },DELAY);
 
