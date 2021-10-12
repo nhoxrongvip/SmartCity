@@ -6,110 +6,87 @@
     android:layout_height="match_parent"
     >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137">
+        app:layout_constraintVertical_bias="0.163"
+        app:srcCompat="@drawable/darkmode" />
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.193"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.122"
-            app:srcCompat="@drawable/darkmode" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/darkmode"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:checked="false"
-            android:clickable="true"
-            android:thumb="@drawable/thumb2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.639"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.115"
-            app:showText="false"
-            app:track="@drawable/track" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/darkmode"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:checked="false"
+        android:clickable="true"
+        android:thumb="@drawable/thumb2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.294">
+        app:layout_constraintVertical_bias="0.157"
+        app:showText="false"
+        app:track="@drawable/track" />
 
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.193"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.339"
-            app:srcCompat="@drawable/lockportrait" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/portraitlocker"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:textOff="Unlock"
-            android:textOn="Lock"
-            android:thumb="@drawable/thumb1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.639"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.334"
-            app:showText="true"
-            app:track="@drawable/track" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.193"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463">
+        app:layout_constraintVertical_bias="0.312"
+        app:srcCompat="@drawable/lockportrait" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/temperature_unit_c_f" />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/portraitlocker"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:thumb="@drawable/thumb1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.307"
+        app:showText="false"
+        app:track="@drawable/track" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <TextView
+        android:layout_width="102dp"
+        android:layout_height="49dp"
+        android:text="@string/temperature_unit_c_f"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.478" />
 
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+    <androidx.appcompat.widget.SwitchCompat
+
+        android:id="@+id/temperatureSwitch"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:textOff="°C"
+        android:textOn="°F"
+        android:thumb="@drawable/thumb3tempsw"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.461"
+        app:track="@drawable/track" />
 
     <Button
         android:id="@+id/bntpremission"
@@ -118,10 +95,10 @@
         android:text="@string/permission"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintHorizontal_bias="0.826"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.935" />
+        app:layout_constraintVertical_bias="0.661" />
 
     <Button
         android:id="@+id/button4"
@@ -130,10 +107,10 @@
         android:text="@string/help_and_feedback"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintVertical_bias="0.661" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
