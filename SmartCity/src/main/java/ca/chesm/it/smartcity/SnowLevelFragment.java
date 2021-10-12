@@ -1,6 +1,9 @@
 
 package ca.chesm.it.smartcity;
-
+//        Name: Hieu Chu N01371619
+//        Course: CENG322-RND
+//        Purpose: Control Snow level on street
+//        Last updated: Sep 27 2021
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
