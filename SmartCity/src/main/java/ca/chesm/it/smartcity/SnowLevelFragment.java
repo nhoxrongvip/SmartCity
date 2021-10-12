@@ -5,7 +5,6 @@ package ca.chesm.it.smartcity;
 //        Purpose: Control Snow level on street
 //        Last updated: Sep 27 2021
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;

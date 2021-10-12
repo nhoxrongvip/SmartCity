@@ -9,7 +9,7 @@
                     android:color="#8e8e8e"/>
             </shape>
         </item>
-    <item android:drawable="@drawable/ic_baseline_dark_mode_24"
+    <item android:drawable="@drawable/ic_baseline_light_mode_24"
         android:left="12dp"
         android:right="12dp"
         android:top="12dp"
