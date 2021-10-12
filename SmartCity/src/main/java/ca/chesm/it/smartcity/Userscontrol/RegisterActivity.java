@@ -56,27 +56,7 @@ public class RegisterActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-              String username1 = editTextusername.getText().toString().trim();
-//                Iterator<DataSnapshot> it = snapshot.getChildren().iterator();
-//                while (it.hasNext())
-//                {
-//                    DataSnapshot data = it.next();
-//                    if(data.getKey().equals(username1))
-//                    {
-//                        System.out.println(data);
-//                    }
-//                }
-                try
-                {
-                    if(snapshot.child(username).getKey().equals(username1))
-                    {
 
-                    }
-                }
-                catch (Exception e)
-                {
-
-                }
             }
 
             @Override

@@ -1,8 +1,12 @@
 //Dung Ly N01327929
 //Thanh Phat Lam N01335598 CENG322-RND
 //Hieu Chu N01371619 CENG322-RND
+
 package ca.chesm.it.smartcity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,19 +16,32 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     BottomNavigationView botnavigation;
+    SharedPreferences sharedPreferences;
+    boolean sw;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        sharedPreferences = this.getSharedPreferences("Switch", Context.MODE_PRIVATE);
+        sw = sharedPreferences.getBoolean("Switch",false);
+        if (sw == false)
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        } else
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
@@ -34,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_overflow, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
         Fragment frag;
 
         switch (item.getItemId())
@@ -71,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Back button pressed
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
                 .setCancelable(false)
@@ -82,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
+    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item ->
+    {
         Fragment frag = null;
         //Set the Fragment that is need to show
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.AirQualityFragment:
                 frag = new AirQualityFragment();
                 break;

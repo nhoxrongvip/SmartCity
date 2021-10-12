@@ -9,10 +9,14 @@ package ca.chesm.it.smartcity.Userscontrol;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,12 +42,22 @@ public class LoginActivity extends AppCompatActivity
     private Button btnlog, btnreg;
     private EditText etxtedituser, etxteditpass;
     private FirebaseAuth mAuth;
-
+    private SharedPreferences sharedPreferences;
+    private boolean sw;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = this.getSharedPreferences("Switch", Context.MODE_PRIVATE);
+        sw = sharedPreferences.getBoolean("Switch",false);
+        if (sw == false)
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        } else
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         mAuth = FirebaseAuth.getInstance();
         res();
         btnlog.setOnClickListener(view ->

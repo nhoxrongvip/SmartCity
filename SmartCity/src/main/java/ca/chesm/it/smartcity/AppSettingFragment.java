@@ -1,54 +1,67 @@
 package ca.chesm.it.smartcity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.Switch;
 
-import com.google.android.material.snackbar.Snackbar;
+public class AppSettingFragment extends Fragment
+{
 
-
-public class AppSettingFragment extends Fragment {
-
-
-    private int STORAGE_PERMISSION_CODE = 1;
-    private View v;
-
+    SharedPreferences sharedPreferences;
+    SwitchCompat swpotrait;
+    View v;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-
+                             Bundle savedInstanceState)
+    {
         v = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button btn = v.findViewById(R.id.bntpremission);
-        btn.setOnClickListener(view ->
+        setupid();
+        sharedPreferences = this.getActivity().getSharedPreferences("Switch", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean orisw = sharedPreferences.getBoolean("Switch", false);
+        if (!orisw)
         {
-            if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            {
-                Snackbar.make(getContext(),getView(),"Permission Granted", Snackbar.LENGTH_SHORT).show();
-            }
-
-            else
-            {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION))
+            swpotrait.setChecked(false);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        } else
+        {
+            swpotrait.setChecked(true);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        swpotrait.setOnCheckedChangeListener((buttonView, isChecked) ->
                 {
-                    Snackbar.make(getContext(),getView(),"Permission Denied", Snackbar.LENGTH_SHORT).show();
+                    if (isChecked)
+                    {
+                        editor.putBoolean("Switch",true);
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        editor.apply();
+                    }
+                    else
+                    {
+                        editor.putBoolean("Switch",false);
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                        editor.apply();
+                    }
                 }
-                else {
-                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},STORAGE_PERMISSION_CODE);
-                }
-            }
-        });
+        );
+
         return v;
+    }
+
+
+    public void setupid()
+    {
+        swpotrait = (SwitchCompat) v.findViewById(R.id.portraitlocker);
     }
 }
