@@ -68,7 +68,6 @@ public class LoginActivity extends AppCompatActivity
         res();
         createRequest();
         SaveState();
-        Checkboxstate();
         btnlog.setOnClickListener(view ->
         {
             login();
@@ -87,9 +86,9 @@ public class LoginActivity extends AppCompatActivity
         sharedPreferences = this.getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
         sw = sharedPreferences.getBoolean("Switch", false);
         user = sharedPreferences.getBoolean("checkboxrem", false);
-        String email,pass;
-        email = sharedPreferences.getString("email","");
-        pass = sharedPreferences.getString("pass","");
+        String email, pass;
+        email = sharedPreferences.getString("email", "");
+        pass = sharedPreferences.getString("pass", "");
         if (sw == false)
         {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
@@ -99,11 +98,10 @@ public class LoginActivity extends AppCompatActivity
         }
         if (user == false)
         {
-            etxtedituser.setText(email);
-            etxteditpass.setText(pass);
+            etxtedituser.setText("");
+            etxteditpass.setText("");
             checkboxrem.setChecked(false);
-        }
-        else
+        } else
         {
             checkboxrem.setChecked(true);
             etxtedituser.setText(email);
@@ -111,25 +109,6 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private void Checkboxstate()
-    {
-        sharedPreferences = this.getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        checkboxrem.setOnCheckedChangeListener((compoundButton, b) ->
-        {
-
-            if (checkboxrem.isChecked())
-            {
-                editor.putBoolean("checkboxrem", true);
-                editor.apply();
-            }
-            else
-            {
-                editor.putBoolean("checkboxrem", false);
-                editor.apply();
-            }
-        });
-    }
     private void createRequest()
     {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -238,8 +217,16 @@ public class LoginActivity extends AppCompatActivity
                     if (task.isSuccessful())
                     {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("email",email);
-                        editor.putString("pass",pass);
+                        editor.putString("email", email);
+                        editor.putString("pass", pass);
+                        if (checkboxrem.isChecked())
+                        {
+                            editor.putBoolean("checkboxrem", true);
+                        }
+                        else
+                        {
+                            editor.putBoolean("checkboxrem", false);
+                        }
                         editor.apply();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

@@ -61,28 +61,31 @@ public class RegisterActivity extends AppCompatActivity
             password = editTextpassword.getText().toString().trim();
             email = editTextemail.getText().toString().trim();
             phone = editTextphone.getText().toString().trim();
-
-            if (fullname.isEmpty() && username.isEmpty() && password.isEmpty() && email.isEmpty() && phone.isEmpty())
+            if (fullname.isEmpty())
             {
                 editTextfullname.setError("This field can not be blank !");
-                editTextpassword.setError("This field can not be blank !");
-                editTextemail.setError("This field can not be blank !");
-                editTextphone.setError("This field can not be blank !");
-            } else if (fullname.isEmpty())
-            {
-                editTextfullname.setError("This field can not be blank !");
-            } else if (password.isEmpty())
-            {
-                editTextpassword.setError("This field can not be blank !");
-            } else if (email.isEmpty())
+                return;
+            }
+            if (email.isEmpty())
             {
                 editTextemail.setError("This field can not be blank !");
-            } else if (phone.isEmpty())
+                return;
+            }
+            if (password.isEmpty())
+            {
+                editTextpassword.setError("This field can not be blank !");
+                return;
+            }
+            if (phone.isEmpty())
             {
                 editTextphone.setError("This field can not be blank !");
-            } else
+                return;
+            }
+            else if (phone.length() < 8)
             {
-
+                editTextphone.setError("Incorrect Phone number !");
+                return;
+            }
                 if (!isEmailValid(email))
                 {
                     editTextemail.setError("The email type not correct !");
@@ -100,7 +103,6 @@ public class RegisterActivity extends AppCompatActivity
                 user.setEmail(email);
                 user.setPhoneNo(phoneno);
                 emailreg(user);
-            }
 
         });
 
