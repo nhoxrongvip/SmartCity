@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class AirQualityFragment extends Fragment {
     View v;
 
     //AQI report components
+    LinearLayout aqi_layout;
     TextView location, aqi_quality, aqi_condition;
     CircleImageView aqi_conditionemotion;
 
@@ -51,7 +53,7 @@ public class AirQualityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
-
+        getID();
 
         return v;
     }
@@ -59,14 +61,15 @@ public class AirQualityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getID();
+
     }
 
-    private void getID(){
+    public void getID(){
         location = v.findViewById(R.id.AQ_currentlocation);
         aqi_quality = v.findViewById(R.id.AQ_quality);
         aqi_condition = v.findViewById(R.id.AQ_condition);
         aqi_conditionemotion = v.findViewById(R.id.AQ_conditionemotion);
+        aqi_layout = v.findViewById(R.id.aqilayout);
 
         pollutants_pm25 = v.findViewById(R.id.AQ_pm25);
         pollutants_co2 = v.findViewById(R.id.AQ_co2);
