@@ -51,28 +51,12 @@ public class RegisterActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         user = new User();
         regid();
-        reff.addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-
-            }
-        });
-
         //Use to control the submit button on Register form
         bntSubmit.setOnClickListener(view ->
         {
             AESCrypt aesCrypt = new AESCrypt();
 
-            int phoneno;
-            username = editTextusername.getText().toString().trim();
+            long phoneno;
             fullname = editTextfullname.getText().toString().trim();
             password = editTextpassword.getText().toString().trim();
             email = editTextemail.getText().toString().trim();
@@ -81,16 +65,12 @@ public class RegisterActivity extends AppCompatActivity
             if (fullname.isEmpty() && username.isEmpty() && password.isEmpty() && email.isEmpty() && phone.isEmpty())
             {
                 editTextfullname.setError("This field can not be blank !");
-                editTextusername.setError("This field can not be blank !");
                 editTextpassword.setError("This field can not be blank !");
                 editTextemail.setError("This field can not be blank !");
                 editTextphone.setError("This field can not be blank !");
             } else if (fullname.isEmpty())
             {
                 editTextfullname.setError("This field can not be blank !");
-            } else if (username.isEmpty())
-            {
-                editTextusername.setError("This field can not be blank !");
             } else if (password.isEmpty())
             {
                 editTextpassword.setError("This field can not be blank !");
@@ -102,12 +82,13 @@ public class RegisterActivity extends AppCompatActivity
                 editTextphone.setError("This field can not be blank !");
             } else
             {
+
                 if (!isEmailValid(email))
                 {
                     editTextemail.setError("The email type not correct !");
                     return;
                 }
-                phoneno = Integer.parseInt(phone);
+                phoneno = Long.parseLong(phone);
                 user.setFullname(fullname);
                 try
                 {
@@ -128,18 +109,33 @@ public class RegisterActivity extends AppCompatActivity
     //This method use to create User on method login with email when user register complete!
     private void emailreg(User user)
     {
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
         {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
             {
+
                 if (task.isSuccessful())
                 {
-                    reff.child(username).setValue(user);
-                    AlertDialog.Builder dialog = Dialogb("Register successful !");
-                    dialog.show();
-                }
-                else
+                    reff.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task)
+                        {
+                            if (task.isSuccessful())
+                            {
+                                AlertDialog.Builder dialog = Dialogb("Register successful !");
+                                dialog.show();
+                            } else
+                            {
+                                AlertDialog.Builder dialog = Dialogb("Failed to register ! Try again !");
+                                dialog.show();
+                            }
+
+                        }
+                    });
+                } else
                 {
                     AlertDialog.Builder dialog = Dialogb(task.getException().getMessage());
                     dialog.show();
@@ -179,7 +175,6 @@ public class RegisterActivity extends AppCompatActivity
     private void regid()
     {
         editTextfullname = (EditText) findViewById(R.id.txteditregfullname);
-        editTextusername = (EditText) findViewById(R.id.txteditregusername);
         editTextpassword = (EditText) findViewById(R.id.txteditregpassword);
         editTextemail = (EditText) findViewById(R.id.txteditregemail);
         editTextphone = (EditText) findViewById(R.id.txteditphoneno);
