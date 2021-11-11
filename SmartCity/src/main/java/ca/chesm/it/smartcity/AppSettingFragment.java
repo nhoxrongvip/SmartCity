@@ -27,7 +27,7 @@ public class AppSettingFragment extends Fragment
     {
         v = inflater.inflate(R.layout.fragment_settings, container, false);
         setupid();
-        sharedPreferences = this.getActivity().getSharedPreferences("Switch", Context.MODE_PRIVATE);
+        sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean orisw = sharedPreferences.getBoolean("Switch", false);
         if (!orisw)
