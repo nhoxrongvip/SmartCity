@@ -8,49 +8,64 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="@color/teal_200"
-            android:padding="30dp"
-            app:layout_constraintVertical_bias="0.52">
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/AQ_conditionemotion"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/airquality"
-
-
+            <TextView
+                android:id="@+id/AQ_currentlocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Current Location"
+                android:textAlignment="center"
                 />
 
-            <TextView
-                android:id="@+id/AQ_quality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="Quality"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                tools:ignore="RtlCompat" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
 
-            <TextView
-                android:id="@+id/AQ_condition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="Condition"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                tools:ignore="RtlCompat" />
+                android:padding="30dp"
+                app:layout_constraintVertical_bias="0.52">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/AQ_conditionemotion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/airquality"
+
+
+                    />
+
+                <TextView
+                    android:id="@+id/AQ_quality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="Quality"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    tools:ignore="RtlCompat" />
+
+                <TextView
+                    android:id="@+id/AQ_condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="Condition"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    tools:ignore="RtlCompat" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -69,7 +84,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pollutants"
+                    android:text="@string/pollutants"
                     android:textAlignment="center"
 
                     />
@@ -96,20 +111,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:text="Quality"
-
-
+                            android:text="@string/pm2_5"
                             tools:ignore="RtlSymmetry" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="10dp"
-                            android:text="Unit"
+                            android:text="@string/aq_unit"
                             tools:ignore="RtlSymmetry" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/AQ_pm25"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="number" />
@@ -133,20 +147,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:text="Quality"
-
-
+                            android:text="@string/co2"
                             tools:ignore="RtlSymmetry" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="10dp"
-                            android:text="Unit"
+                            android:text="@string/aq_unit"
                             tools:ignore="RtlSymmetry" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/AQ_co2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="number" />
@@ -157,8 +170,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingRight="20dp"
-
-
                     >
 
                     <LinearLayout
@@ -170,7 +181,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:text="Quality"
+                            android:text="@string/aq_o3"
 
 
                             tools:ignore="RtlSymmetry" />
@@ -179,11 +190,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="10dp"
-                            android:text="Unit"
+                            android:text="@string/aq_unit"
                             tools:ignore="RtlSymmetry" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/AQ_o3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="number" />
@@ -205,9 +217,53 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Daily Graph" />
+                android:text="@string/aq_daily_graph"
+                android:textAlignment="center"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/rb_aqi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aq_aqi"/>
+                <RadioButton
+                    android:id="@+id/rb_co"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aq_co"/>
+                <RadioButton
+                    android:id="@+id/rb_co2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/co2"/>
+                <RadioButton
+                    android:id="@+id/rb_o3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aq_o3"/>
+                <RadioButton
+                    android:id="@+id/rb_pm25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pm2_5"/>
+                <RadioButton
+                    android:id="@+id/rb_so2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aq_so2"/>
+                <RadioButton
+                    android:id="@+id/rb_no2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no2"/>
+            </RadioGroup>
 
             <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/AQ_dailygraph"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
