@@ -11,7 +11,7 @@ public class User
 {
 
     private String Fullname;
-    private int PhoneNo;
+    private long PhoneNo;
     private String email;
     private String password;
 
@@ -31,12 +31,12 @@ public class User
         Fullname = fullname;
     }
 
-    public int getPhoneNo()
+    public long getPhoneNo()
     {
         return PhoneNo;
     }
 
-    public void setPhoneNo(int phoneNo)
+    public void setPhoneNo(long phoneNo)
     {
         PhoneNo = phoneNo;
     }
