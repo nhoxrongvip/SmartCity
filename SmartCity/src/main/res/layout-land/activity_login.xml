@@ -22,22 +22,22 @@
             android:textSize="25dp"
             android:textStyle="bold|italic" />
 
-        <EditText
-            android:id="@+id/txteditusername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/loginedittext_bg"
-            android:ems="14"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:textAlignment="center"
-            android:textColor="@color/grey"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/txteditusername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/loginedittext_bg"
+        android:ems="14"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textStyle="bold" />
 
-        <EditText
+    <EditText
             android:id="@+id/txteditpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
