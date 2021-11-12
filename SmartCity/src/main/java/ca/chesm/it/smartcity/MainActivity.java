@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
                 .setTitle(R.string.app_name)
                 .setCancelable(false)
                 .setMessage("Do you really want to exit?")
-                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setPositiveButton("Yes", (dialog, which) -> finishAffinity())
                 .setNegativeButton("No", (dialog, which) -> dialog.cancel())
                 .create()
                 .show();
