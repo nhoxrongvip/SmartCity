@@ -15,33 +15,33 @@
             android:id="@+id/txtviewlogin"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="@string/txtview_smartcity"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold|italic" />
 
-        <EditText
-            android:id="@+id/txteditusername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/loginedittext_bg"
-            android:ems="14"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:textAlignment="center"
-            android:textColor="@color/grey"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/txteditusername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/loginedittext_bg"
+        android:ems="14"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textStyle="bold" />
 
-        <EditText
+    <EditText
             android:id="@+id/txteditpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/loginedittext_bg"
             android:ems="14"
@@ -58,23 +58,23 @@
         android:layout_width="match_parent"
         android:textSize="18sp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/remember_me"
         android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/bntregister"
                 android:layout_width="104dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="70dp"
                 android:background="@drawable/bg_btn"
                 android:text="@string/register"
                 android:textAlignment="center"
@@ -107,7 +107,7 @@
             android:id="@+id/imgbntglogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
+            android:layout_gravity="center"
             android:background="@null"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
 

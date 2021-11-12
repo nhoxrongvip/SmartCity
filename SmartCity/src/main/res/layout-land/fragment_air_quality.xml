@@ -79,7 +79,8 @@
             android:layout_height="wrap_content"
             android:background="@color/purple_200">
 
-            <TableRow android:gravity="center">
+            <TableRow
+                android:gravity="center">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -91,11 +92,13 @@
 
             </TableRow>
 
-            <TableRow android:gravity="center"
-
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
                 >
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -130,7 +133,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -166,6 +169,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -212,7 +216,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            >
 
             <TextView
                 android:layout_width="match_parent"
@@ -225,41 +231,50 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+
+
                 >
                 <RadioButton
                     android:id="@+id/rb_aqi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/aq_aqi"/>
                 <RadioButton
                     android:id="@+id/rb_co"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/aq_co"/>
                 <RadioButton
                     android:id="@+id/rb_co2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/co2"/>
                 <RadioButton
                     android:id="@+id/rb_o3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/aq_o3"/>
                 <RadioButton
                     android:id="@+id/rb_pm25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/pm2_5"/>
                 <RadioButton
                     android:id="@+id/rb_so2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/aq_so2"/>
                 <RadioButton
                     android:id="@+id/rb_no2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/no2"/>
             </RadioGroup>
 
