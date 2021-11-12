@@ -6,19 +6,18 @@
     android:layout_height="match_parent"
     >
 
-
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="65dp"
         android:layout_height="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.155"
-        app:srcCompat="@drawable/darkmode"
-        tools:ignore="ImageContrastCheck" />
+        app:layout_constraintVertical_bias="0.163"
+        app:srcCompat="@drawable/darkmode" />
+
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/darkmode"
@@ -29,10 +28,10 @@
         android:thumb="@drawable/thumb2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintVertical_bias="0.157"
         app:showText="false"
         app:track="@drawable/track" />
 
@@ -40,15 +39,13 @@
         android:id="@+id/imageView10"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.193"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334"
-        app:srcCompat="@drawable/lockportrait"
-        tools:ignore="ImageContrastCheck" />
+        app:layout_constraintVertical_bias="0.312"
+        app:srcCompat="@drawable/lockportrait" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/portraitlocker"
@@ -57,10 +54,10 @@
         android:thumb="@drawable/thumb1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.329"
+        app:layout_constraintVertical_bias="0.307"
         app:showText="false"
         app:track="@drawable/track" />
 
@@ -73,7 +70,7 @@
         app:layout_constraintHorizontal_bias="0.216"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.507" />
+        app:layout_constraintVertical_bias="0.478" />
 
     <androidx.appcompat.widget.SwitchCompat
 
@@ -85,10 +82,10 @@
         android:thumb="@drawable/thumb3tempsw"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.493"
+        app:layout_constraintVertical_bias="0.461"
         app:track="@drawable/track" />
 
     <Button
@@ -98,10 +95,10 @@
         android:text="@string/permission"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintHorizontal_bias="0.826"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.783" />
+        app:layout_constraintVertical_bias="0.661" />
 
     <Button
         android:id="@+id/button4"
@@ -113,7 +110,7 @@
         app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.784" />
+        app:layout_constraintVertical_bias="0.661" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
