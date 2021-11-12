@@ -11,7 +11,7 @@
     <color name="grey">#ACBECA</color>
     <color name="red">#FB0303</color>
     <color name="lightblue">#17FBFB</color>
-
+    <color name="dark_grey">#757171</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>

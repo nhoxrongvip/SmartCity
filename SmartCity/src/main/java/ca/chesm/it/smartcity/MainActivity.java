@@ -4,7 +4,6 @@
 
 package ca.chesm.it.smartcity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -16,10 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import ca.chesm.it.smartcity.GarbageBinControl.GarbageFragment;
 
 public class MainActivity extends AppCompatActivity
 {
