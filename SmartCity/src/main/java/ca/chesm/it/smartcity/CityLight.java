@@ -9,14 +9,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ca.chesm.it.smartcity.models.LightView;
 import ca.chesm.it.smartcity.models.Lights;
 
 /**
@@ -34,7 +40,7 @@ import ca.chesm.it.smartcity.models.Lights;
  * Use the {@link CityLight#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CityLight extends Fragment {
+public class CityLight extends Fragment  implements LightView {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +52,17 @@ public class CityLight extends Fragment {
     private String mParam1;
     private String mParam2;
     private View view;
-
+    String name_city= "";
+    String name_key= "";
+    String name_street= "";
+    List<String> liststreet ;
+    List<String> listLight ;
+    List<String> listLightNumber ;
+    Button btnOnof;
+    int k = 0;
+    String name_light="";
+    Lights lights;
+    ImageView imageLight;
     public CityLight() {
         // Required empty public constructor
         Init();
@@ -106,17 +122,23 @@ public class CityLight extends Fragment {
         view =inflater.inflate(R.layout.fragment_city_light, container, false);
         spinerCity = view.findViewById(R.id.SpinerCity);
         spinerStreet = view.findViewById(R.id.SpinerStreet);
-        Lights lights = new Lights();
+        btnOnof=view.findViewById(R.id.btnOnof);
+        imageLight=view.findViewById(R.id.light);
+         lights = new Lights(this);
         List<String> listcity  = lights.getDataListCity();
+
         ArrayAdapter arrayAdapter  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,lights.getDataListCity());
+
 
         spinerCity.setAdapter(arrayAdapter);
 
         spinerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ArrayAdapter arrayAdapter1  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,lights.getDataListStreet(listcity.get(i)));
+                liststreet  = lights.getDataListStreet(listcity.get(i));
+                ArrayAdapter arrayAdapter1  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,liststreet);
                 spinerStreet.setAdapter(arrayAdapter1);
+                name_city = listcity.get(i);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -130,13 +152,82 @@ public class CityLight extends Fragment {
 
             }
         });
+        spinerStreet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    listLight = lights.getDataListLight(name_city,liststreet.get(i));
+                    name_street = liststreet.get(i);
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 arrayAdapter.notifyDataSetChanged();
             }
         },1000);
+        btnOnof.setText("OFF");
+
+        btnOnof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (k){
+                    case  0:
+                        for(String s : listLight){
+                            listLightNumber =lights.getDataListLight(name_city,name_street,s);
+
+                        }
+                        imageLight.setImageResource(R.drawable.light_on);
+
+
+
+
+
+
+                             k=1;btnOnof.setText("ON");btnOnof.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.aqi_good));break;
+
+                    case  1:
+                        for(String s : listLight){
+                            name_light = s;
+                            listLightNumber =lights.getDataListLight(name_city,name_street,s);
+
+                        }
+                        imageLight.setImageResource(R.drawable.light_off);
+                        k=0;btnOnof.setText("OFF");btnOnof.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.grey));break;
+
+
+
+                }
+            }
+        });
 
         return  view;
+    }
+
+    @Override
+    public void getDataLightNumber(String toString) {
+        listLightNumber.add(toString);
+        if(k==0){
+            for(String s : listLight){
+
+                lights.setValuesLightOn(name_city,name_street,s,toString,0);
+            }
+
+        }else{
+            for(String s : listLight){
+
+                lights.setValuesLightOn(name_city,name_street,s,toString,1);
+            }
+        }
+
     }
 }

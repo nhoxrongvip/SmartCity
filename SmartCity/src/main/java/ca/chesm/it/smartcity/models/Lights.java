@@ -19,9 +19,16 @@ public class Lights {
     private FirebaseDatabase firebaseDatabase;
     private boolean state;
     private long distance;
+    private  LightView callback;
     public Lights(){
         firebaseDatabase = FirebaseDatabase.getInstance("https://smartcity-69701-default-rtdb.firebaseio.com/");
          databaseReference = firebaseDatabase.getReference();
+
+    }
+    public Lights(LightView callback){
+        this.callback=callback;
+        firebaseDatabase = FirebaseDatabase.getInstance("https://smartcity-69701-default-rtdb.firebaseio.com/");
+        databaseReference = firebaseDatabase.getReference();
 
     }
     public void SetValueOn(String city, String street){
@@ -71,6 +78,47 @@ public class Lights {
 
         return  list;
     }
+    public List<String> getDataListLight(String namecity, String name_street){
+        List<String> list = new ArrayList<>();
+        databaseReference.child("CityLight").child("City").child(namecity).child("Street").child(name_street).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot value : snapshot.getChildren()){
+                   list.add(value.getKey().toString());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return  list;
+    }
+    public List<String> getDataListLight(String namecity, String name_street,String name_light){
+        List<String> list = new ArrayList<>();
+        databaseReference.child("CityLight").child("City").child(namecity).child("Street").child(name_street).child(name_light).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot value : snapshot.getChildren()){
+                  callback.getDataLightNumber(value.getKey().toString());
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return  list;
+    }
 
     public Lights(boolean state, long distance){
         this.state = state;
@@ -83,5 +131,19 @@ public class Lights {
 
     public boolean isState() {
         return state;
+    }
+
+    public void setValuesLightOn(String name_city, String name_street, String name_light, String key_state,int state_change) {
+
+
+         if(state_change == 1){
+             databaseReference.child("CityLight").child("City").child(name_city).child("Street").child(name_street)
+                     .child(name_light).child(key_state).child("state").setValue(true);
+        }else{
+            databaseReference.child("CityLight").child("City").child(name_city).child("Street").child(name_street)
+                     .child(name_light).child(key_state).child("state").setValue(false);
+         }
+
+
     }
 }
