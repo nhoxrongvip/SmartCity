@@ -65,4 +65,5 @@
     <string name="aq_unit">ug/m3</string>
     <string name="aq_o3">O3</string>
     <string name="aq_so2">SO2</string>
+    <string name="remember_me">Remember me</string>
 </resources>
