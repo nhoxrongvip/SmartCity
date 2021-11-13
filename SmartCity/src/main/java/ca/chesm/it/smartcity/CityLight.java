@@ -7,11 +7,27 @@ package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
+
+import ca.chesm.it.smartcity.models.Lights;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,13 +40,16 @@ public class CityLight extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private AppCompatSpinner spinerCity,spinerStreet;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View view;
 
     public CityLight() {
         // Required empty public constructor
+        Init();
     }
 
     /**
@@ -51,6 +70,27 @@ public class CityLight extends Fragment {
         return fragment;
     }
 
+    private  void Init() {
+
+
+
+
+//        FirebaseDatabase database = FirebaseDatabase.getInstance("https://smartcity-69701-default-rtdb.firebaseio.com/");
+//        DatabaseReference databaseReference = database.getReference();
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        })
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +103,40 @@ public class CityLight extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_city_light, container, false);
+        view =inflater.inflate(R.layout.fragment_city_light, container, false);
+        spinerCity = view.findViewById(R.id.SpinerCity);
+        spinerStreet = view.findViewById(R.id.SpinerStreet);
+        Lights lights = new Lights();
+        List<String> listcity  = lights.getDataListCity();
+        ArrayAdapter arrayAdapter  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,lights.getDataListCity());
+
+        spinerCity.setAdapter(arrayAdapter);
+
+        spinerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ArrayAdapter arrayAdapter1  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,lights.getDataListStreet(listcity.get(i)));
+                spinerStreet.setAdapter(arrayAdapter1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        arrayAdapter1.notifyDataSetChanged();
+                    }
+                },1000);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                arrayAdapter.notifyDataSetChanged();
+            }
+        },1000);
+
+        return  view;
     }
 }
