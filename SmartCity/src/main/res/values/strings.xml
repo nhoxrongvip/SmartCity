@@ -68,5 +68,5 @@
     <string name="aq_daily_graph">Daily Graph</string>
     <string name="pollutants">Pollutants</string>
     <string name="aq_unit">ug/m3</string>
-
+    <string name="remember_me">Remember me</string>
 </resources>
