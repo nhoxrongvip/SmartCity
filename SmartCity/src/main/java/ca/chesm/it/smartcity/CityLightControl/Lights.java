@@ -1,6 +1,4 @@
-package ca.chesm.it.smartcity.models;
-
-import android.util.Log;
+package ca.chesm.it.smartcity.CityLightControl;
 
 import androidx.annotation.NonNull;
 

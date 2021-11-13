@@ -7,13 +7,11 @@ package ca.chesm.it.smartcity;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,25 +19,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import ca.chesm.it.smartcity.models.LightView;
-import ca.chesm.it.smartcity.models.Lights;
+import ca.chesm.it.smartcity.CityLightControl.LightView;
+import ca.chesm.it.smartcity.CityLightControl.Lights;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CityLight#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CityLight extends Fragment  implements LightView {
 
     // TODO: Rename parameter arguments, choose names that match
