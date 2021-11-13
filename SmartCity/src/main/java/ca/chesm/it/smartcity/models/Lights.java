@@ -49,11 +49,11 @@ public class Lights {
 
         return  list;
     }
-    public List<String> getDataListStreet(String street){
+    public List<String> getDataListStreet(String name_city){
 
         List<String>  list = new ArrayList<>();
 
-        databaseReference.child("CityLight").child("City").child(street).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("CityLight").child("City").child(name_city).child("Street").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
