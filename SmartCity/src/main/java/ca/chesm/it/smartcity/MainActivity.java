@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new AirQualityFragment()).commit();
 
-
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
