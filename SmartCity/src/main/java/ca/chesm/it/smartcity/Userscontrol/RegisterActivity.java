@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -128,8 +129,8 @@ public class RegisterActivity extends AppCompatActivity
                         {
                             if (task.isSuccessful())
                             {
-                                AlertDialog.Builder dialog = Dialogb("Register successful !");
-                                dialog.show();
+                                Toast register_success = Toast.makeText(getApplicationContext(),"Register Successfully", Toast.LENGTH_SHORT);
+                                register_success.show();
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }
