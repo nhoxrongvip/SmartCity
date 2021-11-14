@@ -8,9 +8,9 @@
 
 package ca.chesm.it.smartcity;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +55,7 @@ public class AirQualityFragment extends Fragment {
     BarChart dailygraph;
 
     //API value
-    String aqivalue, pm25value, covalue, o3value;
+    public String aqivalue, pm25value, covalue, o3value;
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
     private String city_name = "toronto";
     private String url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
@@ -76,8 +76,16 @@ public class AirQualityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
+
+    @Override
+    public void onResume() {
+        Log.e("DEBUG", "onResume of Air Quality Fragment");
+        super.onResume();
+    }
+
+
+
 
     public void getID() {
         location = v.findViewById(R.id.AQ_currentlocation);
@@ -101,6 +109,8 @@ public class AirQualityFragment extends Fragment {
 
 
     }
+
+
 
 
     private String readJSON(String address) {
