@@ -2,34 +2,25 @@
     Name:Thanh Phat Lam N01335598
     Course: CENG322-RND
     Purpose: Report Air Quality of the selected area
-    Last updated: Sep 27 2021
+    Last updated: Nov 14 2021
 */
 
 
 package ca.chesm.it.smartcity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,18 +48,17 @@ public class AirQualityFragment extends Fragment {
     CircleImageView aqi_conditionemotion;
 
     //Pollutant components
-    TextView pollutants_pm25, pollutants_co2, pollutants_o3;
+    TextView pollutants_pm25, pollutants_co, pollutants_o3;
 
     //Daily graph components
     RadioButton rb_aqi, rb_co, rb_co2, rb_o3, rb_pm25, rb_so2, rb_no2;
     BarChart dailygraph;
 
     //API value
-    String aqivalue,pm25value,covalue,o3value;
+    String aqivalue, pm25value, covalue, o3value;
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
     private String city_name = "toronto";
-    private String url = "https://api.waqi.info/feed/"+city_name+"/?token="+TOKEN;
-
+    private String url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
 
 
     @Override
@@ -87,10 +77,9 @@ public class AirQualityFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
     }
 
-    public void getID(){
+    public void getID() {
         location = v.findViewById(R.id.AQ_currentlocation);
         aqi_quality = v.findViewById(R.id.AQ_quality);
         aqi_condition = v.findViewById(R.id.AQ_condition);
@@ -98,7 +87,7 @@ public class AirQualityFragment extends Fragment {
         aqi_layout = v.findViewById(R.id.aqilayout);
 
         pollutants_pm25 = v.findViewById(R.id.AQ_pm25);
-        pollutants_co2 = v.findViewById(R.id.AQ_co2);
+        pollutants_co = v.findViewById(R.id.AQ_co);
         pollutants_o3 = v.findViewById(R.id.AQ_o3);
 
         rb_aqi = v.findViewById(R.id.rb_aqi);
@@ -114,16 +103,14 @@ public class AirQualityFragment extends Fragment {
     }
 
 
-
-
-    private String readJSON(String address){
+    private String readJSON(String address) {
         URL url = null;
         StringBuilder sb = new StringBuilder();
         HttpsURLConnection urlConnection = null;
         try {
             //Get URL
             url = new URL(address);
-        }catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
@@ -138,84 +125,81 @@ public class AirQualityFragment extends Fragment {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(content));
             String line;
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
         } catch (IOException e) {
             //Catch invalid zip code
             e.printStackTrace();
-        }finally {
+        } finally {
             urlConnection.disconnect();
         }
         return sb.toString();
 
     }
-    private void getAQIdata(){
+
+    private void getAQIdata() {
         new ReadJSONFeed().execute(url);
     }
 
-    private class ReadJSONFeed extends AsyncTask<String,Void,String> {
-
+    private class ReadJSONFeed extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
             return readJSON(urls[0]);
         }
 
-
+        @SuppressLint("UseCompatLoadingForDrawables")
         @Override
-        protected void onPostExecute(String result){
-           getData(result);
-
+        protected void onPostExecute(String result) {
+            getData(result);
 
             aqi_quality.setText(aqivalue);
             pollutants_pm25.setText(pm25value);
-            pollutants_co2.setText(covalue);
+            pollutants_co.setText(covalue);
             pollutants_o3.setText(o3value);
 
             String aqi_result = aqiConditionCheck();
+            aqi_condition.setText(aqi_result);
             switch (aqi_result) {
                 case "Good":
                     aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
-                    aqi_condition.setText(aqi_result);
                     aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
                     break;
                 case "Moderate":
                     aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
-                    aqi_condition.setText(aqi_result);
                     aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
                     break;
                 case "Unhealthy":
-                    aqi_condition.setText(aqi_result);
                     aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
                     aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + aqi_result);
             }
 
 
         }
 
-        public String aqiConditionCheck(){
+        public String aqiConditionCheck() {
             try {
                 int value = Integer.parseInt(aqivalue);
-                if(value <= 50){
+                if (value <= 50) {
                     return "Good";
-                }
-                else if(value >=51 && value <=100){
+                } else if (value >= 51 && value <= 100) {
                     return "Moderate";
-                }
-                else if (value > 100) {
+                } else if (value > 100) {
                     return "Unhealthy";
                 }
 
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return "Not in range";
 
         }
 
-        private void getData(String result){
+        private void getData(String result) {
             try {
                 JSONObject qualityObject = new JSONObject(result);
                 //Get AQI
@@ -226,8 +210,6 @@ public class AirQualityFragment extends Fragment {
                 o3value = dataObject.getJSONObject("iaqi").getJSONObject("o3").getString("v");
 
 
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -235,13 +217,7 @@ public class AirQualityFragment extends Fragment {
         }
 
 
-
-
-
-
-
     }
-
 
 
 }

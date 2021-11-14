@@ -159,7 +159,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/AQ_co2"
+                        android:id="@+id/AQ_co"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="number" />
