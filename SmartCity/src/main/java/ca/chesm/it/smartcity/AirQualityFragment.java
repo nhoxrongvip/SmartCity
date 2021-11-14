@@ -149,7 +149,7 @@ public class AirQualityFragment extends Fragment {
             return readJSON(urls[0]);
         }
 
-        @SuppressLint("UseCompatLoadingForDrawables")
+
         @Override
         protected void onPostExecute(String result) {
             getData(result);
