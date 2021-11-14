@@ -69,4 +69,13 @@
     <string name="pollutants">Pollutants</string>
     <string name="aq_unit">ug/m3</string>
     <string name="remember_me">Remember me</string>
+    <string name="what_do_you_think_of_our_app" translatable="false">What do you think of our App ?</string>
+    <string name="what_would_you_like_to_share_with_us" translatable="false">What would you like to share with us ?</string>
+    <string name="your_thoughts" translatable="false">Your thoughts</string>
+    <string name="how_likely_would_you_recommend_smartcity_to_your_friend" translatable="false">How likely would you recommend Smartcity to your friend ?</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="_3" translatable="false">3</string>
+    <string name="_4" translatable="false">4</string>
+    <string name="_5" translatable="false">5</string>
 </resources>

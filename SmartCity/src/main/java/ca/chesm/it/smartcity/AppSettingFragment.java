@@ -7,10 +7,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Switch;
 
 public class AppSettingFragment extends Fragment
@@ -18,6 +21,7 @@ public class AppSettingFragment extends Fragment
 
     SharedPreferences sharedPreferences;
     SwitchCompat swpotrait;
+    Button btnhelp;
     View v;
 
 
@@ -30,6 +34,7 @@ public class AppSettingFragment extends Fragment
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean orisw = sharedPreferences.getBoolean("Switch", false);
+        btnhelp = (Button) v.findViewById(R.id.helpandfeedbackBtn);
         if (!orisw)
         {
             swpotrait.setChecked(false);
@@ -55,6 +60,15 @@ public class AppSettingFragment extends Fragment
                     }
                 }
         );
+        btnhelp.setOnClickListener(view ->
+        {
+            Fragment fragment = new ReviewFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
 
         return v;
     }

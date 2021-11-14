@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ReviewFragment">
+
+    <TextView
+        android:id="@+id/txtview_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/what_do_you_think_of_our_app"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_grey"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/icons8_smile_64" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/icons8_smile_642" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/icons8_sad" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtviewshare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/what_would_you_like_to_share_with_us"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_grey"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:ems="10"
+        android:lines="7"
+        android:gravity="top"
+        android:padding="5dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/your_thoughts"
+        />
+
+    <TextView
+        android:id="@+id/txtviewreview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/how_likely_would_you_recommend_smartcity_to_your_friend"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnreview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_1" />
+
+        <Button
+            android:id="@+id/bntreview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_2" />
+
+        <Button
+            android:id="@+id/bntreview3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_3" />
+
+        <Button
+            android:id="@+id/bntreview4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_4" />
+
+        <Button
+            android:id="@+id/bntreview5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_5" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bntreviewsubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/submit" />
+
+</LinearLayout>
+

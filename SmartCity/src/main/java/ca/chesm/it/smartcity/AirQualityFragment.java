@@ -47,7 +47,8 @@ import javax.net.ssl.HttpsURLConnection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class AirQualityFragment extends Fragment {
+public class AirQualityFragment extends Fragment
+{
 
     View v;
 
@@ -64,16 +65,16 @@ public class AirQualityFragment extends Fragment {
     BarChart dailygraph;
 
     //API value
-    String aqivalue,pm25value,covalue,o3value;
+    String aqivalue, pm25value, covalue, o3value;
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
     private String city_name = "toronto";
-    private String url = "https://api.waqi.info/feed/"+city_name+"/?token="+TOKEN;
-
+    private String url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
         getID();
         getAQIdata();
@@ -83,14 +84,15 @@ public class AirQualityFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
 
 
     }
 
-    public void getID(){
+    public void getID()
+    {
         location = v.findViewById(R.id.AQ_currentlocation);
         aqi_quality = v.findViewById(R.id.AQ_quality);
         aqi_condition = v.findViewById(R.id.AQ_condition);
@@ -114,58 +116,70 @@ public class AirQualityFragment extends Fragment {
     }
 
 
-
-
-    private String readJSON(String address){
+    private String readJSON(String address)
+    {
         URL url = null;
         StringBuilder sb = new StringBuilder();
         HttpsURLConnection urlConnection = null;
-        try {
+        try
+        {
             //Get URL
             url = new URL(address);
-        }catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
 
-        try {
+        try
+        {
             //Open URL
             urlConnection = (HttpsURLConnection) url.openConnection();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
-        try {
+        try
+        {
             InputStream content = new BufferedInputStream(urlConnection.getInputStream());
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(content));
             String line;
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null)
+            {
                 sb.append(line);
             }
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             //Catch invalid zip code
             e.printStackTrace();
-        }finally {
+        } finally
+        {
             urlConnection.disconnect();
         }
         return sb.toString();
 
     }
-    private void getAQIdata(){
+
+    private void getAQIdata()
+    {
         new ReadJSONFeed().execute(url);
     }
 
-    private class ReadJSONFeed extends AsyncTask<String,Void,String> {
+    private class ReadJSONFeed extends AsyncTask<String, Void, String>
+    {
 
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... urls)
+        {
             return readJSON(urls[0]);
         }
 
 
         @Override
-        protected void onPostExecute(String result){
-           getData(result);
+        protected void onPostExecute(String result)
+        {
+            getData(result);
 
 
             aqi_quality.setText(aqivalue);
@@ -174,7 +188,8 @@ public class AirQualityFragment extends Fragment {
             pollutants_o3.setText(o3value);
 
             String aqi_result = aqiConditionCheck();
-            switch (aqi_result) {
+            switch (aqi_result)
+            {
                 case "Good":
                     aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
                     aqi_condition.setText(aqi_result);
@@ -195,28 +210,34 @@ public class AirQualityFragment extends Fragment {
 
         }
 
-        public String aqiConditionCheck(){
-            try {
+        public String aqiConditionCheck()
+        {
+            try
+            {
                 int value = Integer.parseInt(aqivalue);
-                if(value <= 50){
+                if (value <= 50)
+                {
                     return "Good";
-                }
-                else if(value >=51 && value <=100){
+                } else if (value >= 51 && value <= 100)
+                {
                     return "Moderate";
-                }
-                else if (value > 100) {
+                } else if (value > 100)
+                {
                     return "Unhealthy";
                 }
 
-            }catch (Exception e) {
+            } catch (Exception e)
+            {
                 e.printStackTrace();
             }
             return "Not in range";
 
         }
 
-        private void getData(String result){
-            try {
+        private void getData(String result)
+        {
+            try
+            {
                 JSONObject qualityObject = new JSONObject(result);
                 //Get AQI
                 JSONObject dataObject = qualityObject.getJSONObject("data");
@@ -226,22 +247,15 @@ public class AirQualityFragment extends Fragment {
                 o3value = dataObject.getJSONObject("iaqi").getJSONObject("o3").getString("v");
 
 
-
-
-            } catch (JSONException e) {
+            } catch (JSONException e)
+            {
                 e.printStackTrace();
             }
 
         }
 
 
-
-
-
-
-
     }
-
 
 
 }
