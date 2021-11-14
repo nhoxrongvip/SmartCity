@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class AppSettingFragment extends Fragment
 {
 
@@ -51,12 +53,20 @@ public class AppSettingFragment extends Fragment
                         editor.putBoolean("Switch",true);
                         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         editor.apply();
+
+                        Snackbar portraitsb = Snackbar.make(v,"Portrait lock: ON",Snackbar.LENGTH_SHORT);
+                        portraitsb.show();
+
+
+
                     }
                     else
                     {
                         editor.putBoolean("Switch",false);
                         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                         editor.apply();
+                        Snackbar portraitsb = Snackbar.make(v,"Portrait lock: OFF",Snackbar.LENGTH_SHORT);
+                        portraitsb.show();
                     }
                 }
         );

@@ -17,7 +17,8 @@ public class ReviewFragment extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_review, container, false);
+        View v = inflater.inflate(R.layout.fragment_review, container, false);
+        return v;
     }
 
 }
