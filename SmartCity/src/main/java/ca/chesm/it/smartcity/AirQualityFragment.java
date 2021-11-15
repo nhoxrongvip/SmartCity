@@ -78,14 +78,6 @@ public class AirQualityFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        Log.e("DEBUG", "onResume of Air Quality Fragment");
-        super.onResume();
-    }
-
-
-
 
     public void getID() {
         location = v.findViewById(R.id.AQ_currentlocation);
