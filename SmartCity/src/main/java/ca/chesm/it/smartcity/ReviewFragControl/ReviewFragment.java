@@ -1,7 +1,8 @@
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.ReviewFragControl;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,10 +13,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.Userscontrol.User;
 
 public class ReviewFragment extends Fragment
@@ -23,11 +27,11 @@ public class ReviewFragment extends Fragment
 
     private DatabaseReference reff;
     private FirebaseAuth mAuth;
-    private Button bntsubmit,bntreview1,bntreview2,bntreview3,bntreview4,bntreview5;
+    private Button bntsubmit, bntreview1, bntreview2, bntreview3, bntreview4, bntreview5;
     private ImageButton bntface1, bntface2, bntface3;
     private EditText editextarea;
     private String face, share, recommend;
-    User user;
+    Review review;
     View v;
 
     @Override
@@ -82,24 +86,46 @@ public class ReviewFragment extends Fragment
 
         bntsubmit.setOnClickListener(view ->
         {
-            if(face.equals(""))
+            try
             {
-                Toast.makeText(getActivity(), "Please choose what you think !", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            share = editextarea.getText().toString();
-            if(share.equals(""))
+                if (face.equals("") || face.isEmpty())
+                {
+                    Toast.makeText(getActivity(), "Please choose what you think !", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                share = editextarea.getText().toString();
+                if (share.equals("") || share.isEmpty())
+                {
+                    Toast.makeText(getActivity(), "Please enter your through !", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (recommend.equals("") || recommend.isEmpty())
+                {
+                    Toast.makeText(getActivity(), "Please choose what would you like below !", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String uid = mAuth.getCurrentUser().getUid().toString();
+                review = new Review(recommend,face,share);
+
+                reff.child(uid).setValue(review).addOnCompleteListener(new OnCompleteListener<Void>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            Toast.makeText(getActivity(), "Submitted !", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(), "Submit Failed !", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } catch (Exception e)
             {
-                Toast.makeText(getActivity(), "Please enter your through !", Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
-            if(recommend.equals(""))
-            {
-                Toast.makeText(getActivity(), "Please choose what would you like below !", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            user = new User(mAuth.getCurrentUser().getUid().toString(),face,share,recommend);
-            reff.setValue(user);
         });
         return v;
     }

@@ -36,8 +36,8 @@ import ca.chesm.it.smartcity.R;
 public class RegisterActivity extends AppCompatActivity
 {
 
-    private EditText editTextfullname, editTextusername, editTextpassword, editTextemail, editTextphone;
-    String password, username, fullname, phone, email;
+    private EditText editTextfullname, editTextpassword, editTextemail, editTextphone;
+    String password, fullname, phone, email;
     private Button bntSubmit;
     private DatabaseReference reff;
     private FirebaseAuth mAuth;
@@ -58,7 +58,6 @@ public class RegisterActivity extends AppCompatActivity
         {
             AESCrypt aesCrypt = new AESCrypt();
 
-            long phoneno;
             fullname = editTextfullname.getText().toString().trim();
             password = editTextpassword.getText().toString().trim();
             email = editTextemail.getText().toString().trim();
@@ -93,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity
                     editTextemail.setError("The email type not correct !");
                     return;
                 }
-                phoneno = Long.parseLong(phone);
+                user.setEmail(email);
                 user.setFullname(fullname);
                 try
                 {
@@ -102,8 +101,7 @@ public class RegisterActivity extends AppCompatActivity
                 {
                     e.printStackTrace();
                 }
-                user.setEmail(email);
-                user.setPhoneNo(phoneno);
+                user.setPhoneNo(phone);
                 emailreg(user);
 
         });

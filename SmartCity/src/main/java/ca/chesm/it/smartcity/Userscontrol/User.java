@@ -11,25 +11,23 @@ public class User
 {
 
     private String Fullname;
-    private long PhoneNo;
+    private String PhoneNo;
     private String email;
     private String password;
-    private String face;
-    private String through;
-    private String commend;
-    private String uid;
 
 
-    public User(String uid,String face, String through, String commend)
-    {
-        this.uid = uid;
-        this.face = face;
-        this.through = through;
-        this.commend = commend;
-    }
 
     public User()
     {
+
+    }
+
+    public User(String fullname, String phoneNo, String email, String password)
+    {
+        Fullname = fullname;
+        PhoneNo = phoneNo;
+        this.email = email;
+        this.password = password;
 
     }
 
@@ -44,12 +42,12 @@ public class User
         Fullname = fullname;
     }
 
-    public long getPhoneNo()
+    public String getPhoneNo()
     {
         return PhoneNo;
     }
 
-    public void setPhoneNo(long phoneNo)
+    public void setPhoneNo(String phoneNo)
     {
         PhoneNo = phoneNo;
     }
@@ -74,40 +72,6 @@ public class User
         this.password = password;
     }
 
-    public String getFace()
-    {
-        return face;
-    }
-
-    public void setUid(String uid)
-    {
-        this.uid = uid;
-    }
-
-    public void setFace(String face)
-    {
-        this.face = face;
-    }
-
-    public String getThrough()
-    {
-        return through;
-    }
-
-    public void setThrough(String through)
-    {
-        this.through = through;
-    }
-
-    public String getCommend()
-    {
-        return commend;
-    }
-
-    public void setCommend(String commend)
-    {
-        this.commend = commend;
-    }
 
 
     @Override
