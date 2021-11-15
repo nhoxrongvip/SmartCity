@@ -26,27 +26,27 @@
         >
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/bntfac1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
+            android:backgroundTint="@color/button_background_color"
             android:src="@drawable/icons8_smile_64" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/bntfac2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
+            android:backgroundTint="@color/button_background_color"
             android:src="@drawable/icons8_smile_642" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/bntfac3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
+            android:backgroundTint="@color/button_background_color"
             android:src="@drawable/icons8_sad" />
 
     </LinearLayout>
@@ -66,7 +66,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/txteditreview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -93,9 +93,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnreview1"
+            android:id="@+id/bntreview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background_color"
             android:layout_weight="1"
             android:text="@string/_1" />
 
@@ -103,6 +104,7 @@
             android:id="@+id/bntreview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background_color"
             android:layout_weight="1"
             android:text="@string/_2" />
 
@@ -110,6 +112,7 @@
             android:id="@+id/bntreview3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background_color"
             android:layout_weight="1"
             android:text="@string/_3" />
 
@@ -117,6 +120,7 @@
             android:id="@+id/bntreview4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background_color"
             android:layout_weight="1"
             android:text="@string/_4" />
 
@@ -124,6 +128,7 @@
             android:id="@+id/bntreview5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background_color"
             android:layout_weight="1"
             android:text="@string/_5" />
 
