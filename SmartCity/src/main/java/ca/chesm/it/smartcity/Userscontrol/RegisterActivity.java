@@ -8,8 +8,11 @@
 package ca.chesm.it.smartcity.Userscontrol;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,6 +57,13 @@ public class RegisterActivity extends AppCompatActivity
         reff = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
         user = new User();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            NotificationChannel channen1 = new NotificationChannel("Smart City","Smart City",NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channen1);
+        }
         regid();
         //Use to control the submit button on Register form
         bntSubmit.setOnClickListener(view ->
@@ -129,6 +141,7 @@ public class RegisterActivity extends AppCompatActivity
                             {
                                 Toast register_success = Toast.makeText(getApplicationContext(),"Register Successfully", Toast.LENGTH_SHORT);
                                 register_success.show();
+                                notibuild("Registered Successed !");
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }
@@ -144,7 +157,18 @@ public class RegisterActivity extends AppCompatActivity
         });
     }
 
+    private  void notibuild (String mess)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(RegisterActivity.this,"Smart City");
+        builder.setContentTitle("Smart City");
+        builder.setContentText(mess);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setAutoCancel(true);
 
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(RegisterActivity.this);
+        managerCompat.notify(1,builder.build());
+
+    }
     //Method use to show dialog with custom mess
     private AlertDialog.Builder Dialogb(String mess)
     {
