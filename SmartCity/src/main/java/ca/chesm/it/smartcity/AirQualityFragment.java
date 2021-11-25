@@ -21,6 +21,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +33,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -69,6 +75,8 @@ public class AirQualityFragment extends Fragment {
         getAQIdata();
 
 
+
+
         return v;
     }
 
@@ -76,6 +84,24 @@ public class AirQualityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    private void barChartEntry(BarChart graph){
+        List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, 30f));
+        entries.add(new BarEntry(1f, 80f));
+        entries.add(new BarEntry(2f, 60f));
+        entries.add(new BarEntry(3f, 50f));
+        // gap of 2f
+        entries.add(new BarEntry(5f, 70f));
+        entries.add(new BarEntry(6f, 60f));
+        BarDataSet set = new BarDataSet(entries, "BarDataSet");
+        BarData data = new BarData(set);
+        data.setBarWidth(0.5f);
+        data.setValueTextSize(20f);
+        dailygraph.setData(data);
+        dailygraph.setFitBars(true);
+        dailygraph.invalidate();
     }
 
 
@@ -105,46 +131,85 @@ public class AirQualityFragment extends Fragment {
 
 
 
-    private String readJSON(String address) {
-        URL url = null;
-        StringBuilder sb = new StringBuilder();
-        HttpsURLConnection urlConnection = null;
-        try {
-            //Get URL
-            url = new URL(address);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            //Open URL
-            urlConnection = (HttpsURLConnection) url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            InputStream content = new BufferedInputStream(urlConnection.getInputStream());
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            //Catch invalid zip code
-            e.printStackTrace();
-        } finally {
-            urlConnection.disconnect();
-        }
-        return sb.toString();
-
-    }
 
     private void getAQIdata() {
-        new ReadJSONFeed().execute(url);
+       new ReadJSONFeed().execute(url);
+
     }
 
+    private void setPollutantsTextView(){
+
+        aqi_quality.setText(aqivalue);
+        pollutants_pm25.setText(pm25value);
+        pollutants_co.setText(covalue);
+        pollutants_o3.setText(o3value);
+    }
+    public String aqiConditionCheck() {
+        try {
+            int value = Integer.parseInt(aqivalue);
+            if (value <= 50) {
+                return "Good";
+            } else if (value >= 51 && value <= 100) {
+                return "Moderate";
+            } else if (value > 100) {
+                return "Unhealthy";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Not in range";
+
+    }
+
+    private void setAQITextView(){
+        String aqi_result = aqiConditionCheck();
+        aqi_condition.setText(aqi_result);
+        switch (aqi_result) {
+            case "Good":
+                aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
+                aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
+                break;
+            case "Moderate":
+                aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
+                aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
+                break;
+            case "Unhealthy":
+                aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
+                aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + aqi_result);
+        }
+    }
     private class ReadJSONFeed extends AsyncTask<String, Void, String> {
+        private String readJSON(String address) {
+            URL url = null;
+            StringBuilder sb = new StringBuilder();
+            HttpsURLConnection urlConnection = null;
+            try {
+                //Get URL
+                url = new URL(address);
+                //Open URL
+                urlConnection = (HttpsURLConnection) url.openConnection();
+                InputStream content = new BufferedInputStream(urlConnection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                urlConnection.disconnect();
+            }
+            return sb.toString();
+
+        }
 
         @Override
         protected String doInBackground(String... urls) {
@@ -156,50 +221,14 @@ public class AirQualityFragment extends Fragment {
         protected void onPostExecute(String result) {
             getData(result);
 
-            aqi_quality.setText(aqivalue);
-            pollutants_pm25.setText(pm25value);
-            pollutants_co.setText(covalue);
-            pollutants_o3.setText(o3value);
+            setPollutantsTextView();
+            setAQITextView();
 
-            String aqi_result = aqiConditionCheck();
-            aqi_condition.setText(aqi_result);
-            switch (aqi_result) {
-                case "Good":
-                    aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
-                    aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
-                    break;
-                case "Moderate":
-                    aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
-                    aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
-                    break;
-                case "Unhealthy":
-                    aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
-                    aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + aqi_result);
-            }
 
 
         }
 
-        public String aqiConditionCheck() {
-            try {
-                int value = Integer.parseInt(aqivalue);
-                if (value <= 50) {
-                    return "Good";
-                } else if (value >= 51 && value <= 100) {
-                    return "Moderate";
-                } else if (value > 100) {
-                    return "Unhealthy";
-                }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return "Not in range";
-
-        }
 
         private void getData(String result) {
             try {
