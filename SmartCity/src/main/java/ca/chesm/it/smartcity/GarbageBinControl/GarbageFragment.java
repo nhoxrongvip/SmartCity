@@ -11,10 +11,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.chesm.it.smartcity.R;
 
@@ -33,10 +37,11 @@ import ca.chesm.it.smartcity.R;
 public class GarbageFragment extends Fragment
 {
     View v;
+    private RecyclerView recycview;
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference dbc = ref.child("Garbage").child("City");
     private DatabaseReference dbb = ref.child("Garbage").child("City").child("Toronto");
-    ArrayList<City> citylist = new ArrayList<City>();
+    private CityAdapter cityAdapter;
     City city = new City();
     private TextView txttt;
 
@@ -49,6 +54,10 @@ public class GarbageFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_garbage, container, false);
         v = root;
         regid();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recycview.setLayoutManager(linearLayoutManager);
+        cityAdapter = new CityAdapter(getListCity());
+        recycview.setAdapter(cityAdapter);
         return root;
     }
 
@@ -84,9 +93,20 @@ public class GarbageFragment extends Fragment
 
 
     }
-    public void regid()
+
+    private List<City> getListCity()
+    {
+        List<City> list = new ArrayList<>();
+        list.add(new City("dsadsa", 1,"hahahaha",30,20,10));
+        list.add(new City("dsadsa", 2,"hahahaha",30,20,10));
+        list.add(new City("dsadsa", 3,"hahahaha",30,20,10));
+        list.add(new City("dsadsa", 4,"hahahaha",30,20,10));
+        return list;
+    }
+
+    private void regid()
     {
         txttt = (TextView) v.findViewById(R.id.txtviewtest);
-
+        recycview = v.findViewById(R.id.rcv_data);
     }
 }
