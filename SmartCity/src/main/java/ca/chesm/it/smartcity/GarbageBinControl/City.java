@@ -5,20 +5,20 @@ public class City
     private String Name;
     private int id;
     private String address;
-    private double bin1,bìn2,bin3;
+    private double bin1,bin2,bin3;
 
     public City()
     {
 
     }
 
-    public City(String name, int id, String address, double bin1, double bìn2, double bin3)
+    public City(String name, int id, String address, double bin1, double bin2, double bin3)
     {
         Name = name;
         this.id = id;
         this.address = address;
         this.bin1 = bin1;
-        this.bìn2 = bìn2;
+        this.bin2 = bin2;
         this.bin3 = bin3;
     }
 
@@ -62,14 +62,14 @@ public class City
         this.bin1 = bin1;
     }
 
-    public double getBìn2()
+    public double getBin2()
     {
-        return bìn2;
+        return bin2;
     }
 
-    public void setBìn2(double bìn2)
+    public void setBin2(double bin2)
     {
-        this.bìn2 = bìn2;
+        this.bin2 = bin2;
     }
 
     public double getBin3()
@@ -80,5 +80,18 @@ public class City
     public void setBin3(double bin3)
     {
         this.bin3 = bin3;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "City{" +
+                "Name='" + Name + '\'' +
+                ", id=" + id +
+                ", address='" + address + '\'' +
+                ", bin1=" + bin1 +
+                ", bin2=" + bin2 +
+                ", bin3=" + bin3 +
+                '}';
     }
 }
