@@ -78,4 +78,8 @@
     <string name="_3" translatable="false">3</string>
     <string name="_4" translatable="false">4</string>
     <string name="_5" translatable="false">5</string>
+    <string name="garbage_bins_fragment_control">Garbage Bins Control</string>
+    <string name="city">City</string>
+    <string name="textview">TextView</string>
+    <string name="address">Address:</string>
 </resources>
