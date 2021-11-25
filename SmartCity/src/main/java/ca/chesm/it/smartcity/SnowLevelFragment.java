@@ -16,8 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,10 +31,15 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class SnowLevelFragment extends Fragment {
+    View v;
 
     TextView snow_alert;
     Button snow_alertBtn;
-    View v;
+
+    Spinner snow_location;
+
+
+    CircleImageView snow_weather;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,6 +91,7 @@ public class SnowLevelFragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_snow_level, container, false);
 
+        //Blinking effect for Alert button
         snow_alert = (TextView) v.findViewById(R.id.Snow_Alert);
         snow_alertBtn = (Button) v.findViewById(R.id.Snow_AlertBtn);
         snow_alertBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +101,24 @@ public class SnowLevelFragment extends Fragment {
             }
         });
 
+        //Change weather image based on weather
+        snow_weather = v.findViewById(R.id.snowLevelImage);
+
+        //Spinner location
+        snow_location = v.findViewById(R.id.Snow_currentlocation);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.snow_locationarray, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        snow_location.setAdapter(adapter);
+
+        //
+
+
+
+        //Returns
         return v;
     }
+
 
     @SuppressLint("WrongConstant")
     public void BlinkEffect(){
