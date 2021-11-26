@@ -1,8 +1,5 @@
 package ca.chesm.it.smartcity.GarbageBinControl;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ca.chesm.it.smartcity.CityLight;
 import ca.chesm.it.smartcity.R;
-import ca.chesm.it.smartcity.ReviewFragControl.ReviewFragment;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder>
 {
@@ -55,18 +50,19 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         holder.tvAddress.setText(city.getAddress());
         holder.layoutitem.setOnClickListener(view ->
         {
-            onClickgotodetail();
+            onClickgotodetail(city);
         });
     }
 
-    private void onClickgotodetail()
+    private void onClickgotodetail(City city)
     {
-        Fragment fragment = new DetailFragment();
+        Fragment fragment = new Garbagebin_Fragment();
         FragmentManager fragmentManager = mFragment.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container,fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
     }
 
     @Override
