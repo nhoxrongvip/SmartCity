@@ -20,16 +20,16 @@
 
     <ImageView
         android:id="@+id/light"
-        android:layout_width="162dp"
-        android:layout_height="111dp"
+        android:layout_width="142dp"
+        android:layout_height="67dp"
         android:layout_gravity="center"
         android:layout_margin="25dp"
         android:src="@drawable/light_off" />
 
     <Button
         android:id="@+id/btnOnof"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_width="141dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:background="@color/purple_200"
         android:text="On"
