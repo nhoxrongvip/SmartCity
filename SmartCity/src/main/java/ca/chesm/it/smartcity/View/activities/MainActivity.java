@@ -22,9 +22,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import ca.chesm.it.smartcity.View.FragMent.AirQualityFragment;
 import ca.chesm.it.smartcity.View.FragMent.AppInfoFragment;
 import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
-import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
+
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
+import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
 
 public class MainActivity extends AppCompatActivity
 {

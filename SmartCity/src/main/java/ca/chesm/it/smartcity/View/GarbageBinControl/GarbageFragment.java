@@ -1,11 +1,11 @@
-/*
+package ca.chesm.it.smartcity.View.GarbageBinControl;/*
     Name:Dung Ly N01327929
     Course: CENG322-RND
     Purpose: Control Garbage bins in city
     Last updated: Sep 27 2021
 */
 
-package ca.chesm.it.smartcity.GarbageBinControl;
+
 
 import android.os.Bundle;
 
@@ -35,8 +35,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.chesm.it.smartcity.CityLight;
+
 import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.adapter.CityAdapter;
+import ca.chesm.it.smartcity.models.City;
 
 
 public class GarbageFragment extends Fragment
