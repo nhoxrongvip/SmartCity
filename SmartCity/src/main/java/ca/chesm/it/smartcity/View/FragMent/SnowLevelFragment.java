@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 import ca.chesm.it.smartcity.R;
@@ -111,14 +112,9 @@ public class SnowLevelFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         snow_location.setAdapter(adapter);
 
-        //Snow level simulator
-        snow_level = v.findViewById(R.id.snow_level);
-        snow_level.setText(randNoGen()+" cm");
-
-
+        timer.schedule(snowlvTask, 10, 5000);
 
         //Image View change due to the change in snow level
-
         snow_weather_image= v.findViewById(R.id.snowLevelImage);
         String snow_result = snowlvCheck();
         switch (snow_result)
@@ -134,13 +130,6 @@ public class SnowLevelFragment extends Fragment {
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + snow_result);
-        }
-
-        class randNoGenerator extends TimerTask {
-            public void run() {
-                //Do something here please I am stupid
-
-            }
         }
 
 
@@ -159,17 +148,12 @@ public class SnowLevelFragment extends Fragment {
         anim.start();
     }
 
-    public int randNoGen(){
-        int min = 0;
-        int max = 25;
-        int radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
-        return radNum;
-    }
+
 
     //Snow level checking level
     public String snowlvCheck() {
         try {
-            int value = randNoGen();
+            int value = 1;
             if (value >= 0 && value < 8) {
                 return "low";
             } else if (value >= 8 && value < 16) {
@@ -183,4 +167,23 @@ public class SnowLevelFragment extends Fragment {
         }
         return "Not in range";
     }
+
+
+    class randNoGenerator extends TimerTask {
+        public void run() {
+            //Do something here please I am stupid
+                int min = 0;
+                int max = 25;
+                int radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
+
+            //Snow level simulator
+            snow_level = v.findViewById(R.id.snow_level);
+            snow_level.setText(radNum + " " + getString(R.string.unitCM));
+
+        }
+    }
+    //Task timer
+    randNoGenerator snowlvTask = new randNoGenerator();
+    Timer timer = new Timer();
+
 }

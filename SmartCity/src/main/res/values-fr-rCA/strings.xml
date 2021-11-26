@@ -66,6 +66,7 @@
     <string name="aq_o3">O3</string>
     <string name="aq_so2">SO2</string>
     <string name="remember_me">Remember me</string>
+    <string name="unitCM">\" cm\"</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">

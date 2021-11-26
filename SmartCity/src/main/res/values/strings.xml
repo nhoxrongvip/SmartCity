@@ -82,6 +82,7 @@
     <string name="city">City</string>
     <string name="textview">TextView</string>
     <string name="address">Address:</string>
+    <string name="unitCM">cm</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
