@@ -148,12 +148,29 @@ public class SnowLevelFragment extends Fragment {
         anim.start();
     }
 
+    public int radNum = 0;
+    class randNoGenerator extends TimerTask {
+        public void run() {
+            //Do something here please I am stupid
+            //random no generator
+            int min = 0;
+            int max = 25;
+            radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
 
+            //Snow level simulator
+            snow_level = v.findViewById(R.id.snow_level);
+            snow_level.setText(radNum + " " + getString(R.string.unitCM));
+
+        }
+    }
+    //Task timer
+    randNoGenerator snowlvTask = new randNoGenerator();
+    Timer timer = new Timer();
 
     //Snow level checking level
     public String snowlvCheck() {
         try {
-            int value = 1;
+            int value = radNum;
             if (value >= 0 && value < 8) {
                 return "low";
             } else if (value >= 8 && value < 16) {
@@ -168,22 +185,5 @@ public class SnowLevelFragment extends Fragment {
         return "Not in range";
     }
 
-
-    class randNoGenerator extends TimerTask {
-        public void run() {
-            //Do something here please I am stupid
-                int min = 0;
-                int max = 25;
-                int radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
-
-            //Snow level simulator
-            snow_level = v.findViewById(R.id.snow_level);
-            snow_level.setText(radNum + " " + getString(R.string.unitCM));
-
-        }
-    }
-    //Task timer
-    randNoGenerator snowlvTask = new randNoGenerator();
-    Timer timer = new Timer();
 
 }
