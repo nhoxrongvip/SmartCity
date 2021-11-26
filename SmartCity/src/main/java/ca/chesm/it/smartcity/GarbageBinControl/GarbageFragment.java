@@ -47,6 +47,13 @@ public class GarbageFragment extends Fragment
     private Spinner citySpinner;
     private CityAdapter cityAdapter;
     private final List<City> cityList = new ArrayList<>();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -57,12 +64,6 @@ public class GarbageFragment extends Fragment
         regid();
         LoadAlldata();
         return root;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
     }
 
     private void LoadDatatoView(String name)
