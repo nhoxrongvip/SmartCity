@@ -25,6 +25,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,6 +61,9 @@ public class AirQualityFragment extends Fragment {
     RadioButton rb_aqi, rb_co, rb_co2, rb_o3, rb_pm25, rb_so2, rb_no2;
     BarChart dailygraph;
 
+    //Daily Graph data
+    List<BarEntry> o3daily, pm10daily,pm25daily;
+
     //API value
     public String aqivalue, pm25value, covalue, o3value;
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
@@ -75,8 +79,6 @@ public class AirQualityFragment extends Fragment {
         getAQIdata();
 
 
-
-
         return v;
     }
 
@@ -86,7 +88,7 @@ public class AirQualityFragment extends Fragment {
 
     }
 
-    private void barChartEntry(BarChart graph){
+    private void barChartEntry(BarChart graph) {
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, 30f));
         entries.add(new BarEntry(1f, 80f));
@@ -129,22 +131,19 @@ public class AirQualityFragment extends Fragment {
     }
 
 
-
-
-
-
     private void getAQIdata() {
-       new ReadJSONFeed().execute(url);
+        new ReadJSONFeed().execute(url);
 
     }
 
-    private void setPollutantsTextView(){
+    private void setPollutantsTextView() {
 
         aqi_quality.setText(aqivalue);
         pollutants_pm25.setText(pm25value);
         pollutants_co.setText(covalue);
         pollutants_o3.setText(o3value);
     }
+
     public String aqiConditionCheck() {
         try {
             int value = Integer.parseInt(aqivalue);
@@ -163,7 +162,7 @@ public class AirQualityFragment extends Fragment {
 
     }
 
-    private void setAQITextView(){
+    private void setAQITextView() {
         String aqi_result = aqiConditionCheck();
         aqi_condition.setText(aqi_result);
         switch (aqi_result) {
@@ -183,6 +182,7 @@ public class AirQualityFragment extends Fragment {
                 throw new IllegalStateException("Unexpected value: " + aqi_result);
         }
     }
+
     private class ReadJSONFeed extends AsyncTask<String, Void, String> {
         private String readJSON(String address) {
             URL url = null;
@@ -219,29 +219,48 @@ public class AirQualityFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            getData(result);
 
-            setPollutantsTextView();
-            setAQITextView();
+            try {
+                JSONObject dataObject = new JSONObject(result).getJSONObject("data");
 
+                getAQIvalue(dataObject);
+                getPollutantsvalue(dataObject);
+                getDailyGraphvalue(dataObject);
+                setPollutantsTextView();
+                setAQITextView();
+            } catch (JSONException jsonException) {
+                jsonException.printStackTrace();
+            }
 
 
         }
 
-
-
-        private void getData(String result) {
+        private void getAQIvalue(JSONObject dataObject) {
             try {
-                JSONObject qualityObject = new JSONObject(result);
-                //Get AQI
-                JSONObject dataObject = qualityObject.getJSONObject("data");
+
                 aqivalue = dataObject.getString("aqi");
-                pm25value = dataObject.getJSONObject("iaqi").getJSONObject("pm25").getString("v");
-                covalue = dataObject.getJSONObject("iaqi").getJSONObject("co").getString("v");
-                o3value = dataObject.getJSONObject("iaqi").getJSONObject("o3").getString("v");
-
-
             } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void getPollutantsvalue(JSONObject dataObject) {
+            try {
+                dataObject  =dataObject.getJSONObject("iaqi");
+                pm25value = dataObject.getJSONObject("pm25").getString("v");
+                covalue = dataObject.getJSONObject("co").getString("v");
+                o3value = dataObject.getJSONObject("o3").getString("v");
+            } catch (JSONException jsonException) {
+                jsonException.printStackTrace();
+            }
+        }
+
+        private void getDailyGraphvalue(JSONObject dataObject) {
+            try {
+                JSONArray dataArray = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("o3");
+
+                Log.d("subject length", String.valueOf(dataArray.length()));
+            } catch (JSONException e){
                 e.printStackTrace();
             }
 
@@ -249,6 +268,10 @@ public class AirQualityFragment extends Fragment {
 
 
     }
-
-
 }
+
+
+
+
+
+
