@@ -44,11 +44,4 @@ android:textColor="@android:color/background_light"
         android:text="Person Check"
         android:visibility="visible" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/Snow_hoursgraph"
-        android:layout_width="match_parent"
-        android:layout_height="424dp">
-
-    </com.github.mikephil.charting.charts.BarChart>
-
 </LinearLayout>
