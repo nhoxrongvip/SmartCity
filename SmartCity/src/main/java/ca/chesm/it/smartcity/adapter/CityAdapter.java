@@ -1,5 +1,6 @@
 package ca.chesm.it.smartcity.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container,fragment);
         fragmentTransaction.addToBackStack(null);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("city",city);
+        fragment.setArguments(bundle);
         fragmentTransaction.commit();
 
     }
@@ -82,14 +86,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
 
         private TextView tvAddress;
         private RelativeLayout layoutitem;
-        private ImageView imgv;
 
         public CityViewHolder(@NonNull View itemView)
         {
             super(itemView);
             layoutitem = itemView.findViewById(R.id.glayoutitem);
             tvAddress = itemView.findViewById(R.id.txtviewcityholderadd);
-            imgv = itemView.findViewById(R.id.gimageView);
         }
     }
 }

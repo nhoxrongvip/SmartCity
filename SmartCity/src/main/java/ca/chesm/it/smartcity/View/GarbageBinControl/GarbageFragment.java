@@ -71,8 +71,6 @@ public class GarbageFragment extends Fragment
     private void LoadDatatoView(String name)
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(name);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recycview.setLayoutManager(linearLayoutManager);
         ref.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -144,6 +142,9 @@ public class GarbageFragment extends Fragment
     private void regid()
     {
         recycview = v.findViewById(R.id.rcv_data);
+        recycview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        cityAdapter = new CityAdapter(getActivity(), new ArrayList<>());
+        recycview.setAdapter(cityAdapter);
         citySpinner = v.findViewById(R.id.gcityspinner);
     }
 }

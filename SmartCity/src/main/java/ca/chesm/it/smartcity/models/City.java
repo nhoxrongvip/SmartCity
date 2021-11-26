@@ -1,6 +1,8 @@
 package ca.chesm.it.smartcity.models;
 
-public class City
+import java.io.Serializable;
+
+public class City implements Serializable
 {
     private String Name;
     private int id;

@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey"
+    android:orientation="vertical"
     tools:context=".View.GarbageBinControl.Garbagebin_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/txtview_houseaddress"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/bin_progressbar"
+            style="@style/BinpProgressBar"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:progress="90"></ProgressBar>
+
+        <TextView
+            android:id="@+id/txtpercentbin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/bin_progressbar"
+            android:layout_alignTop="@id/bin_progressbar"
+            android:layout_alignRight="@id/bin_progressbar"
+            android:layout_alignBottom="@id/bin_progressbar"
+            android:background="#00000000"
+            android:gravity="center"
+            android:text="@string/hello_blank_fragment"></TextView>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txtnameofbin"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/button6"
+            android:background="@drawable/green_bin_btn"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:drawableLeft="@drawable/green_bin"
+            android:text="Organics Bin" />
+
+        <Button
+            android:id="@+id/button5"
+            android:background="@drawable/bg_btn"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button4"
+            android:background="@drawable/bg_btn"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Button" />
+    </LinearLayout>
+
+</LinearLayout>
