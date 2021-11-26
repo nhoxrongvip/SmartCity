@@ -6,7 +6,6 @@ package ca.chesm.it.smartcity;
 //        Last updated: Sep 27 2021
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,12 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,7 +37,7 @@ public class SnowLevelFragment extends Fragment {
     Button snow_alertBtn;
 
     Spinner snow_location;
-
+    TextView snow_level;
 
     CircleImageView snow_weather;
 
@@ -112,7 +112,14 @@ public class SnowLevelFragment extends Fragment {
         snow_location.setAdapter(adapter);
 
         //
+        snow_level = v.findViewById(R.id.snow_level);
+        snow_level.setText(randNoGen()+" cm");
+        class randNoGenerator extends TimerTask {
+            public void run() {
+                //Do something here please I am stupid
 
+            }
+        }
 
 
         //Returns
@@ -129,4 +136,15 @@ public class SnowLevelFragment extends Fragment {
         anim.setRepeatCount(Animation.INFINITE);
         anim.start();
     }
+
+
+
+    public int randNoGen(){
+        int min = 0;
+        int max = 25;
+        int radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
+        return radNum;
+    }
+
+
 }
