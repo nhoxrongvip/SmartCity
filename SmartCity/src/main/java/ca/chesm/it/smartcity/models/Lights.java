@@ -90,4 +90,24 @@ public class Lights {
     public void setId(String id) {
         Id = id;
     }
+
+    public void HandleUpdate(String id, int i,String cityname,String streetname) {
+        boolean checked = false;
+        switch (i){
+            case 0 : checked = false;break;
+            case  1: checked = true ;break;
+
+        }
+
+        db.collection("Light")
+                .document(cityname)
+                .collection(streetname).document(id)
+                .update("state",checked).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
+
+    }
 }

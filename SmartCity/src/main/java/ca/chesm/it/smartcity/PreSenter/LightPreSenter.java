@@ -25,4 +25,8 @@ public class LightPreSenter implements  ILights {
     public void EventsChange() {
         callback.EventChange();
     }
+
+    public void HandleUpdate(String id, int i,String cityname,String streetname) {
+        lights.HandleUpdate(id,i,cityname,streetname);
+    }
 }

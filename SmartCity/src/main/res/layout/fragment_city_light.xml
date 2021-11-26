@@ -21,16 +21,27 @@
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
        android:id="@+id/rcvLights"
+       android:layout_marginTop="10dp"
        android:layout_height="250dp"/>
 
     <Button
-
+android:textColor="@android:color/background_light"
         android:id="@+id/btnOnof"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/purple_200"
+        android:background="#3F51B5"
         android:text="On"
+        android:visibility="visible" />
+    <Button
+android:textColor="@android:color/background_light"
+        android:id="@+id/btnPerson"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#3F51B5"
+        android:text="Person Check"
         android:visibility="visible" />
 
     <com.github.mikephil.charting.charts.BarChart

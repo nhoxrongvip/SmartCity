@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.L;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ca.chesm.it.smartcity.PreSenter.CityLightPreSenter;
 import ca.chesm.it.smartcity.PreSenter.CityView;
@@ -63,6 +66,9 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
     private List<Lights> listLights;
     private RecyclerView rcvLights;
     private LightAdapter lightAdapter;
+    private  Button btncheckperson;
+    private Handler handler;
+     private  Runnable runnable;
     public CityLightFragMent() {
         // Required empty public constructor
         Init();
@@ -125,6 +131,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
         btnOnof=view.findViewById(R.id.btnOnof);
         imageLight=view.findViewById(R.id.light);
         rcvLights = view.findViewById(R.id.rcvLights);
+        btncheckperson=view.findViewById(R.id.btnPerson);
 
         cityLightPreSenter = new CityLightPreSenter(this);
         listLightCity = new ArrayList<>();
@@ -159,6 +166,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
        spinerStreet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+               name_street = liststreet.get(i);
                listLights.clear();
                lightPreSenter.getDataListLight(name_city,liststreet.get(i));
                lightAdapter = new LightAdapter(listLights,getActivity());
@@ -175,13 +183,78 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
 
 
         btnOnof.setText("OFF");
+         handler = new Handler();
+         runnable= new Runnable() {
+             @Override
+             public void run() {
 
+             }
+         };
         btnOnof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                handler.removeCallbacks(runnable);
+                if(liststreet.size()>0 ){
+                    if(listLights.size()>0){
+                        switch (k){
+                            case  0 :
+                                btnOnof.setText("ON");
+                                for(Lights l : listLights){
+                                    lightPreSenter.HandleUpdate(l.getId(),1,name_city,name_street);
+
+                                }
+
+                                k=1;break;
+                            case 1:
+                                btnOnof.setText("OFF");
+                                for(Lights l : listLights){
+                                    lightPreSenter.HandleUpdate(l.getId(),0,name_city,name_street);
+
+                                }
+                                k=0;
+                                break;
+                        }
+                    }else{
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
 
             }
         });
+        btncheckperson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random random = new Random();
+               runnable= new Runnable() {
+                   @Override
+                   public void run() {
+                       int k = random.nextInt(200) +10;
+                       Log.d("CHECKED",k+" ");
+                       if(listLights.size()>0){
+                           for(Lights l : listLights){
+                               if(k > l.getDistance()){
+                                   if (k - l.getDistance() <= 20) {
+                                       lightPreSenter.HandleUpdate(l.getId(),1,name_city,name_street);
+                                   }else{
+                                       lightPreSenter.HandleUpdate(l.getId(),0,name_city,name_street);
+                                   }
+
+                               }
+                           }
+                       }
+
+                       handler.postDelayed(this,3000);
+
+                   }
+
+               };
+               runnable.run();
+
+            }
+        });
+
+
 
         return  view;
     }
