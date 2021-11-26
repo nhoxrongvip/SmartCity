@@ -43,12 +43,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     @Override
     public void onBindViewHolder(@NonNull CityViewHolder holder, int position)
     {
-        final City city = mListCity.get(position);
+        City city = mListCity.get(position);
         if(city == null)
         {
             return;
         }
-        holder.imgv.setImageDrawable(mFragment.getResources().getDrawable(R.drawable.house));
         holder.tvAddress.setText(city.getAddress());
         holder.layoutitem.setOnClickListener(view ->
         {

@@ -5,7 +5,7 @@
     Last updated: Sep 27 2021
 */
 
-package ca.chesm.it.smartcity.View.GarbageBinControl;
+package ca.chesm.it.smartcity.GarbageBinControl;
 
 import android.os.Bundle;
 
@@ -14,12 +14,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,12 +31,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.chesm.it.smartcity.CityLight;
 import ca.chesm.it.smartcity.R;
-import ca.chesm.it.smartcity.adapter.CityAdapter;
-import ca.chesm.it.smartcity.models.City;
 
 
 public class GarbageFragment extends Fragment
