@@ -7,6 +7,7 @@
 
 package ca.chesm.it.smartcity.GarbageBinControl;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +48,8 @@ public class GarbageFragment extends Fragment
     private RecyclerView recycview;
     private Spinner citySpinner;
     private CityAdapter cityAdapter;
-    private final List<City> cityList = new ArrayList<>();
-
+    private List<City> cityList = new ArrayList<>();
+    private boolean trigger = false;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -69,9 +71,7 @@ public class GarbageFragment extends Fragment
     private void LoadDatatoView(String name)
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(name);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recycview.setLayoutManager(linearLayoutManager);
-        ref.addValueEventListener(new ValueEventListener()
+        ref.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
@@ -80,11 +80,11 @@ public class GarbageFragment extends Fragment
                 for (DataSnapshot cityload : snapshot.getChildren())
                 {
                     int id = Integer.parseInt(cityload.getKey());
-                    String address = cityload.child("address").getValue(String.class);
+                    String address = cityload.child("address").getValue().toString();
                     double bin1 = cityload.child("bin 1").getValue(Double.class);
                     double bin2 = cityload.child("bin 2").getValue(Double.class);
                     double bin3 = cityload.child("bin 3").getValue(Double.class);
-                    cityList.add(new City(name,id,address,bin1,bin2,bin3));
+                    cityList.add(new City(name, id, address, bin1, bin2, bin3));
                 }
                 cityAdapter = new CityAdapter(getActivity(), cityList);
                 recycview.setAdapter(cityAdapter);
@@ -96,7 +96,6 @@ public class GarbageFragment extends Fragment
 
             }
         });
-
     }
 
     private void LoadAlldata()
@@ -115,24 +114,24 @@ public class GarbageFragment extends Fragment
                 }
                 ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,spinerlist);
                 citySpinner.setAdapter(arrayAdapter);
-                citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
-                    {
-                        LoadDatatoView(spinerlist.get(position));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView)
-                    {
-
-                    }
-                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        });
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+            {
+                LoadDatatoView(spinerlist.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
             {
 
             }
@@ -142,6 +141,9 @@ public class GarbageFragment extends Fragment
     private void regid()
     {
         recycview = v.findViewById(R.id.rcv_data);
+        recycview.setLayoutManager(new LinearLayoutManager(getContext()));
+        cityAdapter = new CityAdapter(getActivity(), new ArrayList<>());
+        recycview.setAdapter(cityAdapter);
         citySpinner = v.findViewById(R.id.gcityspinner);
     }
 }
