@@ -31,6 +31,7 @@ public class Garbagebin_Fragment extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
+
         v = inflater.inflate(R.layout.garbagebin_fragment, container, false);
         return v;
     }
