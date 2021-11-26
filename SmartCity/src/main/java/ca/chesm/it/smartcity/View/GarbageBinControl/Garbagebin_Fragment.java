@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity.GarbageBinControl;
+package ca.chesm.it.smartcity.View.GarbageBinControl;
 
 import android.os.Bundle;
 

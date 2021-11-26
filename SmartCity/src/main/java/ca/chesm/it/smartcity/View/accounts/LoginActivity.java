@@ -5,7 +5,7 @@
     Last updated:  09 Oct 2021
 */
 
-package ca.chesm.it.smartcity.Userscontrol;
+package ca.chesm.it.smartcity.View.accounts;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -18,7 +18,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,8 +26,6 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,7 +40,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ca.chesm.it.smartcity.MainActivity;
+import ca.chesm.it.smartcity.View.activities.MainActivity;
 import ca.chesm.it.smartcity.R;
 
 public class LoginActivity extends AppCompatActivity

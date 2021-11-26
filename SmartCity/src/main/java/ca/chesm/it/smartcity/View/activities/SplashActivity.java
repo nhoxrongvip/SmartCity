@@ -1,24 +1,18 @@
 //If you want to change animation, modify in activity_splash.xml
 
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.View.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import ca.chesm.it.smartcity.Userscontrol.LoginActivity;
+import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.View.accounts.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

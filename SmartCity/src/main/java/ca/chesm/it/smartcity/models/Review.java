@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity.ReviewFragControl;
+package ca.chesm.it.smartcity.models;
 
 public class Review
 {

@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity.GarbageBinControl;
+package ca.chesm.it.smartcity.models;
 
 public class City
 {

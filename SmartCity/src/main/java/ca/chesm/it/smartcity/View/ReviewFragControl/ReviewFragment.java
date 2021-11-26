@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity.ReviewFragControl;
+package ca.chesm.it.smartcity.View.ReviewFragControl;
 
 import android.os.Bundle;
 
@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ca.chesm.it.smartcity.R;
-import ca.chesm.it.smartcity.Userscontrol.User;
+import ca.chesm.it.smartcity.models.Review;
 
 public class ReviewFragment extends Fragment
 {

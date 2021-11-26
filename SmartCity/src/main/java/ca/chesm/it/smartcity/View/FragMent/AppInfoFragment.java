@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.View.FragMent;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import ca.chesm.it.smartcity.R;
 
 /**
  * A simple {@link Fragment} subclass.

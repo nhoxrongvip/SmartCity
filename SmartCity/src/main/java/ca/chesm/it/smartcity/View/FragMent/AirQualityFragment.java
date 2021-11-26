@@ -6,7 +6,7 @@
 */
 
 
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.View.FragMent;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +42,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import ca.chesm.it.smartcity.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 

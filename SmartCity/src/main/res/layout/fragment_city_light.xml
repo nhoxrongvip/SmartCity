@@ -18,15 +18,13 @@
         android:layout_height="50dp"/>
 
 
-    <ImageView
-        android:id="@+id/light"
-        android:layout_width="162dp"
-        android:layout_height="111dp"
-        android:layout_gravity="center"
-        android:layout_margin="25dp"
-        android:src="@drawable/light_off" />
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:id="@+id/rcvLights"
+       android:layout_height="250dp"/>
 
     <Button
+
         android:id="@+id/btnOnof"
         android:layout_width="180dp"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity.GarbageBinControl;
+package ca.chesm.it.smartcity.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import ca.chesm.it.smartcity.View.GarbageBinControl.Garbagebin_Fragment;
 import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.models.City;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder>
 {

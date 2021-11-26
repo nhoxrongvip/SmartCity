@@ -1,4 +1,4 @@
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.View.FragMent;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,11 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import ca.chesm.it.smartcity.ReviewFragControl.ReviewFragment;
+import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.View.ReviewFragControl.ReviewFragment;
 
 public class AppSettingFragment extends Fragment
 {

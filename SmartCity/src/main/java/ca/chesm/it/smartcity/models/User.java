@@ -5,7 +5,7 @@
     Last updated:  09 Oct 2021
 */
 
-package ca.chesm.it.smartcity.Userscontrol;
+package ca.chesm.it.smartcity.models;
 
 public class User
 {

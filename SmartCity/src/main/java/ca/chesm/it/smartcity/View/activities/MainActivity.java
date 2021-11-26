@@ -2,7 +2,7 @@
 //Thanh Phat Lam N01335598 CENG322-RND
 //Hieu Chu N01371619 CENG322-RND
 
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.View.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,7 +19,12 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import ca.chesm.it.smartcity.GarbageBinControl.GarbageFragment;
+import ca.chesm.it.smartcity.View.FragMent.AirQualityFragment;
+import ca.chesm.it.smartcity.View.FragMent.AppInfoFragment;
+import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
+import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
+import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity
                 frag = new GarbageFragment();
                 break;
             case R.id.CityLight:
-                frag = new CityLight();
+                frag = new CityLightFragMent();
                 break;
             case R.id.SnowLevel:
                 frag = new SnowLevelFragment();

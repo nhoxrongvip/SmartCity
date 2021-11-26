@@ -1,5 +1,5 @@
 
-package ca.chesm.it.smartcity;
+package ca.chesm.it.smartcity.View.FragMent;
 //        Name: Hieu Chu N01371619
 //        Course: CENG322-RND
 //        Purpose: Control Snow level on street
@@ -20,9 +20,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
+import ca.chesm.it.smartcity.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
