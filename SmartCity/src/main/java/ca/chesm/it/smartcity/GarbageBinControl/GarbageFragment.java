@@ -18,6 +18,8 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,9 +45,15 @@ public class GarbageFragment extends Fragment
     View v;
     private RecyclerView recycview;
     private Spinner citySpinner;
-    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City");
     private CityAdapter cityAdapter;
     private final List<City> cityList = new ArrayList<>();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -54,19 +62,13 @@ public class GarbageFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_garbage, container, false);
         v = root;
         regid();
-        LoadDataInfo();
+        LoadAlldata();
         return root;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState)
+    private void LoadDatatoView(String name)
     {
-        super.onCreate(savedInstanceState);
-        System.out.println(cityList.size());
-    }
-
-    private void LoadDataInfo()
-    {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(name);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recycview.setLayoutManager(linearLayoutManager);
         ref.addValueEventListener(new ValueEventListener()
@@ -74,19 +76,15 @@ public class GarbageFragment extends Fragment
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
+                cityList.clear();
                 for (DataSnapshot cityload : snapshot.getChildren())
                 {
-                    String name = cityload.getKey();
-                    DataSnapshot dataload = cityload.child(name);
-                    for (DataSnapshot datacity : cityload.getChildren())
-                    {
-                        int id = Integer.parseInt(datacity.getKey());
-                        String address = datacity.child("address").getValue(String.class);
-                        double bin1 = datacity.child("bin 1").getValue(Double.class);
-                        double bin2 = datacity.child("bin 2").getValue(Double.class);
-                        double bin3 = datacity.child("bin 3").getValue(Double.class);
-                        cityList.add(new City(name,id,address,bin1,bin2,bin3));
-                    }
+                    int id = Integer.parseInt(cityload.getKey());
+                    String address = cityload.child("address").getValue(String.class);
+                    double bin1 = cityload.child("bin 1").getValue(Double.class);
+                    double bin2 = cityload.child("bin 2").getValue(Double.class);
+                    double bin3 = cityload.child("bin 3").getValue(Double.class);
+                    cityList.add(new City(name,id,address,bin1,bin2,bin3));
                 }
                 cityAdapter = new CityAdapter(getActivity(), cityList);
                 recycview.setAdapter(cityAdapter);
@@ -98,16 +96,47 @@ public class GarbageFragment extends Fragment
 
             }
         });
+
     }
 
-    private void addCity(City city)
+    private void LoadAlldata()
     {
-        cityList.add(city);
-    }
+        DatabaseReference refspin = FirebaseDatabase.getInstance().getReference("Garbage").child("City");
+        ArrayList<String> spinerlist = new ArrayList<>();
+        refspin.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                for(DataSnapshot spinnerlist : snapshot.getChildren())
+                {
+                    String name = spinnerlist.getKey();
+                    spinerlist.add(name);
+                }
+                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,spinerlist);
+                citySpinner.setAdapter(arrayAdapter);
+                citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+                    {
+                        LoadDatatoView(spinerlist.get(position));
+                    }
 
-    private void Spinnercreate()
-    {
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView)
+                    {
 
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+
+            }
+        });
     }
 
     private void regid()

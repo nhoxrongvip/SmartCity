@@ -6,7 +6,6 @@ package ca.chesm.it.smartcity;
 //        Last updated: Sep 27 2021
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,12 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,9 +37,9 @@ public class SnowLevelFragment extends Fragment {
     Button snow_alertBtn;
 
     Spinner snow_location;
+    TextView snow_level;
 
-
-    CircleImageView snow_weather;
+    CircleImageView snow_weather_image;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,7 +102,7 @@ public class SnowLevelFragment extends Fragment {
         });
 
         //Change weather image based on weather
-        snow_weather = v.findViewById(R.id.snowLevelImage);
+        snow_weather_image = v.findViewById(R.id.snowLevelImage);
 
         //Spinner location
         snow_location = v.findViewById(R.id.Snow_currentlocation);
@@ -111,8 +111,37 @@ public class SnowLevelFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         snow_location.setAdapter(adapter);
 
-        //
+        //Snow level simulator
+        snow_level = v.findViewById(R.id.snow_level);
+        snow_level.setText(randNoGen()+" cm");
 
+
+
+        //Image View change due to the change in snow level
+
+        snow_weather_image= v.findViewById(R.id.snowLevelImage);
+        String snow_result = snowlvCheck();
+        switch (snow_result)
+        {
+            case "low":
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
+                break;
+            case "medium":
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
+                break;
+            case "high":
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + snow_result);
+        }
+
+        class randNoGenerator extends TimerTask {
+            public void run() {
+                //Do something here please I am stupid
+
+            }
+        }
 
 
         //Returns
@@ -128,5 +157,30 @@ public class SnowLevelFragment extends Fragment {
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
         anim.start();
+    }
+
+    public int randNoGen(){
+        int min = 0;
+        int max = 25;
+        int radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
+        return radNum;
+    }
+
+    //Snow level checking level
+    public String snowlvCheck() {
+        try {
+            int value = randNoGen();
+            if (value >= 0 && value < 8) {
+                return "low";
+            } else if (value >= 8 && value < 16) {
+                return "medium";
+            } else if (value > 16 && value <= 25) {
+                return "high";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Not in range";
     }
 }
