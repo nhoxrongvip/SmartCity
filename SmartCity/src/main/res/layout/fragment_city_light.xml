@@ -31,7 +31,7 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@android:color/darker_gray"
+        android:background="@color/purple_200"
         android:text="On"
         android:visibility="visible" />
 
