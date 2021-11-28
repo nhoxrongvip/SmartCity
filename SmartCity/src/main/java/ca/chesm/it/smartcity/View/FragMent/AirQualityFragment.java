@@ -63,7 +63,7 @@ public class AirQualityFragment extends Fragment {
     BarChart dailygraph;
 
     //Daily Graph data
-    List<Float> o3daily = new ArrayList<>(), pm10daily,pm25daily;
+    List<Float> o3daily, pm10daily, pm25daily;
     List<String> dateSupport;
 
     //API value
@@ -92,12 +92,10 @@ public class AirQualityFragment extends Fragment {
 
     private void barChartEntry(BarChart graph) {
         List<BarEntry> entries = new ArrayList<>();
-        for(int i=0;i<o3daily.size();i++){
+        for (int i = 0; i < o3daily.size(); i++) {
             entries.add(new BarEntry(i, o3daily.get(i)));
         }
-        for(float value:o3daily){
-            Log.d("o3 daily:", String.valueOf(value));
-        }
+
         BarDataSet set = new BarDataSet(entries, "BarDataSet");
         BarData data = new BarData(set);
         data.setBarWidth(0.5f);
@@ -248,7 +246,7 @@ public class AirQualityFragment extends Fragment {
 
         private void getPollutantsvalue(JSONObject dataObject) {
             try {
-                dataObject  =dataObject.getJSONObject("iaqi");
+                dataObject = dataObject.getJSONObject("iaqi");
                 pm25value = dataObject.getJSONObject("pm25").getString("v");
                 covalue = dataObject.getJSONObject("co").getString("v");
                 o3value = dataObject.getJSONObject("o3").getString("v");
@@ -257,21 +255,42 @@ public class AirQualityFragment extends Fragment {
             }
         }
 
+        //Messy code
         private void getDailyGraphvalue(JSONObject dataObject) {
             try {
                 dateSupport = new ArrayList<>();
-                //o3daily = new ArrayList<>();
-                JSONArray o3Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("o3");
+                o3daily = new ArrayList<>();
+                pm10daily = new ArrayList<>();
+                pm25daily = new ArrayList<>();
 
-                for(int i=0;i<o3Array.length();i++){
-                    JSONObject temp = o3Array.getJSONObject(i);
-                    String date = temp.getString("day");
-                    String o3dailyValue = temp.getString("avg");
+                JSONArray o3Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("o3");
+                JSONArray pm10Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("pm10");
+                JSONArray pm25Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("pm25");
+
+                for (int i = 0; i < o3Array.length(); i++) {
+                    JSONObject o3temp = o3Array.getJSONObject(i);
+                    String date = o3temp.getString("day");
+                    String o3dailyValue = o3temp.getString("avg");
                     dateSupport.add(date);
                     o3daily.add(Float.parseFloat(o3dailyValue));
                 }
 
-            } catch (JSONException e){
+                for (int i = 0; i < pm10Array.length(); i++) {
+                    JSONObject pm10temp = pm10Array.getJSONObject(i);
+                    String pm10dailyValue = pm10temp.getString("avg");
+                    Log.d("PM10 value:",pm10dailyValue);
+                    pm10daily.add(Float.parseFloat(pm10dailyValue));
+                }
+
+                for (int i = 0; i < pm25Array.length(); i++) {
+                    JSONObject pm25temp = pm25Array.getJSONObject(i);
+                    String pm25dailyValue = pm25temp.getString("avg");
+                    Log.d("PM25 value:",pm25dailyValue);
+                    pm25daily.add(Float.parseFloat(pm25dailyValue));
+                }
+
+
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
