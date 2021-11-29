@@ -163,13 +163,6 @@ public class MainActivity extends AppCompatActivity
                         String display = "Latitude:" + latitude + " Longitude:" +longitude;
                         Toast.makeText(MainActivity.this, display,Toast.LENGTH_SHORT).show();
 
-                        Bundle bundle = new Bundle();
-                        bundle.putDouble("Lat",latitude);
-                        bundle.putDouble("Longi",longitude);
-
-                        AirQualityFragment airQualityFragment = new AirQualityFragment();
-                        airQualityFragment.setArguments(bundle);
-
 
 
 
@@ -228,6 +221,11 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.AirQualityFragment:
                 frag = new AirQualityFragment();
+                getCurrentLocation();
+                Bundle bundle = new Bundle();
+                bundle.putDouble("Lat",latitude);
+                bundle.putDouble("Longi",longitude);
+                frag.setArguments(bundle);
                 break;
             case R.id.Fragment2:
                 frag = new GarbageFragment();
