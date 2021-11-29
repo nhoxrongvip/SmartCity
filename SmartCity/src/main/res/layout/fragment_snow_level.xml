@@ -80,7 +80,8 @@
                         android:textAlignment="center"
                         android:textSize="38sp"
                         android:textStyle="normal|italic"
-                        tools:ignore="RtlCompat" />
+                        tools:ignore="RtlCompat"
+                        android:layout_weight="1"/>
 
                  </LinearLayout>
 
@@ -91,7 +92,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/Snow_temp"
+                        android:id="@+id/Snow_tempBanner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -102,7 +103,20 @@
                         tools:ignore="RtlCompat" />
 
                     <TextView
-                        android:id="@+id/Snow_humid"
+                        android:id="@+id/Snow_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="Temperature"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold|italic"
+                        tools:ignore="RtlCompat" />
+
+
+                    <TextView
+                        android:id="@+id/Snow_humidBanner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -110,6 +124,18 @@
                         android:text="Humidity"
                         android:textAlignment="center"
                         android:textColor="@color/black"
+                        tools:ignore="RtlCompat" />
+
+                    <TextView
+                        android:id="@+id/Snow_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="Humidity"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold|italic"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
 
@@ -141,6 +167,7 @@
                 android:text="Call support"
                 android:textAlignment="center"
                 tools:ignore="RtlCompat" />
+
         </LinearLayout>
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/Snow_hoursgraph"

@@ -92,9 +92,7 @@
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
         <item>Toronto</item>
-        <item>Edmonton</item>
         <item>Montreal</item>
         <item>Vancouver</item>
-        <item>Ottawa</item>
     </string-array>
 </resources>
