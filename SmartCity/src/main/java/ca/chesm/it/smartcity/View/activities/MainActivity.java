@@ -151,7 +151,12 @@ public class MainActivity extends AppCompatActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100)
         {
-            getCurrentLocation();
+            try {
+                getCurrentLocation();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -239,10 +244,12 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.AirQualityFragment:
                 frag = new AirQualityFragment();
-                getCurrentLocation();
-                Bundle bundle = new Bundle();
-                bundle.putString("Hihi", "Alabatrap ");
-                frag.setArguments(bundle);
+                try {
+                    getCurrentLocation();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 break;
             case R.id.Fragment2:
                 frag = new GarbageFragment();
