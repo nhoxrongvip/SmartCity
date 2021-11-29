@@ -139,6 +139,16 @@ public class GarbageFragment extends Fragment
         });
     }
 
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        if (cityAdapter !=null)
+        {
+            cityAdapter.release();
+        }
+    }
+
     private void regid()
     {
         recycview = v.findViewById(R.id.rcv_data);

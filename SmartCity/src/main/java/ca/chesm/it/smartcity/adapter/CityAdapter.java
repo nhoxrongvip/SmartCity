@@ -27,7 +27,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     private List<City> mListCity;
     private FragmentActivity mFragment;
 
-    public CityAdapter(FragmentActivity fragment,List<City> listCity)
+    public CityAdapter(FragmentActivity fragment, List<City> listCity)
     {
         this.mFragment = fragment;
         this.mListCity = listCity;
@@ -37,7 +37,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     @Override
     public CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.glistview, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.glistview, parent, false);
         return new CityViewHolder(view);
     }
 
@@ -45,7 +45,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     public void onBindViewHolder(@NonNull CityViewHolder holder, int position)
     {
         City city = mListCity.get(position);
-        if(city == null)
+        if (city == null)
         {
             return;
         }
@@ -61,10 +61,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         Fragment fragment = new Garbagebin_Fragment();
         FragmentManager fragmentManager = mFragment.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container,fragment);
+        fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("city",city);
+        bundle.putSerializable("city", city);
         fragment.setArguments(bundle);
         fragmentTransaction.commit();
 
@@ -78,6 +78,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
             return mListCity.size();
         }
         return 0;
+    }
+
+    public void release()
+    {
+        mFragment = null;
     }
 
     //Cityviewholder

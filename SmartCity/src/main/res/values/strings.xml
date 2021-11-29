@@ -83,6 +83,9 @@
     <string name="textview">TextView</string>
     <string name="address">Address:</string>
     <string name="unitCM">cm</string>
+    <string name="organics_bin">Organic Bin</string>
+    <string name="reclycle_bin">Reclycle Bin</string>
+    <string name="garbage_bin">Garbage Bin</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
