@@ -148,7 +148,7 @@ public class SnowLevelFragment extends Fragment {
 
             //Snow level simulator
             snow_level = v.findViewById(R.id.snow_level);
-            snow_level.setText(radNum + " " + getActivity().getString(R.string.unitCM));
+            snow_level.setText(radNum + " cm" );
 
             //Snow level checking level
 
