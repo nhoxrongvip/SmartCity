@@ -75,18 +75,24 @@ public class GarbageFragment extends Fragment
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                cityList.clear();
-                for (DataSnapshot cityload : snapshot.getChildren())
-                {
-                    int id = Integer.parseInt(cityload.getKey());
-                    String address = cityload.child("address").getValue(String.class);
-                    double bin1 = cityload.child("bin 1").getValue(Double.class);
-                    double bin2 = cityload.child("bin 2").getValue(Double.class);
-                    double bin3 = cityload.child("bin 3").getValue(Double.class);
-                    cityList.add(new City(name, id, address, bin1, bin2, bin3));
+                try{
+                    cityList.clear();
+                    for (DataSnapshot cityload : snapshot.getChildren())
+                    {
+                        int id = Integer.parseInt(cityload.getKey());
+                        String address = cityload.child("address").getValue(String.class);
+                        double bin1 = cityload.child("bin 1").getValue(Double.class);
+                        double bin2 = cityload.child("bin 2").getValue(Double.class);
+                        double bin3 = cityload.child("bin 3").getValue(Double.class);
+                        cityList.add(new City(name, id, address, bin1, bin2, bin3));
+                    }
+                    cityAdapter = new CityAdapter(getActivity(), cityList);
+                    recycview.setAdapter(cityAdapter);
                 }
-                cityAdapter = new CityAdapter(getActivity(), cityList);
-                recycview.setAdapter(cityAdapter);
+                catch (Exception e)
+                {
+
+                }
             }
 
             @Override

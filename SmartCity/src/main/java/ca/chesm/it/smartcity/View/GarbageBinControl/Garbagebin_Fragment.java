@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
@@ -66,14 +70,40 @@ public class Garbagebin_Fragment extends Fragment
         return v;
     }
 
+    private double rndDataforBin()
+    {
+        int max = 100;
+        int min = 0;
+        Random rad = new Random();
+        double radNum = min + (max - min) * rad.nextDouble();
+        return radNum;
+    }
+
     private class ProgressbarBin extends AsyncTask<Void, Void, Void>
     {
-
 
         @Override
         protected Void doInBackground(Void... voids)
         {
-
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
+            try
+            {
+                while (true)
+                {
+                    Thread.sleep(10000);
+                    double temp = city.getBin1();
+                    String rad = String.format("%.2f",rndDataforBin());
+                    double number = Double.parseDouble(rad);
+                    ref.child("bin 1").setValue(number);
+                    city.setBin1(number);
+                    ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, temp, city.getBin1());
+                    anim.setDuration(1000);
+                    progressBar.startAnimation(anim);
+                }
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
             return null;
         }
 
