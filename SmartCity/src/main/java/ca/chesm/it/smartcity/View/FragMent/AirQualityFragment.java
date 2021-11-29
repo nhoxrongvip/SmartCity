@@ -8,6 +8,8 @@
 
 package ca.chesm.it.smartcity.View.FragMent;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -56,6 +58,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AirQualityFragment extends Fragment {
 
     View v;
+    SharedPreferences sharedPreferences;
 
     //AQI report components
     LinearLayout aqi_layout;
@@ -88,6 +91,14 @@ public class AirQualityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
+        Bundle b = this.getArguments();
+        sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
+        String hoho = sharedPreferences.getString("hello", "nothing");
+        System.out.println(hoho);
+        if(b != null)
+        {
+            System.out.println(b.getString("Hihi","KHong co gi"));
+        }
         getID();
         ReadJSONFeed feed = new ReadJSONFeed();
         feed.execute(url);
