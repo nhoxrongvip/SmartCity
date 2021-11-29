@@ -16,14 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,12 +62,13 @@ public class AirQualityFragment extends Fragment {
     TextView pollutants_pm25, pollutants_co, pollutants_o3;
 
     //Daily graph components
-    RadioButton rb_aqi, rb_co, rb_co2, rb_o3, rb_pm25, rb_so2, rb_no2;
+    RadioGroup dailyGroup;
+    RadioButton rb_o3,rb_pm10,rb_pm25;
     BarChart dailygraph;
 
     //Daily Graph data
-    List<Float> o3daily = new ArrayList<>(), pm10daily,pm25daily;
-    List<String> dateSupport;
+    List<Float> o3daily, pm10daily, pm25daily;
+    List<String> o3DateSupport, pm10DateSupport, pm25DateSupport;
 
     //API value
     public String aqivalue, pm25value, covalue, o3value;
@@ -78,8 +82,8 @@ public class AirQualityFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
         getID();
-        getAQIdata();
-        //barChartEntry(dailygraph);
+        ReadJSONFeed feed = new ReadJSONFeed();
+        feed.execute(url);
 
         return v;
     }
@@ -88,20 +92,34 @@ public class AirQualityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
-    private void barChartEntry(BarChart graph) {
+    private void barChartEntry(BarChart graph,List<Float> dailyValue,String labelsName,List<String> dateSupport) {
+        //Get data from List and Create a Bar
         List<BarEntry> entries = new ArrayList<>();
-        for(int i=0;i<o3daily.size();i++){
-            entries.add(new BarEntry(i, o3daily.get(i)));
+        for (int i = 0; i < dailyValue.size(); i++) {
+            entries.add(new BarEntry(i, dailyValue.get(i)));
         }
-        for(float value:o3daily){
-            Log.d("o3 daily:", String.valueOf(value));
-        }
-        BarDataSet set = new BarDataSet(entries, "BarDataSet");
+
+        //Create Bar Dataset with entries and labels
+        BarDataSet set = new BarDataSet(entries, labelsName);
+
+        //Set Bar attributes
         BarData data = new BarData(set);
         data.setBarWidth(0.5f);
         data.setValueTextSize(20f);
+
+        XAxis xAxis = graph.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(5f);
+
+        String[] date = dateSupport.toArray(new String[0]);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(date));
+
+
+
+        //Set data for graph
         graph.setData(data);
         graph.setFitBars(true);
         graph.invalidate();
@@ -119,23 +137,15 @@ public class AirQualityFragment extends Fragment {
         pollutants_co = v.findViewById(R.id.AQ_co);
         pollutants_o3 = v.findViewById(R.id.AQ_o3);
 
-        rb_aqi = v.findViewById(R.id.rb_aqi);
-        rb_co = v.findViewById(R.id.rb_co);
-        rb_co2 = v.findViewById(R.id.rb_co2);
-        rb_o3 = v.findViewById(R.id.rb_o3);
-        rb_pm25 = v.findViewById(R.id.rb_pm25);
-        rb_so2 = v.findViewById(R.id.rb_so2);
-        rb_no2 = v.findViewById(R.id.rb_no2);
+
+        rb_o3 = v.findViewById(R.id.rb_o3daily);
+        rb_pm25 = v.findViewById(R.id.rb_pm25daily);
+        rb_pm10 = v.findViewById(R.id.rb_pm10daily);
         dailygraph = v.findViewById(R.id.AQ_dailygraph);
-
-
-    }
-
-
-    private void getAQIdata() {
-        new ReadJSONFeed().execute(url);
+        dailyGroup = v.findViewById(R.id.dailyRG);
 
     }
+
 
     private void setPollutantsTextView() {
 
@@ -163,28 +173,14 @@ public class AirQualityFragment extends Fragment {
 
     }
 
-    private void setAQITextView() {
-        String aqi_result = aqiConditionCheck();
-        aqi_condition.setText(aqi_result);
-        switch (aqi_result) {
-            case "Good":
-                aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
-                aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
-                break;
-            case "Moderate":
-                aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
-                aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
-                break;
-            case "Unhealthy":
-                aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
-                aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + aqi_result);
-        }
-    }
+
 
     private class ReadJSONFeed extends AsyncTask<String, Void, String> {
+
+        public ReadJSONFeed(){
+
+
+        }
         private String readJSON(String address) {
             URL url = null;
             StringBuilder sb = new StringBuilder();
@@ -229,7 +225,23 @@ public class AirQualityFragment extends Fragment {
                 getDailyGraphvalue(dataObject);
                 setPollutantsTextView();
                 setAQITextView();
-                barChartEntry(dailygraph);
+                barChartEntry(dailygraph,o3daily,"03",o3DateSupport);
+                dailyGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+                    switch(i){
+                        case R.id.rb_o3daily:
+                            barChartEntry(dailygraph,o3daily,"03",o3DateSupport);
+                            break;
+                        case R.id.rb_pm10daily:
+                            barChartEntry(dailygraph,pm10daily,"PM1.0",pm10DateSupport);
+                            break;
+                        case R.id.rb_pm25daily:
+                            barChartEntry(dailygraph,pm25daily,"PM2.5",pm25DateSupport);
+                            break;
+
+                    }
+                });
+
+
             } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
             }
@@ -239,7 +251,6 @@ public class AirQualityFragment extends Fragment {
 
         private void getAQIvalue(JSONObject dataObject) {
             try {
-
                 aqivalue = dataObject.getString("aqi");
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -248,7 +259,7 @@ public class AirQualityFragment extends Fragment {
 
         private void getPollutantsvalue(JSONObject dataObject) {
             try {
-                dataObject  =dataObject.getJSONObject("iaqi");
+                dataObject = dataObject.getJSONObject("iaqi");
                 pm25value = dataObject.getJSONObject("pm25").getString("v");
                 covalue = dataObject.getJSONObject("co").getString("v");
                 o3value = dataObject.getJSONObject("o3").getString("v");
@@ -257,24 +268,76 @@ public class AirQualityFragment extends Fragment {
             }
         }
 
+        //Messy code
         private void getDailyGraphvalue(JSONObject dataObject) {
             try {
-                dateSupport = new ArrayList<>();
-                //o3daily = new ArrayList<>();
-                JSONArray o3Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("o3");
 
-                for(int i=0;i<o3Array.length();i++){
-                    JSONObject temp = o3Array.getJSONObject(i);
-                    String date = temp.getString("day");
-                    String o3dailyValue = temp.getString("avg");
-                    dateSupport.add(date);
+                o3daily = new ArrayList<>();
+                pm10daily = new ArrayList<>();
+                pm25daily = new ArrayList<>();
+
+                o3DateSupport = new ArrayList<>();
+                pm10DateSupport = new ArrayList<>();
+                pm25DateSupport = new ArrayList<>();
+
+
+                JSONArray o3Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("o3");
+                JSONArray pm10Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("pm10");
+                JSONArray pm25Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("pm25");
+
+                for (int i = 0; i < o3Array.length(); i++) {
+                    JSONObject o3temp = o3Array.getJSONObject(i);
+                    String date = o3temp.getString("day");
+                    String o3dailyValue = o3temp.getString("avg");
+                    o3DateSupport.add(date);
                     o3daily.add(Float.parseFloat(o3dailyValue));
                 }
 
-            } catch (JSONException e){
+                for (int i = 0; i < pm10Array.length(); i++) {
+                    JSONObject pm10temp = pm10Array.getJSONObject(i);
+                    String pm10dailyValue = pm10temp.getString("avg");
+                    String date = pm10temp.getString("day");
+
+                    pm10DateSupport.add(date);
+                    pm10daily.add(Float.parseFloat(pm10dailyValue));
+                }
+
+                for (int i = 0; i < pm25Array.length(); i++) {
+                    JSONObject pm25temp = pm25Array.getJSONObject(i);
+                    String pm25dailyValue = pm25temp.getString("avg");
+                    String date = pm25temp.getString("day");
+
+                    pm25DateSupport.add(date);
+
+                    pm25daily.add(Float.parseFloat(pm25dailyValue));
+                }
+
+
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
+        }
+
+        private void setAQITextView() {
+            String aqi_result = aqiConditionCheck();
+            aqi_condition.setText(aqi_result);
+            switch (aqi_result) {
+                case "Good":
+                    aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
+                    aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
+                    break;
+                case "Moderate":
+                    aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
+                    aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
+                    break;
+                case "Unhealthy":
+                    aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
+                    aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + aqi_result);
+            }
         }
 
 

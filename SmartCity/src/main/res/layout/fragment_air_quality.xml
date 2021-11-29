@@ -225,46 +225,30 @@
                 android:textAlignment="center"
                 />
             <RadioGroup
+                android:id="@+id/dailyRG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:checkedButton="@+id/rb_o3daily"
                 >
                 <RadioButton
-                    android:id="@+id/rb_aqi"
+                    android:id="@+id/rb_o3daily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/aq_aqi"/>
+                    android:text="@string/o3"/>
                 <RadioButton
-                    android:id="@+id/rb_co"
+                    android:id="@+id/rb_pm10daily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/aq_co"/>
+                    android:text="@string/pm1_0"/>
                 <RadioButton
-                    android:id="@+id/rb_co2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/co2"/>
-                <RadioButton
-                    android:id="@+id/rb_o3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aq_o3"/>
-                <RadioButton
-                    android:id="@+id/rb_pm25"
+                    android:id="@+id/rb_pm25daily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pm2_5"/>
-                <RadioButton
-                    android:id="@+id/rb_so2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aq_so2"/>
-                <RadioButton
-                    android:id="@+id/rb_no2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no2"/>
+
+
             </RadioGroup>
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/AQ_dailygraph"
