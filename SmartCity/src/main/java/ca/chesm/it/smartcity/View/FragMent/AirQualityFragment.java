@@ -8,6 +8,8 @@
 
 package ca.chesm.it.smartcity.View.FragMent;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -98,7 +100,6 @@ public class AirQualityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 

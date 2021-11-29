@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -45,8 +46,7 @@ import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView botnavigation;
     SharedPreferences sharedPreferences;
@@ -54,18 +54,18 @@ public class MainActivity extends AppCompatActivity
     FusedLocationProviderClient client;
     boolean sw;
 
+    SharedPreferences.Editor editor;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPreferences = this.getSharedPreferences("Switch", Context.MODE_PRIVATE);
-        sw = sharedPreferences.getBoolean("Switch",false);
-        if (sw == false)
-        {
+        editor = sharedPreferences.edit();
+        sw = sharedPreferences.getBoolean("Switch", false);
+        if (sw == false) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        } else
-        {
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
@@ -79,27 +79,23 @@ public class MainActivity extends AppCompatActivity
 
         AirQualityFragment airFrag = new AirQualityFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, airFrag,"Air Fragment").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, airFrag, "Air Fragment").commit();
 
 
     }
 
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_overflow, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Fragment frag;
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.menu_info:
                 frag = new AppInfoFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
@@ -108,15 +104,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.search1:
 //                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 //Check Conditions
-                if(ActivityCompat.checkSelfPermission(MainActivity.this,
+                if (ActivityCompat.checkSelfPermission(MainActivity.this,
                         android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(MainActivity.this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     //When both permission are granted, call the method to get Long and Lat
                     getCurrentLocation();
 
-                }
-                else {
+
+                } else {
                     //When permission is not granted, request permission
 
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
@@ -137,6 +133,7 @@ public class MainActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //Check condition
@@ -145,29 +142,26 @@ public class MainActivity extends AppCompatActivity
             getCurrentLocation();
         }
     }
+
     @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         //Check Condition: GPS_PROVIDER and NETWORK_PROVIDER
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             //When both permissions are granted, get last location
             client.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location l = task.getResult();
-                    if (l != null){
+                    if (l != null) {
                         //When location is not null, get Latitude and Longitude and display Toast
                         latitude = l.getLatitude();
                         longitude = l.getLongitude();
-                        String display = "Latitude:" + latitude + " Longitude:" +longitude;
-                        Toast.makeText(MainActivity.this, display,Toast.LENGTH_SHORT).show();
+                        String display = "Latitude:" + latitude + " Longitude:" + longitude;
+                        Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
 
-
-
-
-                    }
-                    else {
+                    } else {
                         //Initialize locaiton request
                         LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                                 .setInterval(10000)
@@ -180,19 +174,19 @@ public class MainActivity extends AppCompatActivity
                                 Location l1 = locationResult.getLastLocation();
                                 latitude = l1.getLatitude();
                                 longitude = l1.getLongitude();
-                                String display = "Latitude:" + latitude + "\tLongitude:" +longitude;
-                                Toast.makeText(MainActivity.this, display,Toast.LENGTH_SHORT).show();
+                                String display = "Latitude:" + latitude + "\tLongitude:" + longitude;
+                                Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
 
 
                             }
                         };
                         //Request locaiton update
-                        client.requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
+                        client.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
                     }
                 }
             });
 
-        }else {
+        } else {
             //When location service is not enable, go to location setting
             startActivity(new Intent(Settings.ACTION_LOCALE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
@@ -201,8 +195,7 @@ public class MainActivity extends AppCompatActivity
 
     //Back button pressed
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
                 .setCancelable(false)
@@ -217,15 +210,9 @@ public class MainActivity extends AppCompatActivity
     {
         Fragment frag = null;
         //Set the Fragment that is need to show
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.AirQualityFragment:
                 frag = new AirQualityFragment();
-                getCurrentLocation();
-                Bundle bundle = new Bundle();
-                bundle.putDouble("Lat",latitude);
-                bundle.putDouble("Longi",longitude);
-                frag.setArguments(bundle);
                 break;
             case R.id.Fragment2:
                 frag = new GarbageFragment();
@@ -239,11 +226,12 @@ public class MainActivity extends AppCompatActivity
 
         }
         item.setChecked(true);
+
+
         //Change the fragment to the selected fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
         return true;
     };
-
 
 
 }
