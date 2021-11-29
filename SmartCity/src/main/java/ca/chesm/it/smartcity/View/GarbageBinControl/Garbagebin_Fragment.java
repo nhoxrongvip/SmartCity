@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -80,26 +82,28 @@ public class Garbagebin_Fragment extends Fragment
         {
             orgabin_btn.setOnClickListener(view ->
             {
-                pool.shutdown();
-                pool = Executors.newFixedThreadPool(1);
                 txtbinname.setText(orgabin_btn.getText().toString());
-                pool.execute(new progressbaraniation(city.getBin1()+0.01));
+                ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin1());
+                anim.setDuration(1000);
+                progressBar.startAnimation(anim);
             });
 
             recylebin_btn.setOnClickListener(view ->
             {
-                pool.shutdown();
-                pool = Executors.newFixedThreadPool(1);
+
                 txtbinname.setText(recylebin_btn.getText().toString());
-                pool.execute(new progressbaraniation(city.getBin2()));
+                ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin2());
+                anim.setDuration(1000);
+                progressBar.startAnimation(anim);
+
             });
 
             garbagebin_btn.setOnClickListener(view ->
             {
-                pool.shutdown();
-                pool = Executors.newFixedThreadPool(1);
                 txtbinname.setText(garbagebin_btn.getText().toString());
-                pool.execute(new progressbaraniation(city.getBin3()));
+                ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin3());
+                anim.setDuration(1000);
+                progressBar.startAnimation(anim);
             });
         }
 
@@ -108,31 +112,37 @@ public class Garbagebin_Fragment extends Fragment
         {
             super.onPreExecute();
             txtbinname.setText(orgabin_btn.getText().toString());
-            pool = Executors.newFixedThreadPool(1);
-            pool.execute(new progressbaraniation(city.getBin1()+0.01));
+            ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin1());
+            anim.setDuration(1000);
+            progressBar.startAnimation(anim);
         }
 
     }
 
-    class progressbaraniation implements Runnable
+    public class ProgressBarAnimation extends Animation
     {
 
-        double number;
+        private ProgressBar progressBar;
+        private double from;
+        private double to;
 
-        public progressbaraniation(double number)
+        public ProgressBarAnimation(ProgressBar progressBar, double from, double to)
         {
-            this.number = number;
+            super();
+            this.progressBar = progressBar;
+            this.from = from;
+            this.to = to;
         }
 
         @Override
-        public void run()
+        protected void applyTransformation(float interpolatedTime, Transformation t)
         {
-            for (double i = 0; i < number; i += 0.01)
-            {
-                    progressBar.setProgress((int) i);
-                    txtbattery.setText(String.format("%.2f", i) + "%");
-            }
+            super.applyTransformation(interpolatedTime, t);
+            double value = from + (to - from) * interpolatedTime;
+            progressBar.setProgress((int) value);
+            txtbattery.setText(String.format("%.2f", value) + "%");
         }
+
     }
 
     private void setupid()
