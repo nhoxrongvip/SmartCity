@@ -115,12 +115,18 @@ public class MainActivity extends AppCompatActivity
                     //When both permission are granted, call the method to get Long and Lat
                     getCurrentLocation();
 
+
                 } else
                 {
                     //When permission is not granted, request permission
 
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
                 }
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("longitude",String.valueOf(longitude));
+                editor.putString("latitude",String.valueOf(latitude));
+                editor.apply();
                 return true;
             case R.id.overflow1:
                 Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
@@ -191,15 +197,14 @@ public class MainActivity extends AppCompatActivity
                                 longitude = l1.getLongitude();
                                 String display = "Latitude:" + latitude + "\tLongitude:" + longitude;
                                 Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
-
-
                             }
                         };
                         //Request locaiton update
                         client.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
                     }
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("hello",String.valueOf(longitude));
+                    editor.putString("longitude",String.valueOf(longitude));
+                    editor.putString("latitude",String.valueOf(latitude));
                     editor.apply();
                 }
             });

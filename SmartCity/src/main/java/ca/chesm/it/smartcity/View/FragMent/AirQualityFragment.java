@@ -80,8 +80,8 @@ public class AirQualityFragment extends Fragment {
     //API value
     public String aqivalue, pm25value, covalue, o3value;
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
-    private String city_name = "toronto";
-    private String url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
+    private String city_name ="";
+    private String url;
 
     //Location data
     double longitude,latitude;
@@ -93,15 +93,32 @@ public class AirQualityFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
         Bundle b = this.getArguments();
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
-        String hoho = sharedPreferences.getString("hello", "nothing");
-        System.out.println(hoho);
-        if(b != null)
-        {
-            System.out.println(b.getString("Hihi","KHong co gi"));
-        }
+        longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
+        latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
+
+
         getID();
+
+
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+
+
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 3);
+                city_name = addresses.get(0).getLocality();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            location.setText(city_name);
+        url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
         ReadJSONFeed feed = new ReadJSONFeed();
         feed.execute(url);
+
+
 
         return v;
     }
