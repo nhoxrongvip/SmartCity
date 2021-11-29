@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
     BottomNavigationView botnavigation;
     SharedPreferences sharedPreferences;
-    Double longitude, latitude;
+    double longitude, latitude;
     FusedLocationProviderClient client;
     boolean sw;
 

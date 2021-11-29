@@ -1,31 +1,46 @@
 package ca.chesm.it.smartcity.View.FragMent;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.ReviewFragControl.ReviewFragment;
+import ca.chesm.it.smartcity.View.activities.MainActivity;
 
 public class AppSettingFragment extends Fragment
 {
 
+    private static final int REQUEST_LOCATION = 1;
     SharedPreferences sharedPreferences;
     SwitchCompat swpotrait;
-    Button btnhelp;
+    Button btnhelp,btnPermission;
+
     View v;
 
 
@@ -82,12 +97,26 @@ public class AppSettingFragment extends Fragment
             fragmentTransaction.commit();
         });
 
+
+
+
+
         return v;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     public void setupid()
     {
         swpotrait = (SwitchCompat) v.findViewById(R.id.portraitlocker);
+        btnPermission = (Button) v.findViewById(R.id.btnPermission);
     }
+
+
+
+
 }

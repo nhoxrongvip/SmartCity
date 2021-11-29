@@ -4,12 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "ca.chesm.it.smartcity"
         minSdk 23
-        targetSdk 31
+        targetSdk 29
         versionCode 1
         versionName "1.0"
 

@@ -8,6 +8,8 @@
 
 package ca.chesm.it.smartcity.View.FragMent;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,10 +44,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.View.activities.MainActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -63,7 +67,7 @@ public class AirQualityFragment extends Fragment {
 
     //Daily graph components
     RadioGroup dailyGroup;
-    RadioButton rb_o3,rb_pm10,rb_pm25;
+    RadioButton rb_o3, rb_pm10, rb_pm25;
     BarChart dailygraph;
 
     //Daily Graph data
@@ -75,6 +79,9 @@ public class AirQualityFragment extends Fragment {
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
     private String city_name = "toronto";
     private String url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
+
+    //Location data
+    double longitude,latitude;
 
 
     @Override
@@ -95,7 +102,9 @@ public class AirQualityFragment extends Fragment {
 
     }
 
-    private void barChartEntry(BarChart graph,List<Float> dailyValue,String labelsName,List<String> dateSupport) {
+
+
+    private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport) {
         //Get data from List and Create a Bar
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < dailyValue.size(); i++) {
@@ -116,7 +125,6 @@ public class AirQualityFragment extends Fragment {
 
         String[] date = dateSupport.toArray(new String[0]);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(date));
-
 
 
         //Set data for graph
@@ -174,13 +182,13 @@ public class AirQualityFragment extends Fragment {
     }
 
 
-
     private class ReadJSONFeed extends AsyncTask<String, Void, String> {
 
-        public ReadJSONFeed(){
+        public ReadJSONFeed() {
 
 
         }
+
         private String readJSON(String address) {
             URL url = null;
             StringBuilder sb = new StringBuilder();
@@ -225,21 +233,22 @@ public class AirQualityFragment extends Fragment {
                 getDailyGraphvalue(dataObject);
                 setPollutantsTextView();
                 setAQITextView();
-                barChartEntry(dailygraph,o3daily,"03",o3DateSupport);
+                barChartEntry(dailygraph, o3daily, "03", o3DateSupport);
                 dailyGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-                    switch(i){
+                    switch (i) {
                         case R.id.rb_o3daily:
-                            barChartEntry(dailygraph,o3daily,"03",o3DateSupport);
+                            barChartEntry(dailygraph, o3daily, "03", o3DateSupport);
                             break;
                         case R.id.rb_pm10daily:
-                            barChartEntry(dailygraph,pm10daily,"PM1.0",pm10DateSupport);
+                            barChartEntry(dailygraph, pm10daily, "PM1.0", pm10DateSupport);
                             break;
                         case R.id.rb_pm25daily:
-                            barChartEntry(dailygraph,pm25daily,"PM2.5",pm25DateSupport);
+                            barChartEntry(dailygraph, pm25daily, "PM2.5", pm25DateSupport);
                             break;
 
                     }
                 });
+
 
 
             } catch (JSONException jsonException) {
