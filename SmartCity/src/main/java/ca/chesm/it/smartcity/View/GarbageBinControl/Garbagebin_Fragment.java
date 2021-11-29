@@ -129,16 +129,8 @@ public class Garbagebin_Fragment extends Fragment
         {
             for (double i = 0; i < number; i += 0.01)
             {
-                try
-                {
-                    Thread.sleep(0,1);
                     progressBar.setProgress((int) i);
                     txtbattery.setText(String.format("%.2f", i) + "%");
-                }
-                catch (Exception e)
-                {
-
-                }
             }
         }
     }

@@ -6,7 +6,6 @@ package ca.chesm.it.smartcity.View.GarbageBinControl;/*
 */
 
 
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -84,7 +83,7 @@ public class GarbageFragment extends Fragment
                     double bin1 = cityload.child("bin 1").getValue(Double.class);
                     double bin2 = cityload.child("bin 2").getValue(Double.class);
                     double bin3 = cityload.child("bin 3").getValue(Double.class);
-                    cityList.add(new City(name,id,address,bin1,bin2,bin3));
+                    cityList.add(new City(name, id, address, bin1, bin2, bin3));
                 }
                 cityAdapter = new CityAdapter(getActivity(), cityList);
                 recycview.setAdapter(cityAdapter);
@@ -108,27 +107,33 @@ public class GarbageFragment extends Fragment
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                for(DataSnapshot spinnerlist : snapshot.getChildren())
+                try
                 {
-                    String name = spinnerlist.getKey();
-                    spinerlist.add(name);
+                    for (DataSnapshot spinnerlist : snapshot.getChildren())
+                    {
+                        String name = spinnerlist.getKey();
+                        spinerlist.add(name);
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, spinerlist);
+                    citySpinner.setAdapter(arrayAdapter);
+                    citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                    {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
+                        {
+                            LoadDatatoView(spinerlist.get(position));
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView)
+                        {
+
+                        }
+                    });
+                } catch (Exception e)
+                {
+
                 }
-                ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,spinerlist);
-                citySpinner.setAdapter(arrayAdapter);
-                citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
-                    {
-                        LoadDatatoView(spinerlist.get(position));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView)
-                    {
-
-                    }
-                });
             }
 
             @Override
@@ -143,7 +148,7 @@ public class GarbageFragment extends Fragment
     public void onDestroy()
     {
         super.onDestroy();
-        if (cityAdapter !=null)
+        if (cityAdapter != null)
         {
             cityAdapter.release();
         }

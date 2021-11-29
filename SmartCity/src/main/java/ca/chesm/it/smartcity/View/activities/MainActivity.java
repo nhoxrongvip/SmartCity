@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("longitude",String.valueOf(longitude));
-                editor.putString("latitude",String.valueOf(latitude));
+                editor.putString("longitude", String.valueOf(longitude));
+                editor.putString("latitude", String.valueOf(latitude));
                 editor.apply();
                 return true;
             case R.id.overflow1:
@@ -151,9 +151,11 @@ public class MainActivity extends AppCompatActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100)
         {
-            try {
+            try
+            {
                 getCurrentLocation();
-            }catch (Exception e){
+            } catch (Exception e)
+            {
                 e.printStackTrace();
             }
 
@@ -174,43 +176,49 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onComplete(@NonNull Task<Location> task)
                 {
-                    Location l = task.getResult();
-                    if (l != null)
+                    try
                     {
-                        //When location is not null, get Latitude and Longitude and display Toast
-                        latitude = l.getLatitude();
-                        longitude = l.getLongitude();
-                        String display = "Latitude:" + latitude + " Longitude:" + longitude;
-                        Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
-
-
-                    } else
-                    {
-                        //Initialize locaiton request
-                        LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                                .setInterval(10000)
-                                .setFastestInterval(1000)
-                                .setNumUpdates(1);
-                        //Initialize location call back
-                        LocationCallback locationCallback = new LocationCallback()
+                        Location l = task.getResult();
+                        if (l != null)
                         {
-                            @Override
-                            public void onLocationResult(@NonNull LocationResult locationResult)
+                            //When location is not null, get Latitude and Longitude and display Toast
+                            latitude = l.getLatitude();
+                            longitude = l.getLongitude();
+                            String display = "Latitude:" + latitude + " Longitude:" + longitude;
+                            Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
+
+
+                        } else
+                        {
+                            //Initialize locaiton request
+                            LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                                    .setInterval(10000)
+                                    .setFastestInterval(1000)
+                                    .setNumUpdates(1);
+                            //Initialize location call back
+                            LocationCallback locationCallback = new LocationCallback()
                             {
-                                Location l1 = locationResult.getLastLocation();
-                                latitude = l1.getLatitude();
-                                longitude = l1.getLongitude();
-                                String display = "Latitude:" + latitude + "\tLongitude:" + longitude;
-                                Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
-                            }
-                        };
-                        //Request locaiton update
-                        client.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                                @Override
+                                public void onLocationResult(@NonNull LocationResult locationResult)
+                                {
+                                    Location l1 = locationResult.getLastLocation();
+                                    latitude = l1.getLatitude();
+                                    longitude = l1.getLongitude();
+                                    String display = "Latitude:" + latitude + "\tLongitude:" + longitude;
+                                    Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
+                                }
+                            };
+                            //Request locaiton update
+                            client.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                        }
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("longitude", String.valueOf(longitude));
+                        editor.putString("latitude", String.valueOf(latitude));
+                        editor.apply();
+                    } catch (Exception e)
+                    {
+
                     }
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("longitude",String.valueOf(longitude));
-                    editor.putString("latitude",String.valueOf(latitude));
-                    editor.apply();
                 }
             });
 
@@ -244,9 +252,11 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.AirQualityFragment:
                 frag = new AirQualityFragment();
-                try {
+                try
+                {
                     getCurrentLocation();
-                }catch (Exception e){
+                } catch (Exception e)
+                {
                     e.printStackTrace();
                 }
 
