@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sharedPreferences = this.getSharedPreferences("Switch", Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         sw = sharedPreferences.getBoolean("Switch", false);
         if (sw == false) {

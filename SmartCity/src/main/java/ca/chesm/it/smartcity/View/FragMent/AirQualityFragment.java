@@ -318,7 +318,6 @@ public class AirQualityFragment extends Fragment {
                     String date = pm25temp.getString("day");
 
                     pm25DateSupport.add(date);
-
                     pm25daily.add(Float.parseFloat(pm25dailyValue));
                 }
 
