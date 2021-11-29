@@ -93,8 +93,8 @@ public class SnowLevelFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_snow_level, container, false);
 
         //Blinking effect for Alert button
-        snow_alert = (TextView) v.findViewById(R.id.Snow_Alert);
-        snow_alertBtn = (Button) v.findViewById(R.id.Snow_AlertBtn);
+        snow_alert = v.findViewById(R.id.Snow_Alert);
+        snow_alertBtn = v.findViewById(R.id.Snow_AlertBtn);
         snow_alertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,26 +111,16 @@ public class SnowLevelFragment extends Fragment {
                 R.array.snow_locationarray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         snow_location.setAdapter(adapter);
+        //Task timer
+        randNoGenerator snowlvTask = new randNoGenerator();
+        Timer timer = new Timer();
+        timer.schedule(snowlvTask, 0, 5000);
 
-        timer.schedule(snowlvTask, 10, 5000);
 
         //Image View change due to the change in snow level
         snow_weather_image= v.findViewById(R.id.snowLevelImage);
-        String snow_result = snowlvCheck();
-        switch (snow_result)
-        {
-            case "low":
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
-                break;
-            case "medium":
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
-                break;
-            case "high":
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + snow_result);
-        }
+
+
 
 
         //Returns
@@ -147,43 +137,37 @@ public class SnowLevelFragment extends Fragment {
         anim.setRepeatCount(Animation.INFINITE);
         anim.start();
     }
-
-    public int radNum = 0;
     class randNoGenerator extends TimerTask {
+        @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
         public void run() {
             //Do something here please I am stupid
             //random no generator
             int min = 0;
             int max = 25;
-            radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
+            int radNum = (int)(Math.random() * (double)(max - min + 1) + (double)min);
 
             //Snow level simulator
             snow_level = v.findViewById(R.id.snow_level);
-            snow_level.setText(radNum + " " + getString(R.string.unitCM));
+            snow_level.setText(radNum + " cm" );
 
-        }
-    }
-    //Task timer
-    randNoGenerator snowlvTask = new randNoGenerator();
-    Timer timer = new Timer();
+            //Snow level checking level
 
-    //Snow level checking level
-    public String snowlvCheck() {
-        try {
-            int value = radNum;
-            if (value >= 0 && value < 8) {
-                return "low";
-            } else if (value >= 8 && value < 16) {
-                return "medium";
-            } else if (value > 16 && value <= 25) {
-                return "high";
+            try {
+                int value = radNum;
+                if (value >= 0 && value < 8) {
+                    snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
+                } else if (value >= 8 && value < 16) {
+                    snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
+                } else if (value > 16 && value <= 25) {
+                    snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return "Not in range";
     }
+
 
 
 }
