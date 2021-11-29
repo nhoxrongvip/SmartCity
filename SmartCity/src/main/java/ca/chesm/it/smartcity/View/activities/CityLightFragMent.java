@@ -7,6 +7,7 @@ package ca.chesm.it.smartcity.View.activities;
 
 import android.os.Bundle;
 
+import androidx.annotation.ArrayRes;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,11 +22,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.airbnb.lottie.L;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -69,6 +75,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
     private  Button btncheckperson;
     private Handler handler;
      private  Runnable runnable;
+     private Spinner spinner;
     public CityLightFragMent() {
         // Required empty public constructor
         Init();
@@ -94,23 +101,6 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
 
     private  void Init() {
 
-
-
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance("https://smartcity-69701-default-rtdb.firebaseio.com/");
-//        DatabaseReference databaseReference = database.getReference();
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        })
-
     }
 
     @Override
@@ -132,6 +122,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
         imageLight=view.findViewById(R.id.light);
         rcvLights = view.findViewById(R.id.rcvLights);
         btncheckperson=view.findViewById(R.id.btnPerson);
+        spinner = view.findViewById(R.id.spinerMode);
 
         cityLightPreSenter = new CityLightPreSenter(this);
         listLightCity = new ArrayList<>();
@@ -139,6 +130,47 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
         cityLightPreSenter.getDataCityLight();
         listLights = new ArrayList<>();
         lightPreSenter = new LightPreSenter(this);
+        String[] s= {"Select Mode","Manual","Auto"};
+        btncheckperson.setVisibility(View.GONE);
+        btnOnof.setVisibility(View.GONE);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,s);
+        spinner.setAdapter(arrayAdapter);
+        // Created the user can choice the buttom
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i>0){
+                    switch (i){
+                        case  1 : btnOnof.setVisibility(View.VISIBLE);
+                        btncheckperson.setVisibility(View.GONE);break;
+                        case 2:
+                            Calendar calendar = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+
+                            try {
+                                Date five_morning = simpleDateFormat.parse("5:00");
+                                Date five_tonight= simpleDateFormat.parse("17:00");
+                                Date timer_now = simpleDateFormat.parse(simpleDateFormat.format(calendar.getTime()));
+                                // The light will be on from 5:pm to 5:am
+                                if(timer_now.after(five_tonight) && timer_now.before(five_morning)){
+                                    btncheckperson.setVisibility(View.VISIBLE);
+                                    btnOnof.setVisibility(View.GONE);
+                                }else{
+                                    Toast.makeText(getActivity(), "Not this time!!!!", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
 
 
@@ -153,6 +185,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
                    liststreet.clear();
 
                }
+
                arrayAdapterStreetname = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,liststreet);
                spinerStreet.setAdapter(arrayAdapterStreetname);
                cityLightPreSenter.getDataListCityStreet(name_city);
@@ -222,6 +255,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
 
             }
         });
+        // Set up default distance radius
         btncheckperson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
