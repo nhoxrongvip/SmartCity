@@ -131,6 +131,7 @@ public class Garbagebin_Fragment extends Fragment
             {
                 try
                 {
+                    Thread.sleep(0,1);
                     progressBar.setProgress((int) i);
                     txtbattery.setText(String.format("%.2f", i) + "%");
                 }
