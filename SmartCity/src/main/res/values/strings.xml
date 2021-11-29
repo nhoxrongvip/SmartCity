@@ -83,6 +83,9 @@
     <string name="textview">TextView</string>
     <string name="address">Address:</string>
     <string name="unitCM">cm</string>
+    <string name="o3">O3</string>
+    <string name="pm1_0">PM1.0</string>
+
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
