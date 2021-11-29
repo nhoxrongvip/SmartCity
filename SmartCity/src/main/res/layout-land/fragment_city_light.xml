@@ -4,36 +4,50 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/SpinerCity"
-        android:layout_width="230dp"
-        android:layout_height="38dp"
+        android:layout_width="240dp"
+        android:layout_height="24dp"
+
         android:layout_gravity="center" />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/SpinerStreet"
-        android:layout_width="230dp"
-        android:layout_height="38dp"
+        android:layout_width="240dp"
+        android:layout_height="24dp"
         android:layout_gravity="center" />
 
-    <ImageView
-        android:id="@+id/light"
-        android:layout_width="105dp"
-        android:layout_height="53dp"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvLights"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        android:layout_marginTop="10dp" />
+
+    <Spinner
+        android:id="@+id/spinerMode"
         android:layout_gravity="center"
-        android:layout_margin="25dp"
-        android:src="@drawable/light_off" />
+        android:layout_width="260dp"
+        android:layout_height="24dp"/>
 
     <Button
+        android:textColor="@android:color/background_light"
         android:id="@+id/btnOnof"
-        android:layout_width="125dp"
-        android:layout_height="31dp"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/purple_200"
+        android:background="#3F51B5"
         android:text="On"
         android:visibility="visible" />
-
-
+    <Button
+        android:textColor="@android:color/background_light"
+        android:id="@+id/btnPerson"
+        android:layout_marginTop="10dp"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#3F51B5"
+        android:text="Person Check"
+        android:visibility="visible" />
 
 </LinearLayout>

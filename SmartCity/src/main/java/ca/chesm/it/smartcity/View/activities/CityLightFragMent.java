@@ -101,25 +101,6 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
 
     private  void Init() {
 
-
-
-
-
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance("https://smartcity-69701-default-rtdb.firebaseio.com/");
-//        DatabaseReference databaseReference = database.getReference();
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        })
-
     }
 
     @Override
@@ -274,6 +255,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
 
             }
         });
+        // Set up default distance radius
         btncheckperson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
