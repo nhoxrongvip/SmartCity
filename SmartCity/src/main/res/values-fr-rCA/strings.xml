@@ -66,7 +66,6 @@
     <string name="aq_o3">O3</string>
     <string name="aq_so2">SO2</string>
     <string name="remember_me">Remember me</string>
-    <string name="unitCM">\" cm\"</string>
     <string name="garbage_bins_fragment_control">Garbage Bins Control</string>
     <string name="city">City</string>
     <string name="textview">TextView</string>
