@@ -23,6 +23,11 @@
        android:id="@+id/rcvLights"
        android:layout_marginTop="10dp"
        android:layout_height="250dp"/>
+    <Spinner
+        android:id="@+id/spinerMode"
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="50dp"/>
 
     <Button
 android:textColor="@android:color/background_light"
