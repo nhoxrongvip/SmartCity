@@ -72,10 +72,14 @@ public class MainActivity extends AppCompatActivity
 
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AirQualityFragment()).commit();
+
 
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);
 
+
+        AirQualityFragment airFrag = new AirQualityFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, airFrag,"Air Fragment").commit();
 
 
     }
@@ -137,15 +141,8 @@ public class MainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //Check condition
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 100:
-                getCurrentLocation();
-                break;
-            case 200:
-                Toast.makeText(MainActivity.this, "Storage permission granted", Toast.LENGTH_SHORT).show();
-                break;
-
-
+        if (requestCode == 100) {
+            getCurrentLocation();
         }
     }
     @SuppressLint("MissingPermission")
@@ -166,6 +163,14 @@ public class MainActivity extends AppCompatActivity
                         String display = "Latitude:" + latitude + " Longitude:" +longitude;
                         Toast.makeText(MainActivity.this, display,Toast.LENGTH_SHORT).show();
 
+                        Bundle bundle = new Bundle();
+                        bundle.putDouble("Lat",latitude);
+                        bundle.putDouble("Longi",longitude);
+
+                        AirQualityFragment airQualityFragment = new AirQualityFragment();
+                        airQualityFragment.setArguments(bundle);
+
+
 
 
                     }
@@ -184,11 +189,7 @@ public class MainActivity extends AppCompatActivity
                                 longitude = l1.getLongitude();
                                 String display = "Latitude:" + latitude + "\tLongitude:" +longitude;
                                 Toast.makeText(MainActivity.this, display,Toast.LENGTH_SHORT).show();
-                                Bundle b = new Bundle();
-                                b.putDouble("Latitude",latitude);
-                                b.putDouble("Longitude",longitude);
-                                AirQualityFragment airFrag = new AirQualityFragment();
-                                airFrag.setArguments(b);
+
 
                             }
                         };
