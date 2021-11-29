@@ -71,7 +71,7 @@
             android:layout_weight="1"
             android:textSize="10dp"
             android:drawableLeft="@drawable/green_bin"
-            android:text="@string/organics_bin" />
+            android:text="Organic Bin" />
 
         <Button
             android:id="@+id/bluebinbtn"
@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:textSize="10dp"
             android:drawableLeft="@drawable/blue_bin"
-            android:text="@string/reclycle_bin"
+            android:text="Recycle Bin"
             android:layout_marginLeft="10dp"/>
 
         <Button
@@ -92,7 +92,7 @@
             android:layout_weight="1"
             android:textSize="10dp"
             android:drawableLeft="@drawable/black_bin"
-            android:text="@string/garbage_bin"
+            android:text="Garbage Bin"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
