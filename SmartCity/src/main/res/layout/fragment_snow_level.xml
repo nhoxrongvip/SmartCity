@@ -40,6 +40,7 @@
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     android:textStyle="bold|italic"
+                    android:format12Hour="hh:mm:ss a"
                     tools:ignore="RtlCompat" />
             </LinearLayout>
 
@@ -51,7 +52,7 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/snowLevelImage"
-                    android:layout_width="15dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/customborder"

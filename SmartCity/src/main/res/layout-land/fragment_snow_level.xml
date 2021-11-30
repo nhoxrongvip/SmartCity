@@ -30,7 +30,7 @@
                     android:textAlignment="center" />
 
                 <TextView
-                    android:layout_width="339dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="5dp"
@@ -123,10 +123,10 @@
 
             <TextView
                 android:id="@+id/Snow_Alert"
-                android:layout_width="211dp"
+                android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="ALERT if there is an object blocking the sensor"
+                android:text="@string/warning"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -137,8 +137,8 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="60dp"
-                android:text="Call support"
+                android:layout_marginStart="150dp"
+                android:text="@string/call_support"
                 android:textAlignment="center"
                 tools:ignore="RtlCompat" />
         </LinearLayout>

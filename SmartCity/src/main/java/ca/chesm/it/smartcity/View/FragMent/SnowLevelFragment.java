@@ -196,7 +196,7 @@ public class SnowLevelFragment extends Fragment {
 
     public void callSupport(){
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel: 4166753111"));
+        intent.setData(Uri.parse("tel: 6476771222"));
         startActivity(intent);
     }
 
