@@ -87,11 +87,16 @@
     <string name="garbage_bin">Garbage Bin</string>
     <string name="reclycle_bin">Reclycle Bin</string>
     <string name="organics_bin">Organics Bin</string>
+    <string name="warning">Snow storm warning!!!</string>
+    <string name="call_support">Call support</string>
+    <string name="humidityBanner">Humidity</string>
+    <string name="temperatureBanner">Temperature</string>
+    <string name="snow_levelBanner">Snow Level</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
-        <item>Toronto</item>
-        <item>Montreal</item>
         <item>Vancouver</item>
+        <item>Montreal</item>
+        <item>Toronto</item>
     </string-array>
 </resources>

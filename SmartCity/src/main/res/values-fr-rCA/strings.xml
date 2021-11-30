@@ -72,6 +72,9 @@
     <string name="address">Address:</string>
     <string name="o3">O3</string>
     <string name="pm1_0">PM1.0</string>
+    <string name="warning">Blizzard warning!!!</string>
+    <string name="call_support">Call support</string>
+    <string name="temperatureBanner">Temperature</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">

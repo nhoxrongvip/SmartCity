@@ -8,10 +8,12 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -37,6 +39,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,7 +58,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SnowLevelFragment extends Fragment {
     View v;
 
-    TextView snow_alert;
+    TextView snow_alert, snow_time;
     Button snow_alertBtn;
 
     Spinner snow_location;
@@ -64,6 +68,7 @@ public class SnowLevelFragment extends Fragment {
     //Location data
     double longitude, latitude;
 
+    //API
     SharedPreferences sharedPreferences;
     private String city_name = "";
     private String url;
@@ -109,9 +114,7 @@ public class SnowLevelFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,13 +122,16 @@ public class SnowLevelFragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_snow_level, container, false);
 
-        //Blinking effect for Alert button
+        //Blinking effect for Alert textview
         snow_alert = v.findViewById(R.id.Snow_Alert);
+
+
+        //Call support button
         snow_alertBtn = v.findViewById(R.id.Snow_AlertBtn);
         snow_alertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BlinkEffect();
+                callSupport();
             }
         });
 
@@ -137,6 +143,8 @@ public class SnowLevelFragment extends Fragment {
         humidity = v.findViewById(R.id.Snow_humidity);
         snow_lv = v.findViewById(R.id.snow_level);
 
+        //Show current time
+        snow_time = v.findViewById(R.id.snow_currentTime);
 
 
         //Spinner location
@@ -146,11 +154,8 @@ public class SnowLevelFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         snow_location.setAdapter(adapter);
 
-
+        //Get location
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
-        longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
-        latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
-
         longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
         latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
 
@@ -163,7 +168,7 @@ public class SnowLevelFragment extends Fragment {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 3);
             city_name = addresses.get(0).getLocality();
-            int spinnerPosition = adapter.getPosition(city_name);
+            int spinnerPosition = adapter.getPosition(city_name); //set default location for the spinner
             snow_location.setSelection(spinnerPosition);
 
         } catch (Exception e) {
@@ -188,6 +193,20 @@ public class SnowLevelFragment extends Fragment {
         anim.setRepeatCount(Animation.INFINITE);
         anim.start();
     }
+
+    public void callSupport(){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel: 4166753111"));
+        startActivity(intent);
+    }
+
+    public void currentTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        String currentTime = sdf.format(new Date());
+        snow_time.setText(currentTime);
+
+    }
+
 
     public void setSnowTHView() {
         temperature.setText(temp);
@@ -239,15 +258,10 @@ public class SnowLevelFragment extends Fragment {
                 JSONObject dataObject = new JSONObject(result);
                 JSONObject dataMain = dataObject.getJSONObject("main");
 
-                if (dataObject.has("snow")) {
-                    JSONObject dataSnow = dataObject.getJSONObject("snow");
-                    getSnow(dataSnow);
-                } else {
-                    snow = "0";
-                }
-
                 getTemperature(dataMain);
                 getHumidity(dataMain);
+
+                snowCheck(dataObject);
                 setSnowTHView();
 
 
@@ -276,9 +290,21 @@ public class SnowLevelFragment extends Fragment {
             }
         }
 
+        public void snowCheck(JSONObject dataObject) throws JSONException {
+            if (dataObject.has("snow")) {
+                JSONObject dataSnow = dataObject.getJSONObject("snow");
+                getSnow(dataSnow);
+
+            } else {
+                snow = "0";
+            }
+        }
         public void getSnow(JSONObject dataObject) {
             try {
                 snow = dataObject.getString("1h");
+                if (Double.parseDouble(snow) >= 60){
+                    BlinkEffect();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
