@@ -76,7 +76,7 @@ public class SnowLevelFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String APIkey = "fb3bee783ff014198af717516379bfe1";
+    private final String APIkey = "fb3bee783ff014198af717516379bfe1";
 
     public SnowLevelFragment() {
         // Required empty public constructor
