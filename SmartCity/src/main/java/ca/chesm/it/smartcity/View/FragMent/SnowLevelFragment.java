@@ -297,6 +297,7 @@ public class SnowLevelFragment extends Fragment {
 
             } else {
                 snow = "0";
+                snowLVCheck(Double.parseDouble(snow));
             }
         }
         public void getSnow(JSONObject dataObject) {
@@ -305,8 +306,20 @@ public class SnowLevelFragment extends Fragment {
                 if (Double.parseDouble(snow) >= 60){
                     BlinkEffect();
                 }
+                snowLVCheck(Double.parseDouble(snow));
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+        }
+        public void snowLVCheck(double value){
+            if (value <= 0) {
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.nosnow));
+            } else if (value >= 0 && value < 1) {
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
+            } else if (value > 1 && value <= 4) {
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
+            } else{
+                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
             }
         }
     }
