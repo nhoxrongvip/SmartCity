@@ -22,12 +22,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,10 +45,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -73,6 +85,11 @@ public class SnowLevelFragment extends Fragment {
     private String city_name = "";
     private String url;
     public String humid, snow, temp;
+
+    List<Float> snowValueList;
+    List<String> snowDailyList, locationArray;
+    BarChart dailygraph;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -125,6 +142,8 @@ public class SnowLevelFragment extends Fragment {
         //Blinking effect for Alert textview
         snow_alert = v.findViewById(R.id.Snow_Alert);
 
+        //Bar chart
+        dailygraph = v.findViewById(R.id.Snow_hoursgraph);
 
         //Call support button
         snow_alertBtn = v.findViewById(R.id.Snow_AlertBtn);
@@ -151,8 +170,25 @@ public class SnowLevelFragment extends Fragment {
         snow_location = v.findViewById(R.id.Snow_currentlocation);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.snow_locationarray, android.R.layout.simple_spinner_item);
+
+        locationArray = Arrays.asList(getResources().getStringArray(R.array.snow_locationarray));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         snow_location.setAdapter(adapter);
+        snow_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                url = "https://api.openweathermap.org/data/2.5/forecast?q=" + locationArray.get(position) + "&appid=" + APIkey;
+                ReadJSONFeed feed = new ReadJSONFeed();
+                feed.execute(url);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+
+        });
 
         //Get location
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
@@ -175,12 +211,42 @@ public class SnowLevelFragment extends Fragment {
             e.printStackTrace();
         }
 
-        url = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=" + APIkey;
+        url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city_name + "&appid=" + APIkey;
         ReadJSONFeed feed = new ReadJSONFeed();
         feed.execute(url);
 
         //Returns
         return v;
+    }
+
+
+    private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport) {
+        //Get data from List and Create a Bar
+        List<BarEntry> entries = new ArrayList<>();
+        for (int i = 0; i < dailyValue.size(); i++) {
+            entries.add(new BarEntry(i, dailyValue.get(i)));
+        }
+
+        //Create Bar Dataset with entries and labels
+        BarDataSet set = new BarDataSet(entries, labelsName);
+
+        //Set Bar attributes
+        BarData data = new BarData(set);
+        data.setBarWidth(0.5f);
+        data.setValueTextSize(20f);
+
+        XAxis xAxis = graph.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(5f);
+
+        String[] date = dateSupport.toArray(new String[0]);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(date));
+
+
+        //Set data for graph
+        graph.setData(data);
+        graph.setFitBars(true);
+        graph.invalidate();
     }
 
 
@@ -194,13 +260,13 @@ public class SnowLevelFragment extends Fragment {
         anim.start();
     }
 
-    public void callSupport(){
+    public void callSupport() {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel: 6476771222"));
         startActivity(intent);
     }
 
-    public void currentTime(){
+    public void currentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat();
         String currentTime = sdf.format(new Date());
         snow_time.setText(currentTime);
@@ -255,15 +321,18 @@ public class SnowLevelFragment extends Fragment {
         protected void onPostExecute(String result) {
 
             try {
-                JSONObject dataObject = new JSONObject(result);
-                JSONObject dataMain = dataObject.getJSONObject("main");
 
+                JSONObject dataObject = new JSONObject(result);
+                JSONArray dataList = dataObject.getJSONArray("list");
+                JSONObject dataMain = dataList.getJSONObject(0).getJSONObject("main");
+
+                getDailyGraphvalue(dataObject);
                 getTemperature(dataMain);
                 getHumidity(dataMain);
 
-                snowCheck(dataObject);
+                barChartEntry(dailygraph, snowValueList, "Snow value for 3 hours", snowDailyList);
+                snowCheck(dataList.getJSONObject(0));
                 setSnowTHView();
-
 
             } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
@@ -271,6 +340,35 @@ public class SnowLevelFragment extends Fragment {
 
 
         }
+
+
+         private void getDailyGraphvalue(JSONObject dataObject) {
+             try {
+
+                 snowValueList = new ArrayList<>();
+                 snowDailyList = new ArrayList<>();
+                 JSONArray snowArray = dataObject.getJSONArray("list");
+
+                 for (int i = 0; i < 6; i++) {
+                     JSONObject snowValue = snowArray.getJSONObject(i);
+                     String date = snowValue.getString("dt_txt").split(" ")[1].split(":")[0]+":"+snowValue.getString("dt_txt").split(" ")[1].split(":")[1];
+                     String snowHourlyValue;
+                     if(snowValue.has("snow")){
+                         snowHourlyValue = snowValue.getJSONObject("snow").getString("3h");
+                     }else{
+                         snowHourlyValue = "0";
+                     }
+                     snowDailyList.add(date);
+                     snowValueList.add(Float.parseFloat(snowHourlyValue));
+                 }
+             }
+                  catch(JSONException e)
+                 {
+                     e.printStackTrace();
+                 }
+
+             }
+         }
 
         public void getTemperature(JSONObject dataObject) {
             try {
@@ -300,10 +398,11 @@ public class SnowLevelFragment extends Fragment {
                 snowLVCheck(Double.parseDouble(snow));
             }
         }
+
         public void getSnow(JSONObject dataObject) {
             try {
-                snow = dataObject.getString("1h");
-                if (Double.parseDouble(snow) >= 60){
+                snow = dataObject.getString("3h");
+                if (Double.parseDouble(snow) >= 60) {
                     BlinkEffect();
                 }
                 snowLVCheck(Double.parseDouble(snow));
@@ -311,16 +410,17 @@ public class SnowLevelFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        public void snowLVCheck(double value){
+
+        public void snowLVCheck(double value) {
             if (value <= 0) {
                 snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.nosnow));
             } else if (value >= 0 && value < 1) {
                 snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
             } else if (value > 1 && value <= 4) {
                 snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
-            } else{
+            } else {
                 snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
             }
         }
     }
-}
+
