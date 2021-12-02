@@ -2,6 +2,7 @@ package ca.chesm.it.smartcity.View.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -10,10 +11,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 
 import com.github.appintro.AppIntro;
 import com.github.appintro.AppIntroFragment;
+import com.github.appintro.AppIntroPageTransformerType;
 
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.accounts.LoginActivity;
@@ -22,10 +28,13 @@ public class AppIntroduction extends AppIntro {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Add slides
         addSlide(AppIntroFragment.newInstance(
                 "Welcome to Smart City",
                 "Thanks for choosing Smart City\nLet's see what we have",
@@ -49,6 +58,17 @@ public class AppIntroduction extends AppIntro {
         ));
         askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},3,true);
 
+        //Set transformer type
+        setTransformer(AppIntroPageTransformerType.Fade.INSTANCE);
+        showStatusBar(true);
+        setSkipButtonEnabled(false);
+        isIndicatorEnabled();
+        setProgressIndicator();
+
+
+
+
+
         sharedPreferences = getApplicationContext().getSharedPreferences("Firsttime", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         if(sharedPreferences != null){
@@ -57,6 +77,7 @@ public class AppIntroduction extends AppIntro {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         }
+
 
 
     }
@@ -84,27 +105,31 @@ public class AppIntroduction extends AppIntro {
         super.onUserDeniedPermission(permissionName);
         new AlertDialog.Builder(this)
                 .setTitle("Permission is denied")
-                .setCancelable(true)
+                .setCancelable(false)
                 .setMessage("Uh oh! I need permission to run. Please allow me")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Click to allow Permission", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},3);
+                        askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},3,true);
+
                     }
                 }).create().show();
     }
 
+    //If user disable the permission, it goes to Settings screen
     @Override
     protected void onUserDisabledPermission(@NonNull String permissionName) {
         super.onUserDisabledPermission(permissionName);
         new AlertDialog.Builder(this)
                 .setTitle("Permission is disabled")
-                .setCancelable(true)
-                .setMessage("Uh oh! I need permission to run. Please allow me")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setCancelable(false)
+                .setMessage("Sorry, you disable the location permission. Press the button below to grant us permission")
+                .setNegativeButton("Click to allow permission", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},3);
+                    public void onClick(DialogInterface dialog, int which) {
+                       Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package",getPackageName(),null));
+                       i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                       startActivity(i);
                     }
                 }).create().show();
     }
