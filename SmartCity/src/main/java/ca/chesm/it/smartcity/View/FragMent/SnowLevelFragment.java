@@ -49,6 +49,7 @@ import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,7 +85,7 @@ public class SnowLevelFragment extends Fragment {
     SharedPreferences sharedPreferences;
     private String city_name = "";
     private String url;
-    public String humid, snow, temp;
+    public String humid, snow, temp,snowDay;
 
     List<Float> snowValueList;
     List<String> snowDailyList, locationArray;
@@ -237,7 +238,7 @@ public class SnowLevelFragment extends Fragment {
 
         XAxis xAxis = graph.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(5f);
+        xAxis.setTextSize(10f);
 
         String[] date = dateSupport.toArray(new String[0]);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(date));
@@ -330,7 +331,8 @@ public class SnowLevelFragment extends Fragment {
                 getTemperature(dataMain);
                 getHumidity(dataMain);
 
-                barChartEntry(dailygraph, snowValueList, "Snow value for 3 hours", snowDailyList);
+
+                barChartEntry(dailygraph, snowValueList, barDate(dataObject), snowDailyList);
                 snowCheck(dataList.getJSONObject(0));
                 setSnowTHView();
 
@@ -356,8 +358,9 @@ public class SnowLevelFragment extends Fragment {
                      if(snowValue.has("snow")){
                          snowHourlyValue = snowValue.getJSONObject("snow").getString("3h");
                      }else{
-                         snowHourlyValue = "0";
+                         snowHourlyValue = "00.00";
                      }
+
                      snowDailyList.add(date);
                      snowValueList.add(Float.parseFloat(snowHourlyValue));
                  }
@@ -422,5 +425,15 @@ public class SnowLevelFragment extends Fragment {
                 snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
             }
         }
+
+        public String barDate(JSONObject dataObject) throws JSONException {
+            JSONArray dateArray = dataObject.getJSONArray("list");
+            for (int i = 0; i < 6; i++){
+                JSONObject snowDate = dateArray.getJSONObject(i);
+                snowDay = snowDate.getString("dt_txt").split(" ")[0];
+            }
+            return snowDay;
+        }
     }
+
 
