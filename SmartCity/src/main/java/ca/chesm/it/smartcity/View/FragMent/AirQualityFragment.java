@@ -55,8 +55,7 @@ import ca.chesm.it.smartcity.View.activities.MainActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class AirQualityFragment extends Fragment
-{
+public class AirQualityFragment extends Fragment {
 
     View v;
     SharedPreferences sharedPreferences;
@@ -81,17 +80,16 @@ public class AirQualityFragment extends Fragment
     //API value
     public String aqivalue, pm25value, covalue, o3value;
     final String TOKEN = "335c6bfed754d30c7a80d76cd33f15a76c0f15c1";
-    private String city_name = "";
+    private String city_name ="";
     private String url;
 
     //Location data
-    double longitude, latitude;
+    double longitude,latitude;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
         Bundle b = this.getArguments();
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
@@ -107,38 +105,36 @@ public class AirQualityFragment extends Fragment
         geocoder = new Geocoder(getContext(), Locale.getDefault());
 
 
-        try
-        {
-            addresses = geocoder.getFromLocation(latitude, longitude, 3);
-            city_name = addresses.get(0).getLocality();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
 
-        location.setText(city_name);
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 3);
+                city_name = addresses.get(0).getLocality();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            location.setText(city_name);
         url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
         ReadJSONFeed feed = new ReadJSONFeed();
         feed.execute(url);
+
 
 
         return v;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
 
-    private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport)
-    {
+
+    private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport) {
         //Get data from List and Create a Bar
         List<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < dailyValue.size(); i++)
-        {
+        for (int i = 0; i < dailyValue.size(); i++) {
             entries.add(new BarEntry(i, dailyValue.get(i)));
         }
 
@@ -165,8 +161,7 @@ public class AirQualityFragment extends Fragment
     }
 
 
-    public void getID()
-    {
+    public void getID() {
         location = v.findViewById(R.id.AQ_currentlocation);
         aqi_quality = v.findViewById(R.id.AQ_quality);
         aqi_condition = v.findViewById(R.id.AQ_condition);
@@ -187,8 +182,7 @@ public class AirQualityFragment extends Fragment
     }
 
 
-    private void setPollutantsTextView()
-    {
+    private void setPollutantsTextView() {
 
         aqi_quality.setText(aqivalue);
         pollutants_pm25.setText(pm25value);
@@ -196,24 +190,18 @@ public class AirQualityFragment extends Fragment
         pollutants_o3.setText(o3value);
     }
 
-    public String aqiConditionCheck()
-    {
-        try
-        {
+    public String aqiConditionCheck() {
+        try {
             int value = Integer.parseInt(aqivalue);
-            if (value <= 50)
-            {
+            if (value <= 50) {
                 return "Good";
-            } else if (value >= 51 && value <= 100)
-            {
+            } else if (value >= 51 && value <= 100) {
                 return "Moderate";
-            } else if (value > 100)
-            {
+            } else if (value > 100) {
                 return "Unhealthy";
             }
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "Not in range";
@@ -221,29 +209,18 @@ public class AirQualityFragment extends Fragment
     }
 
 
-    private class ReadJSONFeed extends AsyncTask<String, Void, String>
-    {
+    private class ReadJSONFeed extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-
-        }
-
-        public ReadJSONFeed()
-        {
+        public ReadJSONFeed() {
 
 
         }
 
-        private String readJSON(String address)
-        {
+        private String readJSON(String address) {
             URL url = null;
             StringBuilder sb = new StringBuilder();
             HttpsURLConnection urlConnection = null;
-            try
-            {
+            try {
                 //Get URL
                 url = new URL(address);
                 //Open URL
@@ -252,18 +229,14 @@ public class AirQualityFragment extends Fragment
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(content));
                 String line;
-                while ((line = reader.readLine()) != null)
-                {
+                while ((line = reader.readLine()) != null) {
                     sb.append(line);
                 }
-            } catch (MalformedURLException e)
-            {
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
-            } finally
-            {
+            } finally {
                 urlConnection.disconnect();
             }
             return sb.toString();
@@ -271,18 +244,15 @@ public class AirQualityFragment extends Fragment
         }
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return readJSON(urls[0]);
         }
 
 
         @Override
-        protected void onPostExecute(String result)
-        {
+        protected void onPostExecute(String result) {
 
-            try
-            {
+            try {
                 JSONObject dataObject = new JSONObject(result).getJSONObject("data");
 
                 getAQIvalue(dataObject);
@@ -291,10 +261,8 @@ public class AirQualityFragment extends Fragment
                 setPollutantsTextView();
                 setAQITextView();
                 barChartEntry(dailygraph, o3daily, "03", o3DateSupport);
-                dailyGroup.setOnCheckedChangeListener((radioGroup, i) ->
-                {
-                    switch (i)
-                    {
+                dailyGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+                    switch (i) {
                         case R.id.rb_o3daily:
                             barChartEntry(dailygraph, o3daily, "03", o3DateSupport);
                             break;
@@ -309,44 +277,36 @@ public class AirQualityFragment extends Fragment
                 });
 
 
-            } catch (JSONException jsonException)
-            {
+
+            } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
             }
 
 
         }
 
-        private void getAQIvalue(JSONObject dataObject)
-        {
-            try
-            {
+        private void getAQIvalue(JSONObject dataObject) {
+            try {
                 aqivalue = dataObject.getString("aqi");
-            } catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        private void getPollutantsvalue(JSONObject dataObject)
-        {
-            try
-            {
+        private void getPollutantsvalue(JSONObject dataObject) {
+            try {
                 dataObject = dataObject.getJSONObject("iaqi");
                 pm25value = dataObject.getJSONObject("pm25").getString("v");
                 covalue = dataObject.getJSONObject("co").getString("v");
                 o3value = dataObject.getJSONObject("o3").getString("v");
-            } catch (JSONException jsonException)
-            {
+            } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
             }
         }
 
         //Messy code
-        private void getDailyGraphvalue(JSONObject dataObject)
-        {
-            try
-            {
+        private void getDailyGraphvalue(JSONObject dataObject) {
+            try {
 
                 o3daily = new ArrayList<>();
                 pm10daily = new ArrayList<>();
@@ -361,8 +321,7 @@ public class AirQualityFragment extends Fragment
                 JSONArray pm10Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("pm10");
                 JSONArray pm25Array = dataObject.getJSONObject("forecast").getJSONObject("daily").getJSONArray("pm25");
 
-                for (int i = 0; i < o3Array.length(); i++)
-                {
+                for (int i = 0; i < o3Array.length(); i++) {
                     JSONObject o3temp = o3Array.getJSONObject(i);
                     String date = o3temp.getString("day");
                     String o3dailyValue = o3temp.getString("avg");
@@ -370,8 +329,7 @@ public class AirQualityFragment extends Fragment
                     o3daily.add(Float.parseFloat(o3dailyValue));
                 }
 
-                for (int i = 0; i < pm10Array.length(); i++)
-                {
+                for (int i = 0; i < pm10Array.length(); i++) {
                     JSONObject pm10temp = pm10Array.getJSONObject(i);
                     String pm10dailyValue = pm10temp.getString("avg");
                     String date = pm10temp.getString("day");
@@ -380,8 +338,7 @@ public class AirQualityFragment extends Fragment
                     pm10daily.add(Float.parseFloat(pm10dailyValue));
                 }
 
-                for (int i = 0; i < pm25Array.length(); i++)
-                {
+                for (int i = 0; i < pm25Array.length(); i++) {
                     JSONObject pm25temp = pm25Array.getJSONObject(i);
                     String pm25dailyValue = pm25temp.getString("avg");
                     String date = pm25temp.getString("day");
@@ -391,19 +348,16 @@ public class AirQualityFragment extends Fragment
                 }
 
 
-            } catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
 
-        private void setAQITextView()
-        {
+        private void setAQITextView() {
             String aqi_result = aqiConditionCheck();
             aqi_condition.setText(aqi_result);
-            switch (aqi_result)
-            {
+            switch (aqi_result) {
                 case "Good":
                     aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
                     aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));

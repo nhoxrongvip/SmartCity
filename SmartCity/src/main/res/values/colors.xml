@@ -26,4 +26,5 @@
     <color name="aqi_normal">#FFD966</color>
     <color name="yello">#EFCA5B</color>
     <color name="aqi_bad">#CC0000</color>
+    <color name="IntroTitleBlue">#00aced</color>
 </resources>
