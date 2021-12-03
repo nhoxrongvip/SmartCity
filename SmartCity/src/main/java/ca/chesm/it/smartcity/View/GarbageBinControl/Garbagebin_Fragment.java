@@ -40,12 +40,10 @@ public class Garbagebin_Fragment extends Fragment
     private Runnable runnable;
     private TextView txtaddress, txtbattery, txtbinname;
     private Button orgabin_btn, recylebin_btn, garbagebin_btn;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     private String binname;
     private ProgressBar progressBar;
     private City city;
-    private Timer timer;
-    private boolean runb;
 
     public Garbagebin_Fragment()
     {
@@ -65,12 +63,7 @@ public class Garbagebin_Fragment extends Fragment
     {
         // Inflate the layout for this fragment
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
-        runb = sharedPreferences.getBoolean("Task Run", false);
         v = inflater.inflate(R.layout.garbagebin_fragment, container, false);
-        if(runb == true)
-        {
-            timer.cancel();
-        }
         Bundle bundle = this.getArguments();
         setupid();
         if (bundle != null)
@@ -100,6 +93,13 @@ public class Garbagebin_Fragment extends Fragment
         return v;
     }
 
+    //
+    private void SaveState()
+    {
+        sharedPreferences = getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
+
+    }
+
     private double rndDataforBin()
     {
         int max = 100;
@@ -109,6 +109,8 @@ public class Garbagebin_Fragment extends Fragment
         return radNum;
     }
 
+
+    //Use to generate random value
     private void binupdate(String name)
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
@@ -119,7 +121,7 @@ public class Garbagebin_Fragment extends Fragment
         double number = Double.parseDouble(rad);
         double number1 = Double.parseDouble(rad2);
         double number2 = Double.parseDouble(rad3);
-        ref.child(garbagebin_btn.getText().toString()).setValue(number);
+        ref.child(orgabin_btn.getText().toString()).setValue(number);
         ref.child(recylebin_btn.getText().toString()).setValue(number1);
         ref.child(garbagebin_btn.getText().toString()).setValue(number2);
         city.setBin1(number);
@@ -127,25 +129,6 @@ public class Garbagebin_Fragment extends Fragment
         anim.setDuration(1000);
         progressBar.startAnimation(anim);
     }
-
-    public class TestClass extends TimerTask{
-
-        public void doStuff()
-        {
-            binupdate(binname);
-        }
-
-        @Override
-        public void run()
-        {
-            if(runb == false)
-            {
-                doStuff();
-            }
-        }
-
-    }
-
 
     private class ProgressbarBin extends AsyncTask<Void, Void, Void>
     {

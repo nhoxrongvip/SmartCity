@@ -6,6 +6,8 @@ package ca.chesm.it.smartcity.View.GarbageBinControl;/*
 */
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,24 +50,31 @@ public class GarbageFragment extends Fragment
     private Spinner citySpinner;
     private CityAdapter cityAdapter;
     private final List<City> cityList = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
+    private static String CITY_NAME = "city_name";
+    private static String POSITION = "position";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
+        sharedPreferences = getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
         View root = inflater.inflate(R.layout.fragment_garbage, container, false);
         v = root;
         regid();
         LoadAlldata();
         return root;
     }
+
 
     private void LoadDatatoView(String name)
     {
@@ -75,21 +84,21 @@ public class GarbageFragment extends Fragment
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
-                try{
+                try
+                {
                     cityList.clear();
                     for (DataSnapshot cityload : snapshot.getChildren())
                     {
                         int id = Integer.parseInt(cityload.getKey());
                         String address = cityload.child("address").getValue(String.class);
-                        double bin1 = cityload.child("bin 1").getValue(Double.class);
-                        double bin2 = cityload.child("bin 2").getValue(Double.class);
-                        double bin3 = cityload.child("bin 3").getValue(Double.class);
+                        double bin1 = cityload.child("Organic Bin").getValue(Double.class);
+                        double bin2 = cityload.child("Recycle Bin").getValue(Double.class);
+                        double bin3 = cityload.child("Garbage Bin").getValue(Double.class);
                         cityList.add(new City(name, id, address, bin1, bin2, bin3));
                     }
                     cityAdapter = new CityAdapter(getActivity(), cityList);
                     recycview.setAdapter(cityAdapter);
-                }
-                catch (Exception e)
+                } catch (Exception e)
                 {
 
                 }
@@ -106,6 +115,8 @@ public class GarbageFragment extends Fragment
 
     private void LoadAlldata()
     {
+        int value = sharedPreferences.getInt(POSITION,0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         DatabaseReference refspin = FirebaseDatabase.getInstance().getReference("Garbage").child("City");
         ArrayList<String> spinerlist = new ArrayList<>();
         refspin.addListenerForSingleValueEvent(new ValueEventListener()
@@ -122,11 +133,20 @@ public class GarbageFragment extends Fragment
                     }
                     ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), R.layout.support_simple_spinner_dropdown_item, spinerlist);
                     citySpinner.setAdapter(arrayAdapter);
+                    if(value > 0)
+                    {
+                        citySpinner.setSelection(value);
+                    }
+                    else {
+                        citySpinner.setSelection(0);
+                    }
                     citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
                     {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
                         {
+                            editor.putInt(POSITION,position);
+                            editor.apply();
                             LoadDatatoView(spinerlist.get(position));
                         }
 
@@ -162,10 +182,10 @@ public class GarbageFragment extends Fragment
 
     private void regid()
     {
-        recycview = v.findViewById(R.id.rcv_data);
+        recycview = (RecyclerView) v.findViewById(R.id.rcv_data);
         recycview.setLayoutManager(new LinearLayoutManager(getActivity()));
         cityAdapter = new CityAdapter(getActivity(), new ArrayList<>());
         recycview.setAdapter(cityAdapter);
-        citySpinner = v.findViewById(R.id.gcityspinner);
+        citySpinner = (Spinner) v.findViewById(R.id.gcityspinner);
     }
 }

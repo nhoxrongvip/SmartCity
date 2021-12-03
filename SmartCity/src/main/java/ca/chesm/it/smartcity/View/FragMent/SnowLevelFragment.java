@@ -4,6 +4,7 @@ package ca.chesm.it.smartcity.View.FragMent;
 //        Course: CENG322-RND
 //        Purpose: Control Snow level on street
 //        Last updated: Sep 27 2021
+
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -16,6 +17,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -68,7 +70,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link SnowLevelFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SnowLevelFragment extends Fragment {
+public class SnowLevelFragment extends Fragment
+{
+
     View v;
 
     TextView snow_alert, snow_time;
@@ -85,7 +89,7 @@ public class SnowLevelFragment extends Fragment {
     SharedPreferences sharedPreferences;
     private String city_name = "";
     private String url;
-    public String humid, snow, temp,snowDay;
+    public String humid, snow, temp, snowDay;
 
     List<Float> snowValueList;
     List<String> snowDailyList, locationArray;
@@ -101,7 +105,8 @@ public class SnowLevelFragment extends Fragment {
     private String mParam2;
     private final String APIkey = "fb3bee783ff014198af717516379bfe1";
 
-    public SnowLevelFragment() {
+    public SnowLevelFragment()
+    {
         // Required empty public constructor
     }
 
@@ -115,7 +120,8 @@ public class SnowLevelFragment extends Fragment {
      * @return A new instance of fragment SnowLevelFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SnowLevelFragment newInstance(String param1, String param2) {
+    public static SnowLevelFragment newInstance(String param1, String param2)
+    {
         SnowLevelFragment fragment = new SnowLevelFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -125,9 +131,11 @@ public class SnowLevelFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -136,7 +144,8 @@ public class SnowLevelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_snow_level, container, false);
 
@@ -148,9 +157,11 @@ public class SnowLevelFragment extends Fragment {
 
         //Call support button
         snow_alertBtn = v.findViewById(R.id.Snow_AlertBtn);
-        snow_alertBtn.setOnClickListener(new View.OnClickListener() {
+        snow_alertBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 callSupport();
             }
         });
@@ -175,16 +186,19 @@ public class SnowLevelFragment extends Fragment {
         locationArray = Arrays.asList(getResources().getStringArray(R.array.snow_locationarray));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         snow_location.setAdapter(adapter);
-        snow_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        snow_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
                 url = "https://api.openweathermap.org/data/2.5/forecast?q=" + locationArray.get(position) + "&appid=" + APIkey;
                 ReadJSONFeed feed = new ReadJSONFeed();
                 feed.execute(url);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
 
             }
 
@@ -202,13 +216,15 @@ public class SnowLevelFragment extends Fragment {
         geocoder = new Geocoder(getContext(), Locale.getDefault());
 
 
-        try {
+        try
+        {
             addresses = geocoder.getFromLocation(latitude, longitude, 3);
             city_name = addresses.get(0).getLocality();
             int spinnerPosition = adapter.getPosition(city_name); //set default location for the spinner
             snow_location.setSelection(spinnerPosition);
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -221,10 +237,12 @@ public class SnowLevelFragment extends Fragment {
     }
 
 
-    private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport) {
+    private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport)
+    {
         //Get data from List and Create a Bar
         List<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < dailyValue.size(); i++) {
+        for (int i = 0; i < dailyValue.size(); i++)
+        {
             entries.add(new BarEntry(i, dailyValue.get(i)));
         }
 
@@ -252,7 +270,8 @@ public class SnowLevelFragment extends Fragment {
 
 
     @SuppressLint("WrongConstant")
-    public void BlinkEffect() {
+    public void BlinkEffect()
+    {
         ObjectAnimator anim = ObjectAnimator.ofInt(snow_alert, "backgroundColor", Color.WHITE, Color.RED, Color.WHITE);
         anim.setDuration(800);
         anim.setEvaluator(new ArgbEvaluator());
@@ -261,13 +280,15 @@ public class SnowLevelFragment extends Fragment {
         anim.start();
     }
 
-    public void callSupport() {
+    public void callSupport()
+    {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel: 6476771222"));
         startActivity(intent);
     }
 
-    public void currentTime() {
+    public void currentTime()
+    {
         SimpleDateFormat sdf = new SimpleDateFormat();
         String currentTime = sdf.format(new Date());
         snow_time.setText(currentTime);
@@ -275,28 +296,34 @@ public class SnowLevelFragment extends Fragment {
     }
 
 
-    public void setSnowTHView() {
+    public void setSnowTHView()
+    {
         temperature.setText(temp);
         humidity.setText(humid);
         snow_lv.setText(snow);
     }
 
-    private class ReadJSONFeed extends AsyncTask<String, Void, String> {
+    private class ReadJSONFeed extends AsyncTask<String, Void, String>
+    {
 
-        public ReadJSONFeed() {
+        public ReadJSONFeed()
+        {
 
         }
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... urls)
+        {
             return readJSON(urls[0]);
         }
 
-        private String readJSON(String address) {
+        private String readJSON(String address)
+        {
             URL url = null;
             StringBuilder sb = new StringBuilder();
             HttpsURLConnection urlConnection = null;
-            try {
+            try
+            {
                 //Get URL
                 url = new URL(address);
                 //Open URL
@@ -305,23 +332,29 @@ public class SnowLevelFragment extends Fragment {
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(content));
                 String line;
-                while ((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null)
+                {
                     sb.append(line);
                 }
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException e)
+            {
                 e.printStackTrace();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
-            } finally {
+            } finally
+            {
                 urlConnection.disconnect();
             }
             return sb.toString();
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
 
-            try {
+            try
+            {
 
                 JSONObject dataObject = new JSONObject(result);
                 JSONArray dataList = dataObject.getJSONArray("list");
@@ -336,7 +369,8 @@ public class SnowLevelFragment extends Fragment {
                 snowCheck(dataList.getJSONObject(0));
                 setSnowTHView();
 
-            } catch (JSONException jsonException) {
+            } catch (JSONException jsonException)
+            {
                 jsonException.printStackTrace();
             }
 
@@ -344,96 +378,120 @@ public class SnowLevelFragment extends Fragment {
         }
 
 
-         private void getDailyGraphvalue(JSONObject dataObject) {
-             try {
+        private void getDailyGraphvalue(JSONObject dataObject)
+        {
+            try
+            {
 
-                 snowValueList = new ArrayList<>();
-                 snowDailyList = new ArrayList<>();
-                 JSONArray snowArray = dataObject.getJSONArray("list");
+                snowValueList = new ArrayList<>();
+                snowDailyList = new ArrayList<>();
+                JSONArray snowArray = dataObject.getJSONArray("list");
 
-                 for (int i = 0; i < 6; i++) {
-                     JSONObject snowValue = snowArray.getJSONObject(i);
-                     String date = snowValue.getString("dt_txt").split(" ")[1].split(":")[0]+":"+snowValue.getString("dt_txt").split(" ")[1].split(":")[1];
-                     String snowHourlyValue;
-                     if(snowValue.has("snow")){
-                         snowHourlyValue = snowValue.getJSONObject("snow").getString("3h");
-                     }else{
-                         snowHourlyValue = "00.00";
-                     }
+                for (int i = 0; i < 6; i++)
+                {
+                    JSONObject snowValue = snowArray.getJSONObject(i);
+                    String date = snowValue.getString("dt_txt").split(" ")[1].split(":")[0] + ":" + snowValue.getString("dt_txt").split(" ")[1].split(":")[1];
+                    String snowHourlyValue;
+                    if (snowValue.has("snow"))
+                    {
+                        snowHourlyValue = snowValue.getJSONObject("snow").getString("3h");
+                    } else
+                    {
+                        snowHourlyValue = "00.00";
+                    }
 
-                     snowDailyList.add(date);
-                     snowValueList.add(Float.parseFloat(snowHourlyValue));
-                 }
-             }
-                  catch(JSONException e)
-                 {
-                     e.printStackTrace();
-                 }
-
-             }
-         }
-
-        public void getTemperature(JSONObject dataObject) {
-            try {
-                DecimalFormat df = new DecimalFormat("0.00");
-                temp = df.format(Double.parseDouble(dataObject.getString("temp")) - 273.15);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void getHumidity(JSONObject dataObject) {
-            try {
-                humid = dataObject.getString("humidity");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void snowCheck(JSONObject dataObject) throws JSONException {
-            if (dataObject.has("snow")) {
-                JSONObject dataSnow = dataObject.getJSONObject("snow");
-                getSnow(dataSnow);
-
-            } else {
-                snow = "0";
-                snowLVCheck(Double.parseDouble(snow));
-            }
-        }
-
-        public void getSnow(JSONObject dataObject) {
-            try {
-                snow = dataObject.getString("3h");
-                if (Double.parseDouble(snow) >= 60) {
-                    BlinkEffect();
+                    snowDailyList.add(date);
+                    snowValueList.add(Float.parseFloat(snowHourlyValue));
                 }
-                snowLVCheck(Double.parseDouble(snow));
-            } catch (JSONException e) {
+            } catch (JSONException e)
+            {
                 e.printStackTrace();
             }
-        }
 
-        public void snowLVCheck(double value) {
-            if (value <= 0) {
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.nosnow));
-            } else if (value >= 0 && value < 1) {
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
-            } else if (value > 1 && value <= 4) {
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
-            } else {
-                snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
-            }
-        }
-
-        public String barDate(JSONObject dataObject) throws JSONException {
-            JSONArray dateArray = dataObject.getJSONArray("list");
-            for (int i = 0; i < 6; i++){
-                JSONObject snowDate = dateArray.getJSONObject(i);
-                snowDay = snowDate.getString("dt_txt").split(" ")[0];
-            }
-            return snowDay;
         }
     }
+
+    public void getTemperature(JSONObject dataObject)
+    {
+        try
+        {
+            DecimalFormat df = new DecimalFormat("0.00");
+            temp = df.format(Double.parseDouble(dataObject.getString("temp")) - 273.15);
+
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void getHumidity(JSONObject dataObject)
+    {
+        try
+        {
+            humid = dataObject.getString("humidity");
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void snowCheck(JSONObject dataObject) throws JSONException
+    {
+        if (dataObject.has("snow"))
+        {
+            JSONObject dataSnow = dataObject.getJSONObject("snow");
+            getSnow(dataSnow);
+
+        } else
+        {
+            snow = "0";
+            snowLVCheck(Double.parseDouble(snow));
+        }
+    }
+
+    public void getSnow(JSONObject dataObject)
+    {
+        try
+        {
+            snow = dataObject.getString("3h");
+            if (Double.parseDouble(snow) >= 60)
+            {
+                BlinkEffect();
+            }
+            snowLVCheck(Double.parseDouble(snow));
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void snowLVCheck(double value)
+    {
+        if (value <= 0)
+        {
+            snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.nosnow));
+        } else if (value >= 0 && value < 1)
+        {
+            snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snow));
+        } else if (value > 1 && value <= 4)
+        {
+            snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowmedium));
+        } else
+        {
+            snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.snowheavy));
+        }
+    }
+
+    public String barDate(JSONObject dataObject) throws JSONException
+    {
+        JSONArray dateArray = dataObject.getJSONArray("list");
+        for (int i = 0; i < 6; i++)
+        {
+            JSONObject snowDate = dateArray.getJSONObject(i);
+            snowDay = snowDate.getString("dt_txt").split(" ")[0];
+        }
+        return snowDay;
+    }
+}
 
 
