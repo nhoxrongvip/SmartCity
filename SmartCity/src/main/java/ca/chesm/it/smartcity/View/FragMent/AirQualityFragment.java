@@ -8,13 +8,19 @@
 
 package ca.chesm.it.smartcity.View.FragMent;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +41,9 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,6 +106,7 @@ public class AirQualityFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
         getID();
 
+
         sharedPreferences = this.getActivity().getSharedPreferences("Firsttime", Context.MODE_PRIVATE);
         longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
         latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
@@ -107,15 +117,20 @@ public class AirQualityFragment extends Fragment {
 
 
 
+
+
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 3);
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
             city_name = addresses.get(0).getLocality();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         location.setText(city_name);
+
         url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
+
         ReadJSONFeed feed = new ReadJSONFeed();
         feed.execute(url);
 
@@ -124,21 +139,13 @@ public class AirQualityFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-    }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
 
     private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport) {
         //Get data from List and Create a Bar
@@ -157,11 +164,18 @@ public class AirQualityFragment extends Fragment {
 
         XAxis xAxis = graph.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(5f);
+
+
 
         String[] date = dateSupport.toArray(new String[0]);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(date));
 
+        if(date.length < 4) {
+            xAxis.setTextSize(15f);
+        }
+        else if(date.length < 10){
+            xAxis.setTextSize(8f);
+        }
 
         //Set data for graph
         graph.setData(data);
@@ -260,11 +274,16 @@ public class AirQualityFragment extends Fragment {
             pDialog = new ProgressDialog(getContext());
 
             startTime = System.currentTimeMillis();
-
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             pDialog.setMax(100);
             pDialog.setMessage("Loading data");
+            pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
             pDialog.show();
 
         }
@@ -277,8 +296,6 @@ public class AirQualityFragment extends Fragment {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-
-
         }
 
         @Override

@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressLint("MissingPermission")
-    private void getCurrentLocation()
+    public void getCurrentLocation()
     {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     //Back button pressed
-    /*@Override
+    @Override
     public void onBackPressed()
     {
         new AlertDialog.Builder(this)
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity
                 .create()
                 .show();
     }
-*/
+
     private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item ->
     {
         Fragment frag = null;
