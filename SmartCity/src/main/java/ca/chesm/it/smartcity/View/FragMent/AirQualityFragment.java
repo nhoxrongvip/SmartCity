@@ -8,12 +8,14 @@
 
 package ca.chesm.it.smartcity.View.FragMent;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -217,11 +219,15 @@ public class AirQualityFragment extends Fragment {
 
 
     private class ReadJSONFeed extends AsyncTask<String, Void, String> {
+        private ProgressDialog pDialog;
+        private long startTime;
 
         public ReadJSONFeed() {
 
 
         }
+
+
 
         private String readJSON(String address) {
             URL url = null;
@@ -249,15 +255,39 @@ public class AirQualityFragment extends Fragment {
             return sb.toString();
 
         }
+        @Override
+        protected void onPreExecute() {
+            pDialog = new ProgressDialog(getContext());
+
+            startTime = System.currentTimeMillis();
+
+            pDialog.setCancelable(true);
+            pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pDialog.setMax(100);
+            pDialog.setMessage("Loading data");
+            pDialog.show();
+
+        }
 
         @Override
         protected String doInBackground(String... urls) {
             return readJSON(urls[0]);
         }
 
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+
+
+        }
 
         @Override
         protected void onPostExecute(String result) {
+            long endTime = 1000 - (System.currentTimeMillis() - startTime);
+            if(endTime > 0 ){
+                SystemClock.sleep(endTime);
+            }
+            pDialog.dismiss();
 
             try {
                 JSONObject dataObject = new JSONObject(result).getJSONObject("data");
