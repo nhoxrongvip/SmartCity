@@ -378,7 +378,7 @@ public class SnowLevelFragment extends Fragment
         @Override
         protected void onPostExecute(String result)
         {
-            long endTime = 1000 - (System.currentTimeMillis() - startTime);
+            long endTime = 500 - (System.currentTimeMillis() - startTime);
             if(endTime > 0 ){
                 SystemClock.sleep(endTime);
             }
