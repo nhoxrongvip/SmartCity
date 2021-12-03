@@ -8,6 +8,7 @@ package ca.chesm.it.smartcity.View.FragMent;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +96,7 @@ public class SnowLevelFragment extends Fragment
     List<Float> snowValueList;
     List<String> snowDailyList, locationArray;
     BarChart dailygraph;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -307,7 +310,8 @@ public class SnowLevelFragment extends Fragment
 
     private class ReadJSONFeed extends AsyncTask<String, Void, String>
     {
-
+        private ProgressDialog proDia;
+        private long startTime;
         public ReadJSONFeed()
         {
 
@@ -352,8 +356,33 @@ public class SnowLevelFragment extends Fragment
         }
 
         @Override
+        protected void onPreExecute() {
+            proDia = new ProgressDialog(getContext());
+
+            startTime = System.currentTimeMillis();
+
+            proDia.setCancelable(true);
+            proDia.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            proDia.setMax(100);
+            proDia.setMessage("Loading data");
+            proDia.show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+
+
+        }
+        @Override
         protected void onPostExecute(String result)
         {
+            long endTime = 1000 - (System.currentTimeMillis() - startTime);
+            if(endTime > 0 ){
+                SystemClock.sleep(endTime);
+            }
+            proDia.dismiss();
 
             try
             {
