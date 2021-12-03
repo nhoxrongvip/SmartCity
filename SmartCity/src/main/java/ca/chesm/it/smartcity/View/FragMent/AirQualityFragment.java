@@ -425,15 +425,15 @@ public class AirQualityFragment extends Fragment {
                 switch (aqi_result) {
                     case "Good":
                         aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
-                        aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
+                        aqi_layout.setBackground(getResources().getDrawable(R.drawable.aq_section_layout_good));
                         break;
                     case "Moderate":
                         aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
-                        aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
+                        aqi_layout.setBackground(getResources().getDrawable(R.drawable.aq_section_layout_moderate));
                         break;
                     case "Unhealthy":
                         aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
-                        aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
+                        aqi_layout.setBackground(getResources().getDrawable(R.drawable.aq_section_layout_bad));
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + aqi_result);
