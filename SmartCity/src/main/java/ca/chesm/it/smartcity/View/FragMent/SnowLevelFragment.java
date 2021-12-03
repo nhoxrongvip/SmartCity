@@ -91,7 +91,7 @@ public class SnowLevelFragment extends Fragment
     SharedPreferences sharedPreferences;
     private String city_name = "";
     private String url;
-    public String humid, snow, temp, snowDay;
+    public String humid, snow, temp, snowDay, snowNowDay;
 
     List<Float> snowValueList;
     List<String> snowDailyList, locationArray;
@@ -152,6 +152,27 @@ public class SnowLevelFragment extends Fragment
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_snow_level, container, false);
 
+        //Get location
+        sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
+        longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
+        latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
+
+        //Get default location
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        try
+        {
+            addresses = geocoder.getFromLocation(latitude, longitude, 6);
+            city_name = addresses.get(0).getLocality();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
         //Blinking effect for Alert textview
         snow_alert = v.findViewById(R.id.Snow_Alert);
 
@@ -204,34 +225,15 @@ public class SnowLevelFragment extends Fragment
             @Override
             public void onNothingSelected(AdapterView<?> parent)
             {
-
+                int spinnerPosition = adapter.getPosition(city_name); //set default location for the spinner
+                snow_location.setSelection(spinnerPosition);
+                System.out.println("xin chao");
             }
 
 
         });
 
-        //Get location
-        sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
-        longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
-        latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
 
-        //Get default location
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(getContext(), Locale.getDefault());
-
-
-        try
-        {
-            addresses = geocoder.getFromLocation(latitude, longitude, 3);
-            city_name = addresses.get(0).getLocality();
-            int spinnerPosition = adapter.getPosition(city_name); //set default location for the spinner
-            snow_location.setSelection(spinnerPosition);
-
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
 
         url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city_name + "&appid=" + APIkey;
         ReadJSONFeed feed = new ReadJSONFeed();
@@ -516,12 +518,16 @@ public class SnowLevelFragment extends Fragment
     public String barDate(JSONObject dataObject) throws JSONException
     {
         JSONArray dateArray = dataObject.getJSONArray("list");
+        JSONObject snowNowDate = dateArray.getJSONObject(0);
+        snowNowDay = snowNowDate.getString("dt_txt").split(" ")[0];
         for (int i = 0; i < 5; i++)
         {
             JSONObject snowDate = dateArray.getJSONObject(i);
             snowDay = snowDate.getString("dt_txt").split(" ")[0];
         }
-        return snowDay;
+
+        String day = snowNowDay+ " to " +snowDay;
+        return day;
     }
 }
 
