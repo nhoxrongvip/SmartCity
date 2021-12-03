@@ -418,7 +418,7 @@ public class SnowLevelFragment extends Fragment
         try
         {
             DecimalFormat df = new DecimalFormat("0.00");
-            temp = df.format(Double.parseDouble(dataObject.getString("temp")) - 273.15);
+            temp = df.format(Double.parseDouble(dataObject.getString("temp")) - 273.15) + " °C";
 
         } catch (JSONException e)
         {
@@ -430,7 +430,7 @@ public class SnowLevelFragment extends Fragment
     {
         try
         {
-            humid = dataObject.getString("humidity");
+            humid = dataObject.getString("humidity") + " %";
         } catch (JSONException e)
         {
             e.printStackTrace();
