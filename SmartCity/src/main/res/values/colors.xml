@@ -27,4 +27,5 @@
     <color name="yello">#EFCA5B</color>
     <color name="aqi_bad">#CC0000</color>
     <color name="IntroTitleBlue">#00aced</color>
+    <color name="IntroBackgroundBlue">#B3E7F4</color>
 </resources>
