@@ -164,8 +164,8 @@ public class AppIntroduction extends AppIntro2 {
                         if(location != null){
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-                            editor.putString("longitude",String.valueOf(longitude));
-                            editor.putString("latitude",String.valueOf(latitude));
+                            editor.putString("longitude",String.valueOf(longitude)).commit();
+                            editor.putString("latitude",String.valueOf(latitude)).commit();
                             editor.apply();
                         }
 
@@ -174,6 +174,7 @@ public class AppIntroduction extends AppIntro2 {
                     }
                 });
             }
+
 
 
 
