@@ -39,7 +39,7 @@ public class Garbagebin_Fragment extends Fragment
     private View v;
     private Runnable runnable;
     private TextView txtaddress, txtbattery, txtbinname;
-    private Button orgabin_btn, recylebin_btn, garbagebin_btn;
+    private Button orgabin_btn, recylebin_btn, garbagebin_btn, randombtn;
     private SharedPreferences sharedPreferences;
     private String binname;
     private ProgressBar progressBar;
@@ -75,13 +75,81 @@ public class Garbagebin_Fragment extends Fragment
         progressbarBin.execute();
 
         txtaddress.setText(city.getAddress());
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
-        ref.addListenerForSingleValueEvent(new ValueEventListener()
+        updatevalue();
+        randombtn.setOnClickListener(view ->
         {
+            randomvalueupdate();
+        });
+        return v;
+    }
+
+    public void updatevalue()
+    {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child("1");
+        ref.addValueEventListener(new ValueEventListener()
+        {
+            double temp1 = city.getBin1();
+            double temp2 = city.getBin2();
+            double temp3 = city.getBin3();
+            double bin1, bin2, bin3;
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
+                try
+                {
+                ProgressBarAnimation anim = null;
+                bin1 = snapshot.child("Organic Bin").getValue(Double.class);
+                bin2 = snapshot.child("Recycle Bin").getValue(Double.class);
+                bin3 = snapshot.child("Garbage Bin").getValue(Double.class);
+                    if (txtbinname.getText().equals("Organic Bin"))
+                    {
+                        if (bin1 != temp1)
+                        {
+                            anim = new ProgressBarAnimation(progressBar, temp1, bin1);
+                            city.setBin1(bin1);
+                        }
+                        else
+                        {
+                            anim = new ProgressBarAnimation(progressBar, bin1, temp1);
+                            city.setBin1(bin1);
+                        }
+                    }
+                    else if (txtbinname.getText().equals("Recycle Bin"))
+                    {
+                        if (bin2 != temp2)
+                        {
+                            anim = new ProgressBarAnimation(progressBar, temp2, bin2);
+                            city.setBin2(bin2);
 
+                        }
+                        else
+                        {
+                            anim = new ProgressBarAnimation(progressBar, bin2, temp2);
+                            city.setBin2(bin2);
+                        }
+                    }
+                    else if (txtbinname.getText().equals("Garbage Bin"))
+                    {
+                        if (bin3 != temp3)
+                        {
+                            anim = new ProgressBarAnimation(progressBar, temp3, bin3);
+                            city.setBin3(bin3);
+
+                        }
+                        else
+                        {
+                            anim = new ProgressBarAnimation(progressBar, bin3, temp3);
+                            city.setBin3(bin3);
+                        }
+                    }
+
+                    anim.setDuration(1000);
+                    progressBar.startAnimation(anim);
+                } catch (Exception e)
+                {
+
+                }
             }
 
             @Override
@@ -90,8 +158,14 @@ public class Garbagebin_Fragment extends Fragment
 
             }
         });
-        return v;
     }
+
+    private void collect()
+    {
+
+    }
+
+
 
     //
     private void SaveState()
@@ -111,7 +185,7 @@ public class Garbagebin_Fragment extends Fragment
 
 
     //Use to generate random value
-    private void binupdate(String name)
+    private void randomvalueupdate()
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
         double temp = 0;
@@ -124,10 +198,6 @@ public class Garbagebin_Fragment extends Fragment
         ref.child(orgabin_btn.getText().toString()).setValue(number);
         ref.child(recylebin_btn.getText().toString()).setValue(number1);
         ref.child(garbagebin_btn.getText().toString()).setValue(number2);
-        city.setBin1(number);
-        ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, temp, city.getBin1());
-        anim.setDuration(1000);
-        progressBar.startAnimation(anim);
     }
 
     private class ProgressbarBin extends AsyncTask<Void, Void, Void>
@@ -145,7 +215,8 @@ public class Garbagebin_Fragment extends Fragment
         {
             orgabin_btn.setOnClickListener(view ->
             {
-                txtbinname.setText(orgabin_btn.getText().toString());
+                binname = orgabin_btn.getText().toString();
+                txtbinname.setText(binname);
                 ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin1());
                 anim.setDuration(1000);
                 progressBar.startAnimation(anim);
@@ -153,8 +224,8 @@ public class Garbagebin_Fragment extends Fragment
 
             recylebin_btn.setOnClickListener(view ->
             {
-
-                txtbinname.setText(recylebin_btn.getText().toString());
+                binname = recylebin_btn.getText().toString();
+                txtbinname.setText(binname);
                 ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin2());
                 anim.setDuration(1000);
                 progressBar.startAnimation(anim);
@@ -163,7 +234,8 @@ public class Garbagebin_Fragment extends Fragment
 
             garbagebin_btn.setOnClickListener(view ->
             {
-                txtbinname.setText(garbagebin_btn.getText().toString());
+                binname = garbagebin_btn.getText().toString();
+                txtbinname.setText(binname);
                 ProgressBarAnimation anim = new ProgressBarAnimation(progressBar, 0, city.getBin3());
                 anim.setDuration(1000);
                 progressBar.startAnimation(anim);
@@ -224,5 +296,6 @@ public class Garbagebin_Fragment extends Fragment
         orgabin_btn = (Button) v.findViewById(R.id.greenbinbtn);
         recylebin_btn = (Button) v.findViewById(R.id.bluebinbtn);
         garbagebin_btn = (Button) v.findViewById(R.id.blackbinbtn);
+        randombtn = v.findViewById(R.id.randombtn);
     }
 }

@@ -92,6 +92,8 @@
     <string name="humidityBanner">Humidity</string>
     <string name="temperatureBanner">Temperature</string>
     <string name="snow_levelBanner">Snow Level</string>
+    <string name="random_value_check">Random value Check</string>
+    <string name="collect">Collect</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
