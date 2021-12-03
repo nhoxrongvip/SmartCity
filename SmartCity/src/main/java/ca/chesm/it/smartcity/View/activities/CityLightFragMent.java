@@ -157,7 +157,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
                                     btnOnof.setVisibility(View.GONE);
 
                                 }else{
-                                    Toast.makeText(getActivity(), "Not this time!!!!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "The auto function will work from 5 pm - 5 am", Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (ParseException e) {
