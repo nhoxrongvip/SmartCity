@@ -19,7 +19,8 @@
             android:id="@+id/aqilayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/aqi_good"
+            android:background="@drawable/aq_section_layout_good"
+
             android:orientation="vertical">
 
             <TextView

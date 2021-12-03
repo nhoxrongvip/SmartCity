@@ -34,6 +34,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -44,6 +45,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,7 +134,12 @@ public class AirQualityFragment extends Fragment {
         url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
 
         ReadJSONFeed feed = new ReadJSONFeed();
-        feed.execute(url);
+        try {
+            feed.execute(url);
+        }catch (Exception e){
+            v = inflater.inflate(R.layout.fragment_not_supported, container, false);
+        }
+
 
         return v;
     }
@@ -334,6 +341,9 @@ public class AirQualityFragment extends Fragment {
 
             } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.container, new NotSupportedFragment());
+                ft.commit();
             }
 
 
@@ -415,15 +425,15 @@ public class AirQualityFragment extends Fragment {
                 switch (aqi_result) {
                     case "Good":
                         aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_happy));
-                        aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_good));
+                        aqi_layout.setBackground(getResources().getDrawable(R.drawable.aq_section_layout_good));
                         break;
                     case "Moderate":
                         aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_worry));
-                        aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_normal));
+                        aqi_layout.setBackground(getResources().getDrawable(R.drawable.aq_section_layout_moderate));
                         break;
                     case "Unhealthy":
                         aqi_conditionemotion.setImageDrawable(getResources().getDrawable(R.drawable.aq_angry));
-                        aqi_layout.setBackgroundColor(getResources().getColor(R.color.aqi_bad));
+                        aqi_layout.setBackground(getResources().getDrawable(R.drawable.aq_section_layout_bad));
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + aqi_result);
