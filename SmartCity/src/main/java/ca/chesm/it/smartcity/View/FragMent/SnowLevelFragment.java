@@ -371,7 +371,7 @@ public class SnowLevelFragment extends Fragment
                 snowCheck(dataList.getJSONObject(0));
                 setSnowTHView();
 
-            } catch (JSONException jsonException)
+            } catch (Exception jsonException)
             {
                 jsonException.printStackTrace();
             }

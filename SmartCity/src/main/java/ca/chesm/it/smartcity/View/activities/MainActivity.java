@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case android.R.id.home:
-                moveTaskToBack(false);
+                moveTaskToBack(true);
                 return true;
             case R.id.menu_info:
                 frag = new AppInfoFragment();
