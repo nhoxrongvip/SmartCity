@@ -152,7 +152,7 @@
 
             <TextView
                 android:id="@+id/Snow_Alert"
-                android:layout_width="211dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/warning"
@@ -169,7 +169,6 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="60dp"
                 android:text="@string/call_support"
                 android:textAlignment="center"
                 tools:ignore="RtlCompat" />
