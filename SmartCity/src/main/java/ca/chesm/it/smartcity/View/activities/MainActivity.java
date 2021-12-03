@@ -6,8 +6,9 @@ package ca.chesm.it.smartcity.View.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -17,7 +18,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -27,6 +30,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -76,9 +80,9 @@ public class MainActivity extends AppCompatActivity
 
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);
 
-
         AirQualityFragment airFrag = new AirQualityFragment();
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, airFrag, "Air Fragment").commit();
 
 
@@ -99,6 +103,9 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId())
         {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
             case R.id.menu_info:
                 frag = new AppInfoFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
@@ -229,9 +236,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.app_name)
+                    .setCancelable(false)
+                    .setMessage("Do you really want to exit?")
+                    .setPositiveButton("Yes", (dialog, which) -> finishAffinity())
+                    .setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                    .create()
+                    .show();
+            return true;
+        }
+        return super.onKeyLongPress(keyCode, event);
+    }
 
     //Back button pressed
-    @Override
+    /*@Override
     public void onBackPressed()
     {
         new AlertDialog.Builder(this)
@@ -243,7 +265,7 @@ public class MainActivity extends AppCompatActivity
                 .create()
                 .show();
     }
-
+*/
     private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item ->
     {
         Fragment frag = null;
