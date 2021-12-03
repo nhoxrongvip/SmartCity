@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -191,9 +192,6 @@ public class MainActivity extends AppCompatActivity
                             //When location is not null, get Latitude and Longitude and display Toast
                             latitude = l.getLatitude();
                             longitude = l.getLongitude();
-                            String display = "Latitude:" + latitude + " Longitude:" + longitude;
-                            Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
-
 
                         } else
                         {
@@ -211,8 +209,7 @@ public class MainActivity extends AppCompatActivity
                                     Location l1 = locationResult.getLastLocation();
                                     latitude = l1.getLatitude();
                                     longitude = l1.getLongitude();
-                                    String display = "Latitude:" + latitude + "\tLongitude:" + longitude;
-                                    Toast.makeText(MainActivity.this, display, Toast.LENGTH_SHORT).show();
+
                                 }
                             };
                             //Request locaiton update
