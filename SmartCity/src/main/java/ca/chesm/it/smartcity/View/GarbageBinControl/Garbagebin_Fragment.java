@@ -37,9 +37,8 @@ public class Garbagebin_Fragment extends Fragment
 {
 
     private View v;
-    private Runnable runnable;
     private TextView txtaddress, txtbattery, txtbinname;
-    private Button orgabin_btn, recylebin_btn, garbagebin_btn, randombtn;
+    private Button orgabin_btn, recylebin_btn, garbagebin_btn, randombtn,collectbtn;
     private SharedPreferences sharedPreferences;
     private String binname;
     private ProgressBar progressBar;
@@ -79,6 +78,10 @@ public class Garbagebin_Fragment extends Fragment
         randombtn.setOnClickListener(view ->
         {
             randomvalueupdate();
+        });
+        collectbtn.setOnClickListener(view ->
+        {
+
         });
         return v;
     }
@@ -188,7 +191,6 @@ public class Garbagebin_Fragment extends Fragment
     private void randomvalueupdate()
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
-        double temp = 0;
         String rad = String.format("%.2f", rndDataforBin());
         String rad2 = String.format("%.2f", rndDataforBin());
         String rad3 = String.format("%.2f", rndDataforBin());
@@ -296,6 +298,7 @@ public class Garbagebin_Fragment extends Fragment
         orgabin_btn = (Button) v.findViewById(R.id.greenbinbtn);
         recylebin_btn = (Button) v.findViewById(R.id.bluebinbtn);
         garbagebin_btn = (Button) v.findViewById(R.id.blackbinbtn);
+        collectbtn = v.findViewById(R.id.collectbtn);
         randombtn = v.findViewById(R.id.randombtn);
     }
 }
