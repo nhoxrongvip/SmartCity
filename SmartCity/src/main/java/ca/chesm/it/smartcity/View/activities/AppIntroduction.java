@@ -90,7 +90,7 @@ public class AppIntroduction extends AppIntro2 {
             boolean firstTime = sharedPreferences.getBoolean("checkFirstTime",false);
             if(firstTime) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-
+                finish();
             }
         }
         client = LocationServices.getFusedLocationProviderClient(AppIntroduction.this);
@@ -146,6 +146,7 @@ public class AppIntroduction extends AppIntro2 {
                        Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package",getPackageName(),null));
                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                        startActivity(i);
+                       finish();
                     }
                 }).create().show();
     }

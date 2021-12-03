@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);
 
         AirQualityFragment airFrag = new AirQualityFragment();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, airFrag, "Air Fragment").commit();
 
 
@@ -101,6 +103,9 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId())
         {
+            case android.R.id.home:
+                moveTaskToBack(false);
+                return true;
             case R.id.menu_info:
                 frag = new AppInfoFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
