@@ -312,9 +312,18 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
     @Override
     public void getDataCityname(String cityname) {
        listLightCity.add(cityname);
-       ArrayAdapter arrayAdapter  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,listLightCity);
-        spinerCity.setAdapter(arrayAdapter);
 
+                if(listLightCity.size()>0){
+                    try {
+                        ArrayAdapter arrayAdapter  =new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,listLightCity);
+                        spinerCity.setAdapter(arrayAdapter);
+                    }
+                    catch (Exception e){
+
+                    }
+
+
+                }
     }
 
     @Override
