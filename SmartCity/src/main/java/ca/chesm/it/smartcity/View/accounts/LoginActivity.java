@@ -156,6 +156,7 @@ public class LoginActivity extends AppCompatActivity
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
 
         } catch (ApiException e)
         {
@@ -227,6 +228,7 @@ public class LoginActivity extends AppCompatActivity
                         editor.apply();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     } else
                     {
                         AlertDialog.Builder dialogb = Dialogb(task.getException().getMessage().toString());

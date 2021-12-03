@@ -90,6 +90,7 @@ public class AppIntroduction extends AppIntro2 {
             boolean firstTime = sharedPreferences.getBoolean("checkFirstTime",false);
             if(firstTime) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
             }
         }
         client = LocationServices.getFusedLocationProviderClient(AppIntroduction.this);
