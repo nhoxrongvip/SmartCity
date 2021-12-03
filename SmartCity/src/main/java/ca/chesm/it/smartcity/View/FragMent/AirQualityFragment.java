@@ -23,6 +23,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -91,14 +93,11 @@ public class AirQualityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_air_quality, container, false);
-        Bundle b = this.getArguments();
-        sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
-        longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
-        latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
-
-
         getID();
 
+        sharedPreferences = this.getActivity().getSharedPreferences("Firsttime", Context.MODE_PRIVATE);
+        longitude = Double.parseDouble(sharedPreferences.getString("longitude", "0.0"));
+        latitude = Double.parseDouble(sharedPreferences.getString("latitude", "0.0"));
 
         Geocoder geocoder;
         List<Address> addresses;
@@ -106,19 +105,17 @@ public class AirQualityFragment extends Fragment {
 
 
 
-            try {
-                addresses = geocoder.getFromLocation(latitude, longitude, 3);
-                city_name = addresses.get(0).getLocality();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 3);
+            city_name = addresses.get(0).getLocality();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            location.setText(city_name);
+        location.setText(city_name);
         url = "https://api.waqi.info/feed/" + city_name + "/?token=" + TOKEN;
         ReadJSONFeed feed = new ReadJSONFeed();
         feed.execute(url);
-
-
 
         return v;
     }
@@ -126,10 +123,20 @@ public class AirQualityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
 
     private void barChartEntry(BarChart graph, List<Float> dailyValue, String labelsName, List<String> dateSupport) {
         //Get data from List and Create a Bar
