@@ -85,7 +85,7 @@ public class Garbagebin_Fragment extends Fragment
 
     public void updatevalue()
     {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child("1");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
         ref.addValueEventListener(new ValueEventListener()
         {
             double temp1 = city.getBin1();
