@@ -38,9 +38,13 @@ public class LightAdapter extends RecyclerView.Adapter<LightAdapter.ViewHodler> 
 
         Lights lights = arr.get(position);
 
-        holder.lightVIew.setImageResource(lights.isState() ? R.drawable.light_on : R.drawable.light_off);
-        int k = position + 1;
-        holder.txtlight.setText("Light "+k);
+      try{
+          holder.lightVIew.setImageResource(lights.isState() ? R.drawable.light_on : R.drawable.light_off);
+          int k = position + 1;
+          holder.txtlight.setText("Light "+k);
+      }catch ( Exception e){
+
+      }
 
     }
 

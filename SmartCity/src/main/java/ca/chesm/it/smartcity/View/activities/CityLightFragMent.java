@@ -76,6 +76,7 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
     private Handler handler;
      private  Runnable runnable;
      private Spinner spinner;
+     private int check =0;
     public CityLightFragMent() {
         // Required empty public constructor
         Init();
@@ -130,12 +131,12 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
         cityLightPreSenter.getDataCityLight();
         listLights = new ArrayList<>();
         lightPreSenter = new LightPreSenter(this);
+        // Created the user can choice the buttom
         String[] s= {"Select Mode","Manual","Auto"};
         btncheckperson.setVisibility(View.GONE);
         btnOnof.setVisibility(View.GONE);
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,s);
         spinner.setAdapter(arrayAdapter);
-        // Created the user can choice the buttom
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -148,16 +149,17 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 
                             try {
-                                Date five_morning = simpleDateFormat.parse("5:00");
-                                Date five_tonight= simpleDateFormat.parse("17:00");
+
                                 Date timer_now = simpleDateFormat.parse(simpleDateFormat.format(calendar.getTime()));
-                                // The light will be on from 5:pm to 5:am
-                                if(timer_now.after(five_tonight) && timer_now.before(five_morning)){
+                                if(timer_now.getHours()>=17 && timer_now.getHours()<=24 ||
+                                timer_now.getHours()>=0 && timer_now.getHours()<=5 ){
                                     btncheckperson.setVisibility(View.VISIBLE);
                                     btnOnof.setVisibility(View.GONE);
+
                                 }else{
                                     Toast.makeText(getActivity(), "Not this time!!!!", Toast.LENGTH_SHORT).show();
                                 }
+
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -179,16 +181,19 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
        spinerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               name_city = listLightCity.get(i);
+               if(listLightCity.size()>0){
+                   name_city = listLightCity.get(i);
 
-               if(liststreet.size()> 0 ){
-                   liststreet.clear();
+                   if(liststreet.size()> 0 ){
+                       liststreet.clear();
 
+                   }
+
+                   arrayAdapterStreetname = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,liststreet);
+                   spinerStreet.setAdapter(arrayAdapterStreetname);
+                   cityLightPreSenter.getDataListCityStreet(name_city);
                }
 
-               arrayAdapterStreetname = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,liststreet);
-               spinerStreet.setAdapter(arrayAdapterStreetname);
-               cityLightPreSenter.getDataListCityStreet(name_city);
            }
 
            @Override
@@ -199,12 +204,15 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
        spinerStreet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            @Override
            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               name_street = liststreet.get(i);
-               listLights.clear();
-               lightPreSenter.getDataListLight(name_city,liststreet.get(i));
-               lightAdapter = new LightAdapter(listLights,getActivity());
-               rcvLights.setLayoutManager(new GridLayoutManager(getActivity(),5));
-               rcvLights.setAdapter(lightAdapter);
+               if(liststreet.size()>0){
+                   name_street = liststreet.get(i);
+                   listLights.clear();
+                   lightPreSenter.getDataListLight(name_city,liststreet.get(i));
+                   lightAdapter = new LightAdapter(listLights,getActivity());
+                   rcvLights.setLayoutManager(new GridLayoutManager(getActivity(),5));
+                   rcvLights.setAdapter(lightAdapter);
+               }
+
            }
 
            @Override
@@ -226,6 +234,8 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
         btnOnof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                check=0;
+                handler.removeCallbacks(runnable);
                 handler.removeCallbacks(runnable);
                 if(liststreet.size()>0 ){
                     if(listLights.size()>0){
@@ -259,31 +269,35 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
         btncheckperson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Random random = new Random();
-               runnable= new Runnable() {
-                   @Override
-                   public void run() {
-                       int k = random.nextInt(200) +10;
-                       Log.d("CHECKED",k+" ");
-                       if(listLights.size()>0){
-                           for(Lights l : listLights){
-                               if(k > l.getDistance()){
-                                   if (k - l.getDistance() <= 20) {
-                                       lightPreSenter.HandleUpdate(l.getId(),1,name_city,name_street);
-                                   }else{
-                                       lightPreSenter.HandleUpdate(l.getId(),0,name_city,name_street);
-                                   }
+                check = 1;
+                if(check == 1){
+                    Random random = new Random();
+                    runnable= new Runnable() {
+                        @Override
+                        public void run() {
+                            int k = random.nextInt(200) +10;
+                            Log.d("CHECKED",k+" ");
+                            if(listLights.size()>0){
+                                for(Lights l : listLights){
+                                    if(k > l.getDistance()){
+                                        if (k - l.getDistance() <= 20) {
+                                            lightPreSenter.HandleUpdate(l.getId(),1,name_city,name_street);
+                                        }else{
+                                            lightPreSenter.HandleUpdate(l.getId(),0,name_city,name_street);
+                                        }
 
-                               }
-                           }
-                       }
+                                    }
+                                }
+                            }
 
-                       handler.postDelayed(this,3000);
+                            handler.postDelayed(this,3000);
 
-                   }
+                        }
 
-               };
-               runnable.run();
+                    };
+                    runnable.run();
+                }
+
 
             }
         });
@@ -306,8 +320,15 @@ public class CityLightFragMent extends Fragment  implements LightView, CityView 
     @Override
     public void getDataStreetname(String streetname) {
         liststreet.add(streetname);
-        arrayAdapterStreetname= new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,liststreet);
-        spinerStreet.setAdapter(arrayAdapterStreetname);
+        if(liststreet.size()>0){
+            try{
+                arrayAdapterStreetname= new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,liststreet);
+                spinerStreet.setAdapter(arrayAdapterStreetname);
+
+            }catch ( Exception e){
+
+            }
+        }
 
 
     }
