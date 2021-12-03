@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);
 
 
+
         AirQualityFragment airFrag = new AirQualityFragment();
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, airFrag, "Air Fragment").commit();
 
@@ -123,10 +125,7 @@ public class MainActivity extends AppCompatActivity
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
                 }
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("longitude", String.valueOf(longitude));
-                editor.putString("latitude", String.valueOf(latitude));
-                editor.apply();
+
                 return true;
             case R.id.overflow1:
                 Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
