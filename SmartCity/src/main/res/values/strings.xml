@@ -100,5 +100,7 @@
         <item>Vancouver</item>
         <item>Montreal</item>
         <item>Toronto</item>
+        <item>Hanoi</item>
+        <item>Moscow</item>
     </string-array>
 </resources>

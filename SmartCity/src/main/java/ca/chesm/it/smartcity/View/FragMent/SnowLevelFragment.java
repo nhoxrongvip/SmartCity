@@ -178,6 +178,7 @@ public class SnowLevelFragment extends Fragment
         snow_time = v.findViewById(R.id.snow_currentTime);
 
 
+
         //Spinner location
         snow_location = v.findViewById(R.id.Snow_currentlocation);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -194,6 +195,7 @@ public class SnowLevelFragment extends Fragment
                 url = "https://api.openweathermap.org/data/2.5/forecast?q=" + locationArray.get(position) + "&appid=" + APIkey;
                 ReadJSONFeed feed = new ReadJSONFeed();
                 feed.execute(url);
+                currentTime();
             }
 
             @Override
@@ -289,7 +291,7 @@ public class SnowLevelFragment extends Fragment
 
     public void currentTime()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm z");
         String currentTime = sdf.format(new Date());
         snow_time.setText(currentTime);
 
