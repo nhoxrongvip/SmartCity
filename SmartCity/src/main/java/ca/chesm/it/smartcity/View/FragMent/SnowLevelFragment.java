@@ -516,7 +516,7 @@ public class SnowLevelFragment extends Fragment
     public String barDate(JSONObject dataObject) throws JSONException
     {
         JSONArray dateArray = dataObject.getJSONArray("list");
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             JSONObject snowDate = dateArray.getJSONObject(i);
             snowDay = snowDate.getString("dt_txt").split(" ")[0];
