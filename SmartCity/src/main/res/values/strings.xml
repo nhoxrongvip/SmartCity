@@ -93,6 +93,10 @@
     <string name="temperatureBanner">Temperature</string>
     <string name="snow_levelBanner">Snow Level</string>
     <string name="random_value_check">Random value Check</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_myprofile">My Profile</string>
+    <string name="nav_password">Change Password</string>
     <string name="collect">Collect</string>
 
     <!--Arrays of location for snow level fragement -->

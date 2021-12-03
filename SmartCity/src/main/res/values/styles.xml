@@ -18,20 +18,9 @@
        <item name="android:fontFamily">monospace </item>
    </style>
 
-    <style name="mainstyle" parent="Theme.AppCompat.Light">
+    <style name="mainstyle" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- This is the styling for action bar -->
-        <item name="actionBarStyle">@style/MyActionBar</item>
         <item name="android:navigationBarColor">@color/dark_grey</item>
-    </style>
-
-    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="background">@color/dark_grey</item>
-        <item name="titleTextStyle">@style/MyActionBarTitle</item>
-    </style>
-
-
-    <style name="MyActionBarTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="BinpProgressBar">
