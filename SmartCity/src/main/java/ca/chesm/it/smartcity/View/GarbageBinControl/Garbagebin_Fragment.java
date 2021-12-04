@@ -216,13 +216,15 @@ public class Garbagebin_Fragment extends Fragment
     private void collect()
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
-        if(txtbinname.getText().toString().equals(""))
-        if(city.getBin1() >= 80)
+        if(txtbinname.getText().toString().equals("Organic Bin"))
         {
+            if(city.getBin1() >= 80)
+            {
 
-        }
-        else {
+            }
+            else {
 
+            }
         }
         if(city.getBin2() >= 80)
         {

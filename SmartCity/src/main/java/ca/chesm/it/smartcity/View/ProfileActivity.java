@@ -75,10 +75,6 @@ public class ProfileActivity extends AppCompatActivity {
         txtemail.setText(firebaseUser.getEmail());
         try
         {
-
-        }
-        catch (Exception e)
-        {
             if(firebaseUser.getPhoneNumber()!=null){
                 txtphonenumber.setText(firebaseUser.getPhoneNumber());
             }else{
@@ -102,6 +98,10 @@ public class ProfileActivity extends AppCompatActivity {
                     cImage.setImageBitmap(bitmap);
                 }
             }
+        }
+        catch (Exception e)
+        {
+
         }
         cImage.setOnClickListener(new View.OnClickListener() {
             @Override
