@@ -6,7 +6,6 @@ package ca.chesm.it.smartcity.View.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.content.Context;
 
 import android.content.DialogInterface;
@@ -20,7 +19,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -37,7 +35,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -52,13 +49,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import ca.chesm.it.smartcity.View.FragMent.AirQualityFragment;
-import ca.chesm.it.smartcity.View.FragMent.AppInfoFragment;
 import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
 
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
 import ca.chesm.it.smartcity.View.accounts.LoginActivity;
+import ca.chesm.it.smartcity.View.accounts.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -143,7 +140,12 @@ public class MainActivity extends AppCompatActivity
                             }
                         });
                         builder.show();
+                    case R.id.nav_profile:
+                        startActivity(new Intent(MainActivity.this, AppInfoActivity.class));
 
+
+                    case R.id.nav_home:
+                        startActivity(new Intent(MainActivity.this, MainActivity.class));
                 }
 
                 return true;
@@ -174,10 +176,6 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId())
         {
-            case android.R.id.home:
-                moveTaskToBack(true);
-                return true;
-
             case R.id.search1:
 //                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 //Check Conditions
@@ -281,7 +279,7 @@ public class MainActivity extends AppCompatActivity
                         editor.apply();
                     } catch (Exception e)
                     {
-
+                        startActivity(new Intent());
                     }
                 }
             });

@@ -111,4 +111,5 @@
         <item>Old Crow</item>
         <item>Hald Ege</item>
     </string-array>
+    <string name="title_activity_app_info">AppInfo</string>
 </resources>
