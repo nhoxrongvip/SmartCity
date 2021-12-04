@@ -73,27 +73,34 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser =  firebaseAuth.getCurrentUser();
         txtemail.setText(firebaseUser.getEmail());
-        if(firebaseUser.getPhoneNumber()!=null){
-            txtphonenumber.setText(firebaseUser.getPhoneNumber());
-        }else{
+        try
+        {
 
         }
-        String phone = sharedPreferences.getString(firebaseUser.getUid()+"phone","");
-        txtphonenumber.setText(phone);
-        if(firebaseUser.getDisplayName() !=null){
-            txtusername.setText(firebaseUser.getDisplayName());
-        }
-        String basecode = sharedPreferences.getString(firebaseUser.getUid(),"");
-        if(basecode.length() >20){
-           byte[] decodeImge = Base64.decode(basecode,Base64.NO_WRAP);
-           Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImge,0,decodeImge.length);
-           cImage.setImageBitmap(bitmap);
-        }else{
-            if(firebaseUser.getPhotoUrl().toString().length() >20){
-                basecode = firebaseUser.getPhotoUrl().toString();
+        catch (Exception e)
+        {
+            if(firebaseUser.getPhoneNumber()!=null){
+                txtphonenumber.setText(firebaseUser.getPhoneNumber());
+            }else{
+
+            }
+            String phone = sharedPreferences.getString(firebaseUser.getUid()+"phone","");
+            txtphonenumber.setText(phone);
+            if(firebaseUser.getDisplayName() !=null){
+                txtusername.setText(firebaseUser.getDisplayName());
+            }
+            String basecode = sharedPreferences.getString(firebaseUser.getUid(),"");
+            if(basecode.length() >20){
                 byte[] decodeImge = Base64.decode(basecode,Base64.NO_WRAP);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImge,0,decodeImge.length);
                 cImage.setImageBitmap(bitmap);
+            }else{
+                if(firebaseUser.getPhotoUrl().toString().length() >20){
+                    basecode = firebaseUser.getPhotoUrl().toString();
+                    byte[] decodeImge = Base64.decode(basecode,Base64.NO_WRAP);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImge,0,decodeImge.length);
+                    cImage.setImageBitmap(bitmap);
+                }
             }
         }
         cImage.setOnClickListener(new View.OnClickListener() {

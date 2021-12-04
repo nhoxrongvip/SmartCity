@@ -21,7 +21,9 @@ import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.common.base.MoreObjects;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -118,17 +120,29 @@ public class Garbagebin_Fragment extends Fragment
                         manager.createNotificationChannel(channel);
                     }
 
-                    if (bin1 > 80)
+                    if (bin1 >= 80)
+                    {
+                        notibuild("Your Organic Bin is almost full ",1);
+                    }
+                    else if(bin1 == 100)
                     {
                         notibuild("Your Organic Bin is full ",1);
                     }
 
-                    if (bin2 > 80)
+                    if (bin2 >= 80)
+                    {
+                        notibuild("Your Recycle Bin is almost full ",2);
+                    }
+                    else if(bin2 == 100)
                     {
                         notibuild("Your Recycle Bin is full ",2);
                     }
 
-                    if (bin3 > 80)
+                    if (bin3 >= 80)
+                    {
+                        notibuild("Your Garbage Bin is almost full ",3);
+                    }
+                    else if(bin3 == 100)
                     {
                         notibuild("Your Garbage Bin is full ",3);
                     }
@@ -201,7 +215,31 @@ public class Garbagebin_Fragment extends Fragment
 
     private void collect()
     {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
+        if(txtbinname.getText().toString().equals(""))
+        if(city.getBin1() >= 80)
+        {
 
+        }
+        else {
+
+        }
+        if(city.getBin2() >= 80)
+        {
+
+        }
+        else
+            {
+
+        }
+        if(city.getBin3() >= 80)
+        {
+
+        }
+        else
+            {
+
+        }
     }
 
 
@@ -235,6 +273,18 @@ public class Garbagebin_Fragment extends Fragment
         ref.child(orgabin_btn.getText().toString()).setValue(number);
         ref.child(recylebin_btn.getText().toString()).setValue(number1);
         ref.child(garbagebin_btn.getText().toString()).setValue(number2);
+    }
+
+    private void randomvalueupdate2()
+    {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
+        String rad = "false";
+        boolean number = Boolean.parseBoolean(rad);
+        boolean number1 = Boolean.parseBoolean(rad);
+        boolean number2 = Boolean.parseBoolean(rad);
+        ref.child("Organic Bin Collect").setValue(rad);
+        ref.child("Garbage Bin Collect").setValue(rad);
+        ref.child("Recycle Bin Collect").setValue(rad);
     }
 
     private class ProgressbarBin extends AsyncTask<Void, Void, Void>

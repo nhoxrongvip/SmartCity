@@ -6,7 +6,9 @@ package ca.chesm.it.smartcity.View.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +19,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -33,6 +37,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -46,10 +51,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.AirQualityFragment;
-
 import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
+
+import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
 import ca.chesm.it.smartcity.View.ProfileActivity;
@@ -170,7 +175,6 @@ public class MainActivity extends AppCompatActivity
             case android.R.id.home:
                 moveTaskToBack(true);
                 return true;
-
 
             case R.id.search1:
 //                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
