@@ -64,7 +64,7 @@ public class ForgetPassActivity extends AppCompatActivity {
                  firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                      @Override
                      public void onSuccess(Void unused) {
-                         Toast.makeText(ForgetPassActivity.this, "Plese go to email !", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(ForgetPassActivity.this, "Please go to email !", Toast.LENGTH_SHORT).show();
                      }
                  });
 
