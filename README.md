@@ -1,6 +1,6 @@
-## SmartCityMonitor
+# SmartCityMonitor
 
-##Main Fragments
+## Main Fragments
 
 Air quality fragment
 ```java
@@ -59,9 +59,19 @@ Snow Level
 ```java
 /*
 Snow level fragment displays the level of snow of assigned cities using OpenWeatherMap API. Similar to the Air Quality fragment, the snow level will be displayed using a bar chart.
-However, the snow level will be displayed as a forecast of 3 hours in the future of snow level of the chosen city
+
+However, the snow level will be displayed as a forecast of 3 hours in the future of the snow level of the chosen city. These levels will be displayed by 6 bar charts, each bar display by 3 hours apart.
+
+Location Spinner is on top of the fragment giving the users options to choose which city they want to see. On the right will be the text clock which will be displayed based on the current time and current location of the device.
+
+Similar to Air Quality Fragment, the level of snow will change the ImageView according to the snow level. Furthermore, the snow level will trigger the TextView = "SNOW STORM WARNING" to blink red as the snow level reaches 60 mm.
+
+ADD on: on the right of the snow level will display the temperature and humidity of the same API. This data of temperature and humidity will also change accordingly by the city options.
 */
+//API
+ url = "https://api.openweathermap.org/data/2.5/forecast?q=" + locationArray.get(position) + "&appid=" + APIkey;
 ```
+## Other activity and fragments
 
 ## Contributors
 Thanh Phat Lam N01335598.
@@ -74,5 +84,4 @@ Hieu Chu N01371619.
 
 Please make sure to update tests as appropriate.
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+## 
