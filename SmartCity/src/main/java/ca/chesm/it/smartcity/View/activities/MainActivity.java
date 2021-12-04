@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
 
                          AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                          builder.setMessage("Do you want sign out ?");
-                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                              @Override
                              public void onClick(DialogInterface dialogInterface, int i) {
                                  firebaseAuth.signOut();
