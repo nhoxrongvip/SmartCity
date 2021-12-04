@@ -8,46 +8,12 @@
         android:icon="@drawable/location_icon"
         app:showAsAction="always" />
 
-    <item android:title="Settings"
-        android:id="@+id/main_menu"
-        app:showAsAction="never">
-        <menu>
-            <item
-                android:title="App settings"
-                android:id="@+id/overflow1"
-                app:showAsAction="never"
-                />
 
-            <item
-                android:title="Wifi"
-                android:id="@+id/overflow2"
-                app:showAsAction="never"
-
-                />
-
-            <item
-                android:title="Bluetooh"
-                android:id="@+id/overflow3"
-                app:showAsAction="never"
-                />
-            <item
-                android:title="Info"
-
-                android:id="@+id/menu_info"
-                app:showAsAction="ifRoom"
-                />
-        </menu>
-    </item>
-
-    <item android:title="@string/search_overflow"
-        android:id="@+id/search4"
+    <item
+        android:title="App settings"
+        android:id="@+id/overflow1"
+        android:icon="@drawable/ic_baseline_settings_24"
         app:showAsAction="never"
-
         />
-    <item android:title=""
-        
-        >
-
-    </item>
 
 </menu>

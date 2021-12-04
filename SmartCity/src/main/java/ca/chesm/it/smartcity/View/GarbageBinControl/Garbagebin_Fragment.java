@@ -1,11 +1,16 @@
 package ca.chesm.it.smartcity.View.GarbageBinControl;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -31,6 +36,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 import ca.chesm.it.smartcity.R;
+import ca.chesm.it.smartcity.View.accounts.RegisterActivity;
 import ca.chesm.it.smartcity.models.City;
 
 public class Garbagebin_Fragment extends Fragment
@@ -38,7 +44,7 @@ public class Garbagebin_Fragment extends Fragment
 
     private View v;
     private TextView txtaddress, txtbattery, txtbinname;
-    private Button orgabin_btn, recylebin_btn, garbagebin_btn, randombtn,collectbtn;
+    private Button orgabin_btn, recylebin_btn, garbagebin_btn, randombtn, collectbtn;
     private SharedPreferences sharedPreferences;
     private String binname;
     private ProgressBar progressBar;
@@ -101,46 +107,63 @@ public class Garbagebin_Fragment extends Fragment
             {
                 try
                 {
-                ProgressBarAnimation anim = null;
-                bin1 = snapshot.child("Organic Bin").getValue(Double.class);
-                bin2 = snapshot.child("Recycle Bin").getValue(Double.class);
-                bin3 = snapshot.child("Garbage Bin").getValue(Double.class);
+                    ProgressBarAnimation anim = null;
+                    bin1 = snapshot.child("Organic Bin").getValue(Double.class);
+                    bin2 = snapshot.child("Recycle Bin").getValue(Double.class);
+                    bin3 = snapshot.child("Garbage Bin").getValue(Double.class);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    {
+                        NotificationChannel channel = new NotificationChannel("Smart City", "Smart City", NotificationManager.IMPORTANCE_DEFAULT);
+                        NotificationManager manager = getContext().getSystemService(NotificationManager.class);
+                        manager.createNotificationChannel(channel);
+                    }
+
+                    if (bin1 > 80)
+                    {
+                        notibuild("Your Organic Bin is full ",1);
+                    }
+
+                    if (bin2 > 80)
+                    {
+                        notibuild("Your Recycle Bin is full ",2);
+                    }
+
+                    if (bin3 > 80)
+                    {
+                        notibuild("Your Garbage Bin is full ",3);
+                    }
+
                     if (txtbinname.getText().equals("Organic Bin"))
                     {
                         if (bin1 != temp1)
                         {
                             anim = new ProgressBarAnimation(progressBar, temp1, bin1);
                             city.setBin1(bin1);
-                        }
-                        else
+                        } else
                         {
                             anim = new ProgressBarAnimation(progressBar, bin1, temp1);
                             city.setBin1(bin1);
                         }
-                    }
-                    else if (txtbinname.getText().equals("Recycle Bin"))
+                    } else if (txtbinname.getText().equals("Recycle Bin"))
                     {
                         if (bin2 != temp2)
                         {
                             anim = new ProgressBarAnimation(progressBar, temp2, bin2);
                             city.setBin2(bin2);
 
-                        }
-                        else
+                        } else
                         {
                             anim = new ProgressBarAnimation(progressBar, bin2, temp2);
                             city.setBin2(bin2);
                         }
-                    }
-                    else if (txtbinname.getText().equals("Garbage Bin"))
+                    } else if (txtbinname.getText().equals("Garbage Bin"))
                     {
                         if (bin3 != temp3)
                         {
                             anim = new ProgressBarAnimation(progressBar, temp3, bin3);
                             city.setBin3(bin3);
 
-                        }
-                        else
+                        } else
                         {
                             anim = new ProgressBarAnimation(progressBar, bin3, temp3);
                             city.setBin3(bin3);
@@ -163,11 +186,23 @@ public class Garbagebin_Fragment extends Fragment
         });
     }
 
+    private void notibuild(String mess,int id)
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Smart City");
+        builder.setContentTitle("Garbage Bin Controller");
+        builder.setContentText(mess + getString(R.string.collect_mess));
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setAutoCancel(true);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getContext());
+        managerCompat.notify(id, builder.build());
+
+    }
+
     private void collect()
     {
 
     }
-
 
 
     //
@@ -257,7 +292,7 @@ public class Garbagebin_Fragment extends Fragment
 
     }
 
-    public class ProgressBarAnimation extends Animation
+    private class ProgressBarAnimation extends Animation
     {
 
         private ProgressBar progressBar;

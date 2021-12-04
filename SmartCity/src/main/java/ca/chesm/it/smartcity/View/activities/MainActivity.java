@@ -58,7 +58,6 @@ import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
-import ca.chesm.it.smartcity.View.ProfileActivity;
 import ca.chesm.it.smartcity.View.accounts.LoginActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
          txtuser.setText(firebaseUser.getEmail());
-
          navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
              @Override
              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -119,7 +117,7 @@ public class MainActivity extends AppCompatActivity
 
                          AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                          builder.setMessage("Do you want sign out ?");
-                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                              @Override
                              public void onClick(DialogInterface dialogInterface, int i) {
                                  firebaseAuth.signOut();
@@ -133,13 +131,8 @@ public class MainActivity extends AppCompatActivity
 
                              }
                          });
-                         builder.show();break;
-                     case R.id.nav_profile:
-                         startActivity(new Intent( MainActivity.this, ProfileActivity.class));break;
-                     case R.id.nav_password:
-                         startActivity(new Intent( MainActivity.this, ChangePassActivity.class));break;
-                     case R.id.nav_home:
-                         drawerLayout.closeDrawers();
+                         builder.show();
+
                  }
 
                  return true;
