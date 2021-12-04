@@ -257,7 +257,7 @@ public class Garbagebin_Fragment extends Fragment
 
     }
 
-    public class ProgressBarAnimation extends Animation
+    private class ProgressBarAnimation extends Animation
     {
 
         private ProgressBar progressBar;

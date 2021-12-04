@@ -106,9 +106,11 @@ public class MainActivity extends AppCompatActivity
         });
         View headerview = navigationView.getHeaderView(0);
         TextView txtuser= headerview.findViewById(R.id.txtusername);
+        TextView txtfname = headerview.findViewById(R.id.txtefullname);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-         txtuser.setText(firebaseUser.getEmail());
+        txtuser.setText(firebaseUser.getEmail());
+        txtfname.setText(firebaseUser.getDisplayName());
          navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
              @Override
              public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -160,60 +162,60 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
-        Fragment frag;
-
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                moveTaskToBack(true);
-                return true;
-            case R.id.menu_info:
-                frag = new AppInfoFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
-                return true;
-
-            case R.id.search1:
-//                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
-                //Check Conditions
-                if (ActivityCompat.checkSelfPermission(MainActivity.this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(MainActivity.this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                {
-                    //When both permission are granted, call the method to get Long and Lat
-                    getCurrentLocation();
-
-
-                } else
-                {
-                    //When permission is not granted, request permission
-
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-                }
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("longitude", String.valueOf(longitude));
-                editor.putString("latitude", String.valueOf(latitude));
-                editor.apply();
-                return true;
-            case R.id.overflow1:
-                Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
-                frag = new AppSettingFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
-                return true;
-            case R.id.overflow2:
-                Toast.makeText(this, "Wifi", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.overflow3:
-                Toast.makeText(this, "Bluetooh", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+//    {
+//        Fragment frag;
+//
+//        switch (item.getItemId())
+//        {
+//            case android.R.id.home:
+//                moveTaskToBack(true);
+//                return true;
+//            case R.id.menu_info:
+//                frag = new AppInfoFragment();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+//                return true;
+//
+//            case R.id.search1:
+////                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+//                //Check Conditions
+//                if (ActivityCompat.checkSelfPermission(MainActivity.this,
+//                        android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+//                        && ActivityCompat.checkSelfPermission(MainActivity.this,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+//                {
+//                    //When both permission are granted, call the method to get Long and Lat
+//                    getCurrentLocation();
+//
+//
+//                } else
+//                {
+//                    //When permission is not granted, request permission
+//
+//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+//                }
+//
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putString("longitude", String.valueOf(longitude));
+//                editor.putString("latitude", String.valueOf(latitude));
+//                editor.apply();
+//                return true;
+//            case R.id.overflow1:
+//                Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
+//                frag = new AppSettingFragment();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+//                return true;
+//            case R.id.overflow2:
+//                Toast.makeText(this, "Wifi", Toast.LENGTH_SHORT).show();
+//                return true;
+//            case R.id.overflow3:
+//                Toast.makeText(this, "Bluetooh", Toast.LENGTH_SHORT).show();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
