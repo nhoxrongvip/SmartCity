@@ -92,57 +92,63 @@ public class MainActivity extends AppCompatActivity
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
         toolbar = findViewById(R.id.toolbar);
-        navigationView= findViewById(R.id.navigation_view);
-        drawerLayout=findViewById(R.id.drawelayout);
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.Open,R.string.Close);
+        navigationView = findViewById(R.id.navigation_view);
+        drawerLayout = findViewById(R.id.drawelayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
         toggle.syncState();
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
         View headerview = navigationView.getHeaderView(0);
-        TextView txtuser= headerview.findViewById(R.id.txtusername);
+        TextView txtuser = headerview.findViewById(R.id.txtusername);
         TextView txtfname = headerview.findViewById(R.id.txtefullname);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         txtuser.setText(firebaseUser.getEmail());
         txtfname.setText(firebaseUser.getDisplayName());
-         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-             @Override
-             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                 switch (item.getItemId()){
-                     case  R.id.nav_signout:
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    case R.id.nav_signout:
 
-                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                         builder.setMessage("Do you want sign out ?");
-                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialogInterface, int i) {
-                                 firebaseAuth.signOut();
-                                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Do you want sign out ?");
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
-                             }
-                         });
-                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
 
-                             }
-                         });
-                         builder.show();
+                            }
+                        });
+                        builder.show();
 
-                 }
+                }
 
-                 return true;
-             }
-         });
-
-
-
+                return true;
+            }
+        });
 
 
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);
@@ -154,7 +160,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -162,60 +167,50 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-//    {
-//        Fragment frag;
-//
-//        switch (item.getItemId())
-//        {
-//            case android.R.id.home:
-//                moveTaskToBack(true);
-//                return true;
-//            case R.id.menu_info:
-//                frag = new AppInfoFragment();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
-//                return true;
-//
-//            case R.id.search1:
-////                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
-//                //Check Conditions
-//                if (ActivityCompat.checkSelfPermission(MainActivity.this,
-//                        android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-//                        && ActivityCompat.checkSelfPermission(MainActivity.this,
-//                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-//                {
-//                    //When both permission are granted, call the method to get Long and Lat
-//                    getCurrentLocation();
-//
-//
-//                } else
-//                {
-//                    //When permission is not granted, request permission
-//
-//                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-//                }
-//
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("longitude", String.valueOf(longitude));
-//                editor.putString("latitude", String.valueOf(latitude));
-//                editor.apply();
-//                return true;
-//            case R.id.overflow1:
-//                Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
-//                frag = new AppSettingFragment();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
-//                return true;
-//            case R.id.overflow2:
-//                Toast.makeText(this, "Wifi", Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.overflow3:
-//                Toast.makeText(this, "Bluetooh", Toast.LENGTH_SHORT).show();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        Fragment frag;
+
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                moveTaskToBack(true);
+                return true;
+
+            case R.id.search1:
+//                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+                //Check Conditions
+                if (ActivityCompat.checkSelfPermission(MainActivity.this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                {
+                    //When both permission are granted, call the method to get Long and Lat
+                    getCurrentLocation();
+
+
+                } else
+                {
+                    //When permission is not granted, request permission
+
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+                }
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("longitude", String.valueOf(longitude));
+                editor.putString("latitude", String.valueOf(latitude));
+                editor.apply();
+                return true;
+            case R.id.overflow1:
+                Toast.makeText(this, " App Settings", Toast.LENGTH_SHORT).show();
+                frag = new AppSettingFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -299,8 +294,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public boolean onKeyLongPress(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.app_name)
                     .setCancelable(false)
@@ -361,7 +358,6 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
         return true;
     };
-
 
 
 }

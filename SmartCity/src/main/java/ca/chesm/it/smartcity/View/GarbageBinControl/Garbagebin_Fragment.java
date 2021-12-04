@@ -105,6 +105,21 @@ public class Garbagebin_Fragment extends Fragment
                 bin1 = snapshot.child("Organic Bin").getValue(Double.class);
                 bin2 = snapshot.child("Recycle Bin").getValue(Double.class);
                 bin3 = snapshot.child("Garbage Bin").getValue(Double.class);
+
+                if(bin1 > 80)
+                {
+
+                }
+
+                if(bin2 > 80)
+                {
+
+                }
+
+                if(bin3 > 80)
+                {
+
+                }
                     if (txtbinname.getText().equals("Organic Bin"))
                     {
                         if (bin1 != temp1)
