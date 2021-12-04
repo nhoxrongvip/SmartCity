@@ -46,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private  String base64 ="";
 
-
+// 1
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
