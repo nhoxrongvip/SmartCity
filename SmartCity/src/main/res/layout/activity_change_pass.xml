@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:inputType="textPassword"
+                android:textSize="16sp"
+                android:textColor="@android:color/background_dark"
+                android:id="@+id/idpassnew"
+                android:hint="Enter pass New"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:inputType="textPassword"
+                android:textSize="16sp"
+                android:textColor="@android:color/background_dark"
+                android:id="@+id/idpassnew1"
+                android:hint="Enter repass New"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/btnchangepass"
+        android:textColor="@android:color/background_light"
+        android:textSize="16sp"
+        android:text="Change Pass"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_button"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

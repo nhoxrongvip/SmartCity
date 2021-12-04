@@ -101,6 +101,7 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="nav_signout">Sign Out</string>
+    <string name="forgetpass"><u>Forget Pass ?</u></string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">

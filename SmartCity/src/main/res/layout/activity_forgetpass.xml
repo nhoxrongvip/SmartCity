@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#A4A6B6"
+        ></androidx.appcompat.widget.Toolbar>
+
+
+    <EditText
+
+        android:gravity="center"
+        android:hint="Enter Email"
+        android:layout_margin="10dp"
+        android:id="@+id/editEmail"
+        android:textColor="@android:color/background_dark"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+    <Button
+        android:id="@+id/btnsearch"
+        android:textColor="@android:color/background_light"
+        android:text="Search"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

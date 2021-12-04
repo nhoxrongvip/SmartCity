@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+     <TextView
+         android:padding="5dp"
+         android:textSize="20dp"
+         android:textColor="@android:color/background_dark"
+         android:text="Info Profile"
+         android:layout_marginTop="10dp"
+         android:layout_gravity="center"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"/>
+       <RelativeLayout
+           android:layout_gravity="center"
+           android:layout_width="90dp"
+           android:layout_height="90dp">
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:layout_width="90dp"
+
+               android:layout_margin="10dp"
+               android:background="@drawable/circle_bg"
+               android:id="@+id/img_profile"
+               android:layout_gravity="center"
+               android:layout_height="90dp"/>
+           <ImageView
+               app:tint="#3F51B5"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentBottom="true"
+               android:src="@drawable/ic_baseline_camera_alt_24"
+               android:layout_width="32dp"
+               android:layout_height="32dp"/>
+       </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+              <TextView
+                  android:textColor="@android:color/background_dark"
+                  android:padding="5dp"
+                  android:textSize="16sp"
+                  android:text="Fullname"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+                <TextView
+                    android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+                    android:id="@+id/txtusername"
+                    android:padding="5dp"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@android:color/background_dark"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:text="Email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+                    android:id="@+id/txtemail"
+                    android:padding="5dp"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@android:color/background_dark"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:text="Phone Number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+                    android:id="@+id/txtphonumber"
+                    android:padding="5dp"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
