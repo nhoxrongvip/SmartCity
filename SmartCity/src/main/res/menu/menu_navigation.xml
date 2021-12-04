@@ -17,6 +17,10 @@
                 android:id="@+id/nav_password"
                 android:icon="@drawable/nav_password"
                 android:title="@string/nav_password"></item>
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_baseline_arrow_back_ios_24"
+                android:title="@string/nav_signout"></item>
         </menu>
     </item>
 </menu>

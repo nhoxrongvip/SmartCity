@@ -4,54 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawelayout"
 
-    tools:context=".View.activities.MainActivity"
-    tools:openDrawer="start"
+
     >
-    <RelativeLayout
+    <LinearLayout
+         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+
         >
 
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.appcompat.widget.Toolbar
+
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/appbar"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/grey"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
+            android:layout_height="?attr/actionBarSize"
+            android:background="#A4A6B6"
+            ></androidx.appcompat.widget.Toolbar>
         <FrameLayout
+            android:layout_weight="1"
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/botnavigation"
-            android:layout_below="@+id/appbar"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="0dp"
+
+
+             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/botnavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_grey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="2.0"
             app:menu="@menu/botnav"
-            android:layout_alignParentBottom="true"
+
          />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <com.google.android.material.navigation.NavigationView

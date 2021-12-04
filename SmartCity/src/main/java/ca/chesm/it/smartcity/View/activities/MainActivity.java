@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -20,15 +21,21 @@ import android.os.Looper;
 import android.provider.Settings;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -40,6 +47,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import ca.chesm.it.smartcity.View.FragMent.AirQualityFragment;
 import ca.chesm.it.smartcity.View.FragMent.AppInfoFragment;
@@ -48,6 +58,7 @@ import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
+import ca.chesm.it.smartcity.View.accounts.LoginActivity;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -56,7 +67,11 @@ public class MainActivity extends AppCompatActivity
     SharedPreferences sharedPreferences;
     double longitude, latitude;
     FusedLocationProviderClient client;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
     boolean sw;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,6 +91,56 @@ public class MainActivity extends AppCompatActivity
 
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
+        toolbar = findViewById(R.id.toolbar);
+        navigationView= findViewById(R.id.navigation_view);
+        drawerLayout=findViewById(R.id.drawelayout);
+        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.Open,R.string.Close);
+        toggle.syncState();
+
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        View headerview = navigationView.getHeaderView(0);
+        TextView txtuser= headerview.findViewById(R.id.txtusername);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+         txtuser.setText(firebaseUser.getEmail());
+         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+             @Override
+             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                 switch (item.getItemId()){
+                     case  R.id.nav_signout:
+
+                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                         builder.setMessage("Do you want sign out ?");
+                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialogInterface, int i) {
+                                 firebaseAuth.signOut();
+                                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+                             }
+                         });
+                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialogInterface, int i) {
+
+                             }
+                         });
+                         builder.show();
+
+                 }
+
+                 return true;
+             }
+         });
+
+
+
 
 
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);

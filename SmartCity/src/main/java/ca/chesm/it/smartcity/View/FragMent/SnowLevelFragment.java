@@ -500,6 +500,7 @@ public class SnowLevelFragment extends Fragment
 
     public void snowLVCheck(double value)
     {
+
         if (value <= 0)
         {
             snow_weather_image.setImageDrawable(getResources().getDrawable(R.drawable.nosnow));

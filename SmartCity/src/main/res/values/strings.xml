@@ -98,6 +98,9 @@
     <string name="nav_myprofile">My Profile</string>
     <string name="nav_password">Change Password</string>
     <string name="collect">Collect</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="nav_signout">Sign Out</string>
 
     <!--Arrays of location for snow level fragement -->
     <string-array name="snow_locationarray">
