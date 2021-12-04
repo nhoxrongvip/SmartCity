@@ -140,12 +140,13 @@ public class MainActivity extends AppCompatActivity
                             }
                         });
                         builder.show();
+                        break;
                     case R.id.nav_profile:
                         startActivity(new Intent(MainActivity.this, AppInfoActivity.class));
 
-
                     case R.id.nav_home:
                         startActivity(new Intent(MainActivity.this, MainActivity.class));
+
                 }
 
                 return true;
