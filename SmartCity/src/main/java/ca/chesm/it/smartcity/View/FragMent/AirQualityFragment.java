@@ -327,9 +327,6 @@ public class AirQualityFragment extends Fragment {
                         case R.id.rb_o3daily:
                             barChartEntry(dailygraph, o3daily, "03", o3DateSupport);
                             break;
-                        case R.id.rb_pm10daily:
-                            barChartEntry(dailygraph, pm10daily, "PM1.0", pm10DateSupport);
-                            break;
                         case R.id.rb_pm25daily:
                             barChartEntry(dailygraph, pm25daily, "PM2.5", pm25DateSupport);
                             break;
