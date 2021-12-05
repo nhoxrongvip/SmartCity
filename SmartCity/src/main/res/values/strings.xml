@@ -114,4 +114,5 @@
     </string-array>
     <string name="title_activity_app_info">AppInfo</string>
     <string name="collect_mess">Please click on collect button !</string>
+    <string name="full_name">Full name</string>
 </resources>

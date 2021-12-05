@@ -3,6 +3,7 @@ package ca.chesm.it.smartcity.View.GarbageBinControl;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -71,6 +72,12 @@ public class Garbagebin_Fragment extends Fragment
         // Inflate the layout for this fragment
         sharedPreferences = this.getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
         v = inflater.inflate(R.layout.garbagebin_fragment, container, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            NotificationChannel channel = new NotificationChannel("Smart City", "Smart City", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getContext().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
         Bundle bundle = this.getArguments();
         setupid();
         if (bundle != null)
@@ -89,7 +96,7 @@ public class Garbagebin_Fragment extends Fragment
         });
         collectbtn.setOnClickListener(view ->
         {
-
+            collect();
         });
         return v;
     }
@@ -109,42 +116,66 @@ public class Garbagebin_Fragment extends Fragment
             {
                 try
                 {
+                    String cbin1 = "Organic Bin Collect";
+                    String cbin2 = "Garbage Bin Collect";
+                    String cbin3 = "Recycle Bin Collect";
                     ProgressBarAnimation anim = null;
-                    bin1 = snapshot.child("Organic Bin").getValue(Double.class);
-                    bin2 = snapshot.child("Recycle Bin").getValue(Double.class);
-                    bin3 = snapshot.child("Garbage Bin").getValue(Double.class);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    {
-                        NotificationChannel channel = new NotificationChannel("Smart City", "Smart City", NotificationManager.IMPORTANCE_DEFAULT);
-                        NotificationManager manager = getContext().getSystemService(NotificationManager.class);
-                        manager.createNotificationChannel(channel);
-                    }
-
+                    bin1 = city.getBin1();
+                    bin2 = city.getBin2();
+                    bin3 = city.getBin3();
+                    boolean collect1 = snapshot.child(cbin1).getValue(Boolean.class);
+                    boolean collect2 = snapshot.child(cbin2).getValue(Boolean.class);
+                    boolean collect3 = snapshot.child(cbin3).getValue(Boolean.class);
                     if (bin1 >= 80)
                     {
-                        notibuild("Your Organic Bin is almost full ",1);
-                    }
-                    else if(bin1 == 100)
+                        if (!collect1 != false)
+                        {
+                            notibuild("Your Organic Bin is almost full ", 1);
+                        }
+                    } else if (bin1 == 100)
                     {
-                        notibuild("Your Organic Bin is full ",1);
+                        if (collect2 != false)
+                        {
+                            notibuild("Your Organic Bin is full ", 1);
+                        }
+                    } else
+                    {
+                        ref.child(cbin1).setValue(false);
                     }
 
                     if (bin2 >= 80)
                     {
-                        notibuild("Your Recycle Bin is almost full ",2);
+                        if (!collect2 != false)
+                        {
+                            notibuild("Your Recycle Bin is almost full ", 2);
+                        }
                     }
-                    else if(bin2 == 100)
+                    else if (bin2 == 100)
                     {
-                        notibuild("Your Recycle Bin is full ",2);
+                        if (!collect2 != false)
+                        {
+                            notibuild("Your Recycle Bin is full ", 2);
+                        }
+                    } else
+                    {
+                        ref.child(cbin2).setValue(false);
                     }
 
                     if (bin3 >= 80)
                     {
-                        notibuild("Your Garbage Bin is almost full ",3);
-                    }
-                    else if(bin3 == 100)
+                        if (!collect3 != false)
+                        {
+                            notibuild("Your Garbage Bin is almost full ", 3);
+                        }
+                    } else if (bin3 == 100)
                     {
-                        notibuild("Your Garbage Bin is full ",3);
+                        if (!collect3 != false)
+                        {
+                            notibuild("Your Garbage Bin is full ", 3);
+                        }
+                    } else
+                    {
+                        ref.child(cbin3).setValue(false);
                     }
 
                     if (txtbinname.getText().equals("Organic Bin"))
@@ -200,7 +231,7 @@ public class Garbagebin_Fragment extends Fragment
         });
     }
 
-    private void notibuild(String mess,int id)
+    private void notibuild(String mess, int id)
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Smart City");
         builder.setContentTitle("Garbage Bin Controller");
@@ -215,40 +246,47 @@ public class Garbagebin_Fragment extends Fragment
 
     private void collect()
     {
+        double bin1 = city.getBin1();
+        double bin2 = city.getBin2();
+        double bin3 = city.getBin3();
+        String cbin1 = "Organic Bin Collect";
+        String cbin2 = "Garbage Bin Collect";
+        String cbin3 = "Recycle Bin Collect";
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
-        if(txtbinname.getText().toString().equals("Organic Bin"))
+        if (txtbinname.getText().toString().equals("Organic Bin"))
         {
-            if(city.getBin1() >= 80)
+            if (bin1 >= 80)
             {
-
+                ref.child(cbin1).setValue(true);
+                Toast.makeText(getContext(), "Collect submmited !", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Toast.makeText(getContext(), cbin1 + " is not full !", Toast.LENGTH_SHORT).show();
             }
-            else {
-
+        }
+        if (txtbinname.getText().toString().equals("Garbage Bin"))
+        {
+            if (bin2 >= 80)
+            {
+                ref.child(cbin2).setValue(true);
+                Toast.makeText(getContext(), "Collect submmited !", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Toast.makeText(getContext(), cbin2 + " is not full !", Toast.LENGTH_SHORT).show();
             }
         }
-        if(city.getBin2() >= 80)
+        if (txtbinname.getText().toString().equals("Recycle Bin"))
         {
-
-        }
-        else
+            if (bin3 >= 80)
             {
-
-        }
-        if(city.getBin3() >= 80)
-        {
-
-        }
-        else
+                ref.child(cbin3).setValue(true);
+                Toast.makeText(getContext(), "Collect submmited !", Toast.LENGTH_SHORT).show();
+            } else
             {
-
+                Toast.makeText(getContext(), cbin3 + " is not full !", Toast.LENGTH_SHORT).show();
+            }
         }
-    }
 
-
-    //
-    private void SaveState()
-    {
-        sharedPreferences = getActivity().getSharedPreferences("SmartCity", Context.MODE_PRIVATE);
 
     }
 
@@ -272,6 +310,9 @@ public class Garbagebin_Fragment extends Fragment
         double number = Double.parseDouble(rad);
         double number1 = Double.parseDouble(rad2);
         double number2 = Double.parseDouble(rad3);
+        city.setBin1(number);
+        city.setBin2(number1);
+        city.setBin3(number2);
         ref.child(orgabin_btn.getText().toString()).setValue(number);
         ref.child(recylebin_btn.getText().toString()).setValue(number1);
         ref.child(garbagebin_btn.getText().toString()).setValue(number2);
@@ -280,10 +321,7 @@ public class Garbagebin_Fragment extends Fragment
     private void randomvalueupdate2()
     {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Garbage").child("City").child(city.getName()).child(String.valueOf(city.getId()));
-        String rad = "false";
-        boolean number = Boolean.parseBoolean(rad);
-        boolean number1 = Boolean.parseBoolean(rad);
-        boolean number2 = Boolean.parseBoolean(rad);
+        boolean rad = false;
         ref.child("Organic Bin Collect").setValue(rad);
         ref.child("Garbage Bin Collect").setValue(rad);
         ref.child("Recycle Bin Collect").setValue(rad);

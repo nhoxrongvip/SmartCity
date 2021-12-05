@@ -14,18 +14,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,14 +55,19 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import ca.chesm.it.smartcity.View.FragMent.AirQualityFragment;
 import ca.chesm.it.smartcity.View.FragMent.AppSettingFragment;
 
 import ca.chesm.it.smartcity.R;
 import ca.chesm.it.smartcity.View.FragMent.SnowLevelFragment;
 import ca.chesm.it.smartcity.View.GarbageBinControl.GarbageFragment;
+import ca.chesm.it.smartcity.View.GarbageBinControl.Garbagebin_Fragment;
 import ca.chesm.it.smartcity.View.ProfileActivity;
 import ca.chesm.it.smartcity.View.accounts.LoginActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -72,6 +81,8 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle toggle;
     boolean sw;
     private NavigationView navigationView;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -92,60 +103,72 @@ public class MainActivity extends AppCompatActivity
         botnavigation = (BottomNavigationView) findViewById(R.id.botnavigation);
         botnavigation.setOnNavigationItemSelectedListener(bottomNavMethod);
         toolbar = findViewById(R.id.toolbar);
-        navigationView= findViewById(R.id.navigation_view);
-        drawerLayout=findViewById(R.id.drawelayout);
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.Open,R.string.Close);
+        navigationView = findViewById(R.id.navigation_view);
+        drawerLayout = findViewById(R.id.drawelayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
         toggle.syncState();
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
         View headerview = navigationView.getHeaderView(0);
-        TextView txtuser= headerview.findViewById(R.id.txtusername);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-         txtuser.setText(firebaseUser.getEmail());
-         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-             @Override
-             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                 switch (item.getItemId()){
-                     case  R.id.nav_signout:
+        TextView txtuser = headerview.findViewById(R.id.txtusername);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        setImg();
+        txtuser.setText(firebaseUser.getEmail());
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    case R.id.nav_signout:
 
-                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                         builder.setMessage("Do you want sign out ?");
-                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialogInterface, int i) {
-                                 firebaseAuth.signOut();
-                                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Do you want sign out ?");
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
-                             }
-                         });
-                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
 
-                             }
-                         });
-                         builder.show();break;
-                     case R.id.nav_profile: startActivity(new Intent(MainActivity.this, ProfileActivity.class));break;
-                     case R.id.nav_password: startActivity(new Intent(MainActivity.this, ChangePassActivity.class));break;
-                     case R.id.nav_home:
-                         drawerLayout.closeDrawers();
+                            }
+                        });
+                        builder.show();
+                        break;
+                    case R.id.nav_profile:
+                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                        break;
+                    case R.id.nav_password:
+                        startActivity(new Intent(MainActivity.this, ChangePassActivity.class));
+                        break;
+                    case R.id.nav_home:
+                        AirQualityFragment frag = new AirQualityFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag, "Air Fragment").commit();
+                        drawerLayout.closeDrawers();
+                }
 
-
-                 }
-
-                 return true;
-             }
-         });
-
-
-
+                return true;
+            }
+        });
 
 
         client = LocationServices.getFusedLocationProviderClient(MainActivity.this);
@@ -156,7 +179,34 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    private void setImg()
+    {
+        CircleImageView img = (CircleImageView) findViewById(R.id.avatar);
+        SharedPreferences sharedPreferences1 = this.getSharedPreferences("INFO", MODE_PRIVATE);
+        try
+        {
+            String basecode = sharedPreferences1.getString(firebaseUser.getUid(), "");
+            if (basecode.length() > 20)
+            {
+                byte[] decodeImge = Base64.decode(basecode, Base64.NO_WRAP);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImge, 0, decodeImge.length);
+                img.setImageBitmap(bitmap);
+            } else
+            {
+                if (firebaseUser.getPhotoUrl().toString().length() > 20)
+                {
+                    basecode = firebaseUser.getPhotoUrl().toString();
+                    byte[] decodeImge = Base64.decode(basecode, Base64.NO_WRAP);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodeImge, 0, decodeImge.length);
+                    img.setImageBitmap(bitmap);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -292,8 +342,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public boolean onKeyLongPress(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.app_name)
                     .setCancelable(false)
@@ -354,7 +406,6 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
         return true;
     };
-
 
 
 }

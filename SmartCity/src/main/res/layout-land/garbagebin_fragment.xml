@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey"
+    android:orientation="vertical"
+    tools:context=".View.GarbageBinControl.Garbagebin_Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtview_houseaddress"
+            android:layout_marginTop="20dp"
+            android:textSize="22dp"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/hello_blank_fragment" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/bin_progressbar"
+                style="@style/BinpProgressBar"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:progress="90">
+            </ProgressBar>
+
+            <TextView
+                android:id="@+id/txtview_percentbin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/bin_progressbar"
+                android:layout_alignTop="@id/bin_progressbar"
+                android:layout_alignRight="@id/bin_progressbar"
+                android:layout_alignBottom="@id/bin_progressbar"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/hello_blank_fragment"
+                android:textSize="18dp"
+                android:textStyle="bold"></TextView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtview_nameofbin"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textview" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/greenbinbtn"
+                android:background="@drawable/green_bin_btn"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="10dp"
+                android:drawableLeft="@drawable/green_bin"
+                android:text="Organic Bin" />
+
+            <Button
+                android:id="@+id/bluebinbtn"
+                android:background="@drawable/blue_bin_btn"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="10dp"
+                android:drawableLeft="@drawable/blue_bin"
+                android:text="Recycle Bin"
+                android:layout_marginLeft="10dp"/>
+
+            <Button
+                android:id="@+id/blackbinbtn"
+                android:background="@drawable/black_bin_btn"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="10dp"
+                android:drawableLeft="@drawable/black_bin"
+                android:text="Garbage Bin"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            >
+
+            <Button
+                android:id="@+id/randombtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_bin_btn"
+                android:text="@string/random_value_check"
+                android:textSize="10dp" />
+
+            <Button
+                android:id="@+id/collectbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_bin_btn"
+                android:layout_marginLeft="60dp"
+                android:text="@string/collect"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
