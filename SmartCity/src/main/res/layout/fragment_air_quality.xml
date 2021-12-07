@@ -256,11 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/o3"/>
-                <RadioButton
-                    android:id="@+id/rb_pm10daily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pm1_0"/>
+
                 <RadioButton
                     android:id="@+id/rb_pm25daily"
                     android:layout_width="wrap_content"
