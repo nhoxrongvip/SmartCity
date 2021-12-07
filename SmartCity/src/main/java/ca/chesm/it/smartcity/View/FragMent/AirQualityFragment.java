@@ -117,10 +117,6 @@ public class AirQualityFragment extends Fragment {
         List<Address> addresses;
         geocoder = new Geocoder(getContext(), Locale.getDefault());
 
-
-
-
-
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
             city_name = addresses.get(0).getLocality();
@@ -205,7 +201,7 @@ public class AirQualityFragment extends Fragment {
 
         rb_o3 = v.findViewById(R.id.rb_o3daily);
         rb_pm25 = v.findViewById(R.id.rb_pm25daily);
-        rb_pm10 = v.findViewById(R.id.rb_pm10daily);
+
         dailygraph = v.findViewById(R.id.AQ_dailygraph);
         dailyGroup = v.findViewById(R.id.dailyRG);
 

@@ -10,8 +10,8 @@ android {
     defaultConfig {
         applicationId "ca.chesm.it.smartcity"
         minSdk 23
-        targetSdk 29
-        versionCode 1
+        targetSdk 30
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

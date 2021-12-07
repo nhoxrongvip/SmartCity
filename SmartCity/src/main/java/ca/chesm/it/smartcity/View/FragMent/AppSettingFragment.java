@@ -113,7 +113,7 @@ public class AppSettingFragment extends Fragment
     public void setupid()
     {
         swpotrait = (SwitchCompat) v.findViewById(R.id.portraitlocker);
-        btnPermission = (Button) v.findViewById(R.id.btnPermission);
+
     }
 
 
