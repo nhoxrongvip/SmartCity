@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.robolectric.Shadows.shadowOf;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,10 +27,12 @@ import ca.chesm.it.smartcity.View.activities.MainActivity;
 @RunWith(RobolectricTestRunner.class)
 public class LoginActivityTest
 {
+
     Activity activity;
 
     @Before
-    public void init() {
+    public void init()
+    {
         activity = Robolectric.setupActivity(LoginActivity.class);
     }
 
@@ -40,8 +41,8 @@ public class LoginActivityTest
     {
         EditText results = (EditText) activity.findViewById(R.id.txteditusername);
         EditText results2 = (EditText) activity.findViewById(R.id.txteditpassword);
-        String resultsText = results.getHint().toString();
-        String resultsText2 = results2.getHint().toString();
+        String resultsText = results.getText().toString();
+        String resultsText2 = results2.getText().toString();
         assertThat(resultsText, equalTo("Testing Android Rocks!"));
         assertThat(resultsText2, equalTo("Testing Android Rocks 2!"));
     }
@@ -51,14 +52,15 @@ public class LoginActivityTest
     {
         EditText results = (EditText) activity.findViewById(R.id.txteditusername);
         EditText results2 = (EditText) activity.findViewById(R.id.txteditpassword);
-        String resultsText = results.getHint().toString();
-        String resultsText2 = results2.getHint().toString();
-        assertThat(resultsText, equalTo("Email"));
+        String resultsText = results.getText().toString();
+        String resultsText2 = results2.getText().toString();
+        assertThat(resultsText, equalTo(""));
         assertThat(resultsText2, equalTo("Password"));
     }
 
     @Test
-    public void clickingButton_shouldChangeResultsViewText() throws Exception {
+    public void clickingButton_shouldChangeResultsViewText() throws Exception
+    {
         Button button = (Button) activity.findViewById(R.id.bntlogin);
         button.performClick();
         Intent intent = Shadows.shadowOf(activity).peekNextStartedActivity();
@@ -75,11 +77,11 @@ public class LoginActivityTest
     }
 
     @Test
-    public  void TextViewwelcome() throws Exception
+    public void TextViewWelcome() throws Exception
     {
         TextView tv = activity.findViewById(R.id.txtviewlogin);
         assertNotNull(tv);
-        assertEquals(tv.getText(),"Welcome to Smart City");
+        assertEquals(tv.getText(), "Welcome to SmartCity");
     }
 
 

@@ -26,7 +26,7 @@ public class UserTest
     }
 
     @Test
-    public void Testgetfname1() throws Exception
+    public void TestgetfnamePass() throws Exception
     {
         //Expected: Danny, Set name with Danny.
         user.setFullname("Danny");
@@ -34,7 +34,7 @@ public class UserTest
     }
 
     @Test
-    public void Testgetfname2() throws Exception
+    public void TestgetfnameFail() throws Exception
     {
         //Expected: Phat, Set name with Danny.
         user.setFullname("Danny");
@@ -42,7 +42,7 @@ public class UserTest
     }
 
     @Test
-    public void getPhoneNo() throws Exception
+    public void getPhoneNoPass() throws Exception
     {
         //Expected: 6478189795, with 6478189795 PhoneNo.
         user.setPhoneNo("6478189795");
@@ -50,7 +50,7 @@ public class UserTest
     }
 
     @Test
-    public void getPhoneNo2() throws Exception
+    public void getPhoneNoFail() throws Exception
     {
         //Expected: 6478189799, with 6478189795 PhoneNo.
         user.setPhoneNo("6478189799");
@@ -58,9 +58,14 @@ public class UserTest
     }
 
     @Test
-    public void getPassword() throws Exception
+    public void getPasswordPass() throws Exception
     {
-        assertNotNull(user);
+        assertNotNull(user.getPassword());
     }
 
+    @Test
+    public void getPasswordFail() throws Exception
+    {
+        assertNotNull(user.getPassword());
+    }
 }
