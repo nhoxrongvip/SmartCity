@@ -1,4 +1,14 @@
 # SmartCityMonitor
+This is a team project based on the Android development of native Java language that is an example of a Smart City Control Application with four main interfaces for users: 
+
+Gabage Control
+
+Air Quality Monitor
+
+Snow Level Monitor
+
+Street lights Control
+
 
 ## Main Fragments
 
